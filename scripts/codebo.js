@@ -12,7 +12,7 @@ function Codebo(x, y, classename, z) {
 	this.map;
 	
 	this.actualx = 0;
-	this.actualy = 1;
+	this.actualy = 2;
 	
 	GameObject.call(this, sprite, x, y, classename, h,w, 0, z);
    
@@ -37,21 +37,36 @@ Codebo.prototype.setCommands = function (actions, map) {
 
 Codebo.prototype.runCommands = function () {
 	
-	this.stopCommands();
-	
-	var action = actions[++this.actualaction];
-	
+	//this.stopCommands();
+	this.actualaction++ 
+	var action = actions[this.actualaction];
+	console.log(this.actualaction);
 	if(action == "forward"){
-		//diagonal
-		if(this.map[this.actualx+1][this.actualy+1] != 0){
-			
-			this.x += 35;
-			this.y += 17.5;
-			
-			this.actualx+=1;
-			this.actualy+=1;
-		}
 		
+		//diagonal (o if é necessario por conta da codificacao do map, nas linhas pares os blocos seguem no mesmo padrao da px linha. No caso de impares isso n ocorre);
+		
+		if(this.actualx%2 == 0){
+			
+			if(this.map[this.actualx+1][this.actualy] != 0){
+				
+				this.x += 35;
+				this.y += 17.5;
+				
+				this.actualx+=1;
+				this.actualy;
+			}
+			
+		}else{
+			
+			if(this.map[this.actualx+1][this.actualy+1] != 0){
+				
+				this.x += 35;
+				this.y += 17.5;
+				
+				this.actualx+=1;
+				this.actualy+=1;
+			}
+		}
 		//pensar no que fazer se ele cair na agua (0)
 		
 	}else if(action == "backward"){

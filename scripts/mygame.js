@@ -91,7 +91,7 @@ function setJogo(){
 	[0,0,1,0,0,0],
 	[0,0,1,0,0,0],
 	[0,0,0,1,0,0],
-	[0,0,0,0,0,0],
+	[0,0,0,1,0,0],
 	[0,0,0,0,1,0],
 	[0,0,0,0,1,0],
 	[0,0,0,0,0,3],
@@ -125,6 +125,7 @@ function setJogo(){
 	bt4 = new Button("button_play", 500, 40, function(){
 		
 		codebo.setCommands( actions, arrmap );
+		codebo.stopCommands();
 		codebo.runCommands();
 		
 	}, 50,50);
