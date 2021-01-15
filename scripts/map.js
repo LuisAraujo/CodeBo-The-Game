@@ -36,11 +36,15 @@ Map.prototype.create = function () {
 				
 				}else if(this.map[i][j] == 3){
 					
-					new Block( "block_0" , this.marginleft + m + j*70, this.margintop +i*17.5, "imagem", 1 );
+					/*esse blocos estão com um z maior que codebo
+					para dá a ideia de 3d
+					quando codebo mudar de nivel, esse blocos (ou pelo menos o superior, deve ficar com o z menor que o codebo*/
 					
-					new Block( "block_3" , this.marginleft + m + j*70, this.margintop +i*17.5-35, "imagem", 1 );
+					new Block( "block_0" , this.marginleft + m + j*70, this.margintop +i*17.5, "imagem", 100 );
 					
-					new Block( "block_2" , this.marginleft + m + j*70, this.margintop +i*17.5-70, "imagem", 1 );
+					new Block( "block_3" , this.marginleft + m + j*70, this.margintop +i*17.5-35, "imagem", 100 );
+					
+					new Block( "block_2" , this.marginleft + m + j*70, this.margintop +i*17.5-70, "imagem", 100 );
 				
 				}else if(this.map[i][j] == 3){
 					

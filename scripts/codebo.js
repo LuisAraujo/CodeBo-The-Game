@@ -13,6 +13,7 @@ function Codebo(x, y, classename, z) {
 	
 	this.actualx = 0;
 	this.actualy = 2;
+	this.actuallevel = 1;
 	
 	GameObject.call(this, sprite, x, y, classename, h,w, 0, z);
    
@@ -47,7 +48,7 @@ Codebo.prototype.runCommands = function () {
 		
 		if(this.actualx%2 == 0){
 			
-			if(this.map[this.actualx+1][this.actualy] != 0){
+			if(this.map[this.actualx+1][this.actualy] == this.getLevel() ){
 				
 				this.x += 35;
 				this.y += 17.5;
@@ -58,7 +59,7 @@ Codebo.prototype.runCommands = function () {
 			
 		}else{
 			
-			if(this.map[this.actualx+1][this.actualy+1] != 0){
+			if(this.map[this.actualx+1][this.actualy+1]  == this.getLevel()){
 				
 				this.x += 35;
 				this.y += 17.5;
@@ -101,5 +102,32 @@ Codebo.prototype.stopCommands = function (actions) {
 	
 };
 
+Codebo.prototype.upLevel = function () {
+	this.actuallevel ++;
+	this.updateZ();
+};
 
+Codebo.prototype.downlevel = function () {
+	this.actuallevel --;
+	this.updateZ();
+};
+
+//usar isso para mudança de nivel e gera a ideia de 3d
+Codebo.prototype.updateZ = function () {
+	if(this.actuallevel == 1)
+		this.z = 99;
+	else if(this.actuallevel ==2)
+		this.z = 100;
+	else if(this.actuallevel ==3)
+		this.z = 101;
+}
+
+Codebo.prototype.changeLevel = function (level) {
+	this.actuallevel = level;
+};
+
+
+Codebo.prototype.getLevel = function () {
+	return this.actuallevel;
+};
 
