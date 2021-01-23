@@ -33,7 +33,7 @@ se.setResources = function () {
 	this.loader.addResource("button_play", "button_play.png", "image");
 	
 	//sprites mini buttons
-	this.loader.addResource("mini_forward", "button_forward_mini.png", "image");
+	this.loader.addResource("mini_forward", "button_forward_mini.png", "image");	
 	this.loader.addResource("mini_backward", "button_backward_mini.png", "image");
 	this.loader.addResource("mini_left", "button_left_mini.png", "image");
 	this.loader.addResource("mini_right", "button_right_mini.png", "image");
@@ -50,44 +50,12 @@ se.setResources = function () {
 se.gameReady = function() {
 
 	//criando um level
-	var jogo = new Scene();
-	//configurando as funcoes de inicio e update
-	jogo.setFunctionStart( setJogo );
-	jogo.setFunctionUpdate( updateJogo );
-	//adicional o level ao jogo
-	this.mlevel.addScene(jogo);
-
-}
-
-
-function updateJogo(){
-
-  posx = 0;
-  posy = 0;
-  j=0;
-  
-  //percorrendo os comandos
-  for(var i = 0; i < actions.length; i++){
-		j++;
-		
-		//grade de 4 comandos
-		if(i%4 == 0)
-			j =0;	
-		posy = parseInt(i/4) * 35;
-		posx = j * 35;
-		
-		new Sprite("mini_"+actions[i], 550 + posx, 100 +  posy ,30,30);
-
-		
-	}
-
-}
-
-//funcao incial do jogo
-function setJogo(){
-
+	var lv1 = new Scene();
+	
+	
+	
 	//mapa, pode ser obtido do arquivo
-	arrmap = [
+	var arrmap = [
 	[0,0,1,0,0,0],
 	[0,0,1,0,0,0],
 	[0,0,0,1,0,0],
@@ -100,17 +68,73 @@ function setJogo(){
 	[0,0,0,0,0,0],
 	];
 	
+	//configurando as funcoes de inicio e update
+	lv1.setFunctionStart( setLevel.bind(null, arrmap) );
+	lv1.setFunctionUpdate( updateLevel );
+	
+
+	//adicional o level ao jogo
+	this.mlevel.addScene(lv1);
+
+}
+
+
+function updateLevel(){
+  printCommands();
+}
+
+/*Exibe os comandos abaixo do play*/
+function printCommands(){
+
+  // removendo todos os comandos
+  var objectstag = se.mlevel.getCurrentScene().getObjectsByTag("btcommands");	
+  for(var i = 0; i < objectstag.length; i++){
+	se.mlevel.removeObject(objectstag[i]);
+  }
+   
+  posx = 0;
+  posy = 0;
+  marginx = 500;
+  marginy = 100;
+  j=0;
+ 
+	//percorrendo os comandos
+  for(var i = 0; i < actions.length; i++){
+		j++;
+		
+		//grade de 4 comandos
+		if(i%4 == 0)
+			j =0;	
+		posy = parseInt(i/4) * 35;
+		posx = j * 35;
+		
+		bt = new MiniButton("mini_"+actions[i], marginx + posx, marginy +  posy , function(){
+			actions.splice(this.getId(), 1);
+		} ,30,30);
+		
+		bt.setId(i);
+		bt.setTag("btcommands");
+		
+	}
+	
+}
+
+
+//funcao incial do jogo
+function setLevel(arrmap){
+
 	//map
 	map = new Map(arrmap, 200, 70);
 	
 	//CodeBo
-	codebo = new Codebo( 180, 180, "play", 99 );
+	codebo = new Codebo( 180, 180, 0, 2, "play", 99 );
 	
 	actions = [];
 	
 	bt1 = new Button("button_forward", 200, 500, function(){
 		actions.push("forward");
 	}, 40,40);
+	
 	bt2 = new Button("button_backward", 250, 500, function(){
 		actions.push("backward");
 	}, 40,40);
@@ -123,10 +147,12 @@ function setJogo(){
 	
 	
 	bt4 = new Button("button_play", 500, 40, function(){
-		
 		codebo.setCommands( actions, arrmap );
 		codebo.stopCommands();
-		codebo.runCommands();
+		codebo.startPosition();
+		setTimeout( function(){
+			codebo.runCommands();
+		}, 100);
 		
 	}, 50,50);
 	

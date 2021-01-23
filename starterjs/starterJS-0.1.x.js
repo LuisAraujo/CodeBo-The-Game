@@ -52,6 +52,10 @@ function Animation(sprites, timesprite) {
 	
 }
 
+/**
+* Inicia a sequência da animação com tempo
+* @method
+*/
 Animation.prototype.start = function () {
 	
     var _this = this;
@@ -63,6 +67,11 @@ Animation.prototype.start = function () {
         , this.timesprite*1000
     );
 }
+
+/**
+* Update da animação
+* @method
+*/
 
 Animation.prototype.update = function (_this) {
 
@@ -84,6 +93,7 @@ Animation.prototype.update = function (_this) {
 
 /**
  * Avança para o próximo sprite
+ * @method
  */
 Animation.prototype.nextSprite = function () {
    this.currentsprite++;
@@ -91,6 +101,7 @@ Animation.prototype.nextSprite = function () {
 
 /**
  * Retorna ao sprite anterior
+ * @method
  */
 
 Animation.prototype.priorSprite = function () {
@@ -178,9 +189,6 @@ Animation.prototype.autoSize = function(type){
  * @param {int} h - Altura do sprite
  * @constructor
  */
- 
- 
- 
 function GameObject(animations, x, y, classename, w, h, r, z) {
     //this.sprite = null;
 
@@ -216,28 +224,7 @@ function GameObject(animations, x, y, classename, w, h, r, z) {
 
     if(animations != undefined) {
 
-        if(Array.isArray(animations)) {
-
-            //verificando se algum elemento não é uma animação
-            animations.forEach(function(e){
-                if(e.constructor != Animation)
-                    throw new Error("Algum elemento do Array não é uma animação")
-            });
-
-            this.animation = animations;
-
-        //se animations for apenas uma string com o nome do sprite
-        }else if(typeof animations == "string"){
-            this.animation = [ new Animation([animations] )];
-        }
-
-
-        if (this.h == 0) {
-            this.h = this.animation[this.currentAnimation].autoSize("h");
-        }
-        if (this.w == 0) {
-            this.w = this.animation[this.currentAnimation].autoSize("w");
-        }
+		this.setAnimation(animations);
     }
 
 	this.tag = "";
@@ -261,8 +248,40 @@ GameObject.prototype.update = function() {
 
 
 /**
- * Atualiza a tag do objeto
+ * Atualiza a animação
  * @method
+ */
+GameObject.prototype.setAnimation = function(animations){
+	
+		
+	   if(Array.isArray(animations)) {
+
+            //verificando se algum elemento não é uma animação
+            animations.forEach(function(e){
+                if(e.constructor != Animation)
+                    throw new Error("Algum elemento do Array não é uma animação")
+            });
+
+            this.animation = animations;
+
+        //se animations for apenas uma string com o nome do sprite
+        }else if(typeof animations == "string"){
+            this.animation = [ new Animation([animations] )];
+        }
+
+
+        if (this.h == 0) {
+            this.h = this.animation[this.currentAnimation].autoSize("h");
+        }
+        if (this.w == 0) {
+            this.w = this.animation[this.currentAnimation].autoSize("w");
+        }
+		
+}
+
+/**
+ * Atualiza a tag do objeto
+ * @param {tag} string  - tag de um objeto
  */
 GameObject.prototype.setTag = function(tag) {
 	this.tag = tag;
@@ -272,11 +291,35 @@ GameObject.prototype.setTag = function(tag) {
 
 /**
  * Retorna a tag do objeto
- * @method
+ * @return {tag} string - tag do objeto
  */
 GameObject.prototype.getTag = function() {
 	return  this.tag;
 }
+
+
+
+/**
+ * Atualiza o id do objeto
+* @param {id} int  - identificador de um objeto
+ */
+GameObject.prototype.setId = function (id) {
+ 
+ this.id = id;
+   
+};
+
+
+
+/**
+ * Retorna a id do objeto
+ * @return {id} int  - identificador de um objeto
+ */
+GameObject.prototype.getId = function () {
+ 
+	return this.id;
+   
+};
 
 /**
  * Imprime o estado atual do objeto na tela
@@ -656,7 +699,25 @@ Scene.prototype.getObjectByTag = function (tag) {
 }
 
 /**
- * Remove um o objeto do level
+ * Obtém  objetos do level pela tag
+ * @method
+ */
+Scene.prototype.getObjectsByTag = function (tag) {
+    arr =[];
+	 
+	 for(var i = 0; i <  this.objects.length; i++){
+	   if(this.objects[i].tag == tag){
+			arr.push(this.objects[i]);
+	   }
+	   
+   } 
+
+	return arr;
+}
+
+
+/**
+ * Remove um o objeto do level através da tag
  * @method
  */
 Scene.prototype.removeObjectByTag = function (tag) {
@@ -672,6 +733,8 @@ Scene.prototype.removeObjectByTag = function (tag) {
    this.objects = arr;
 	
 }
+
+
 
 
 

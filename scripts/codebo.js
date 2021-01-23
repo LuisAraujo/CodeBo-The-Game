@@ -1,4 +1,4 @@
-function Codebo(x, y, classename, z) {
+function Codebo(x, y, actualx, actualy, classename, z) {
 
 	h = 50;
 	w = 50;
@@ -11,9 +11,16 @@ function Codebo(x, y, classename, z) {
 	
 	this.map;
 	
-	this.actualx = 0;
-	this.actualy = 2;
+	this.actualx = actualx;
+	this.actualy = actualy;
 	this.actuallevel = 1;
+	
+	this.startx = x;
+	this.starty = y;
+	
+	this.startactualx = actualx;
+	this.startactualy = actualy;
+	
 	
 	GameObject.call(this, sprite, x, y, classename, h,w, 0, z);
    
@@ -23,10 +30,7 @@ function Codebo(x, y, classename, z) {
 Codebo.prototype = Object.create(GameObject.prototype);
 
 
-Codebo.prototype.update = function () {
- 
-   
-};
+Codebo.prototype.update = function () {};
 
 Codebo.prototype.setCommands = function (actions, map) {
 	
@@ -41,11 +45,15 @@ Codebo.prototype.runCommands = function () {
 	//this.stopCommands();
 	this.actualaction++ 
 	var action = actions[this.actualaction];
+	
 	console.log(this.actualaction);
+	
 	if(action == "forward"){
 		
 		//diagonal (o if é necessario por conta da codificacao do map, nas linhas pares os blocos seguem no mesmo padrao da px linha. No caso de impares isso n ocorre);
 		
+		
+		//mudar animação
 		if(this.actualx%2 == 0){
 			
 			if(this.map[this.actualx+1][this.actualy] == this.getLevel() ){
@@ -71,8 +79,34 @@ Codebo.prototype.runCommands = function () {
 		//pensar no que fazer se ele cair na agua (0)
 		
 	}else if(action == "backward"){
+		
 		//todo 
-		//é preciso fazer o mesmo que o forward
+		//mudar animação
+		
+		if(this.actualx%2 != 0){
+			
+			if(this.map[this.actualx-1][this.actualy] == this.getLevel() ){
+				
+				this.x -= 35;
+				this.y -= 17.5;
+				
+				this.actualx-=1;
+				this.actualy;
+			}
+			
+		}else{
+			
+			if(this.map[this.actualx-1][this.actualy-1]  == this.getLevel()){
+				
+				this.x -= 35;
+				this.y -= 17.5;
+				
+				this.actualx-=1;
+				this.actualy-=1;
+			}
+		}
+		
+		
 	}else if(action == "left"){
 
 		//todo 
@@ -129,5 +163,15 @@ Codebo.prototype.changeLevel = function (level) {
 
 Codebo.prototype.getLevel = function () {
 	return this.actuallevel;
+};
+
+
+
+Codebo.prototype.startPosition = function () {
+	this.actualx = this.startactualx;
+	this.actualy = this.startactualy;
+	this.x = this.startx;
+	this.y = this.starty;
+	
 };
 
