@@ -13,18 +13,22 @@ se.setResources = function () {
   this.loader.addResource('codebo_sp6', 'codebo/forward/sp6.png', 'image');
 
   //sprites CodeBo pra trás
-  this.loader.addResource('codebo_sp1', 'codebo/backward/sp1.png', 'image');
+  this.loader.addResource(
+    'codebo_back_sp1',
+    'codebo/backward/sp1.png',
+    'image'
+  );
 
   //sprites CodeBo pra direita
-  this.loader.addResource('codebo_sp1', 'codebo/right/sp1.png', 'image');
+  this.loader.addResource('codebo_right_sp1', 'codebo/right/sp1.png', 'image');
 
   //sprites CodeBo pra esquerda
-  this.loader.addResource('codebo_sp1', 'codebo/left/sp1.png', 'image');
-  this.loader.addResource('codebo_sp2', 'codebo/left/sp2.png', 'image');
-  this.loader.addResource('codebo_sp3', 'codebo/left/sp3.png', 'image');
-  this.loader.addResource('codebo_sp4', 'codebo/left/sp4.png', 'image');
-  this.loader.addResource('codebo_sp5', 'codebo/left/sp5.png', 'image');
-  this.loader.addResource('codebo_sp6', 'codebo/left/sp6.png', 'image');
+  this.loader.addResource('codebo_left_sp1', 'codebo/left/sp1.png', 'image');
+  this.loader.addResource('codebo_left_sp2', 'codebo/left/sp2.png', 'image');
+  this.loader.addResource('codebo_left_sp3', 'codebo/left/sp3.png', 'image');
+  this.loader.addResource('codebo_left_sp4', 'codebo/left/sp4.png', 'image');
+  this.loader.addResource('codebo_left_sp5', 'codebo/left/sp5.png', 'image');
+  this.loader.addResource('codebo_left_sp6', 'codebo/left/sp6.png', 'image');
 
   //sprites blocks
   this.loader.addResource('block_0', 'blocks/block_0.png', 'image');
@@ -174,20 +178,26 @@ se.setResources = function () {
   //sprits container
   this.loader.addResource(
     'container_4_fields',
-    'containers/container_4_fields',
+    'containers/container_4_fields.png',
     'image'
   );
   this.loader.addResource(
     'container_5_fields',
-    'containers/container_5_fields',
+    'containers/container_5_fields.png',
     'image'
   );
+
+  //Mapas
+  this.loader.addResource('map_level_1', 'maps/map_level_1.xml', 'xml');
 };
 
 //Quando o loading dos recursos acaba, esse métodos é executado
 se.gameReady = function () {
   //criando um level
   var lv1 = new Scene();
+
+  map = new ReaderXMLFile('map_level_1');
+  console.log(map);
 
   //mapa, pode ser obtido do arquivo
   var arrmap = [
