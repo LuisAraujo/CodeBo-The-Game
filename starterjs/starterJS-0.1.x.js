@@ -2090,6 +2090,8 @@ ManagerLoader.prototype.print = function(porcent){
     if(porcentload==1)
         porcentload = 0.99;
 
+	barsize = 600;
+
     ctx.fillStyle="#008080ff";
     ctx.fillRect(0,0, canvas.width, canvas.height);
 
@@ -2101,12 +2103,12 @@ ManagerLoader.prototype.print = function(porcent){
     x = canvas.width/2 - 160;
     y = canvas.height/2 + 200
 
-	x = canvas.width/2 - 160;
+	x = canvas.width/2 - barsize/2;
     y = canvas.height/2 + 200
 	
     ctx.moveTo(x,y);
-    ctx.lineTo(x+300, y);
-    ctx.quadraticCurveTo(x+310,y+15, x+300,y+30 );
+    ctx.lineTo(x+barsize, y);
+    ctx.quadraticCurveTo(x+barsize+10,y+15, x+barsize,y+30 );
     ctx.lineTo(x, y+30);
     ctx.quadraticCurveTo(x-10, y+15, x, y);
     ctx.stroke();
@@ -2116,8 +2118,8 @@ ManagerLoader.prototype.print = function(porcent){
 
     ctx.beginPath();
     ctx.moveTo(x,y);
-    ctx.lineTo( porcentload* x+290, y);
-    ctx.lineTo(porcentload* x+290, y+20);
+    ctx.lineTo( porcentload* x+barsize-5, y);
+    ctx.lineTo(porcentload* x+barsize-5, y+20);
     //ctx.quadraticCurveTo(x+300,y+10, x+290,y+20 );
     ctx.lineTo(x, y+20);
     ctx.quadraticCurveTo(x-10, y+10, x, y);
@@ -2136,7 +2138,7 @@ ManagerLoader.prototype.print = function(porcent){
 }
 
 /**
- * Essa classe é responsávl pela entrada de teclado
+ * Essa classe é responsável pela entrada de teclado
  * @class
  */
 function ManagerInputs() {

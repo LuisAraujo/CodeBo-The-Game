@@ -213,8 +213,11 @@ se.gameReady = function () {
     [0, 0, 0, 0, 0, 0],
   ];
 
+//esse nomes podem vim do xml
+ var commands = ["stack_new", "stack_block_push", "stack_block_pop", "stack_character_push", "stack_character_pop"];
+ 
   //configurando as funcoes de inicio e update
-  lv1.setFunctionStart(setLevel.bind(null, arrmap));
+  lv1.setFunctionStart(setLevel.bind(null, arrmap, commands));
   lv1.setFunctionUpdate(updateLevel);
 
   //adicional o level ao jogo
@@ -224,6 +227,78 @@ se.gameReady = function () {
 function updateLevel() {
   printCommands();
 }
+
+
+//funcao incial do jogo
+function setLevel(arrmap, commands) {
+  //map
+  map = new Map(arrmap, 200, 70);
+
+  //CodeBo
+  codebo = new Codebo(180, 180, 0, 2, 'play', 99);
+
+  actions = [];
+  
+  size = 60;	
+  marginx = 0;
+  posx = 100;
+  marginbt = 10;
+
+  //FIXO DE TODOS OS LEVELS
+  ["forward","backward","right","left"].forEach( createCommandsButton ); 
+ 
+  //VARIAVEL POR LEVELS
+  commands.forEach( createCommandsButton ); 
+  
+  createGUiButton();
+
+}
+
+
+function createCommandsButton(item){
+	
+		new Button(
+		'button_'+item,
+		window.posx,
+		500,
+		function () {
+		  actions.push(item);
+		},
+		window.size,
+		window.size
+	  );
+	  
+	 window.posx += window.size+window.marginbt;
+}
+
+
+function createGUiButton(){
+
+
+	new Button(
+    'button_play',
+    900,
+    10,
+    function () {
+      codebo.setCommands(actions, arrmap);
+      codebo.stopCommands();
+      codebo.startPosition();
+      setTimeout(function () {
+        codebo.runCommands();
+      }, 100);
+    },
+    70,
+    70
+  );
+
+  //FIXOS DE TODOS OS LEVEL
+  new Button('button_stop', 980, 10, function () {}, 60, 60);
+  new Button('button_reload', 1050, 10, function () {}, 60, 60)
+  new Button('button_help', 10, 10, function () {}, 70, 70);
+
+}
+
+
 
 /*Exibe os comandos abaixo do play*/
 function printCommands() {
@@ -262,143 +337,4 @@ function printCommands() {
     bt.setId(i);
     bt.setTag('btcommands');
   }
-}
-
-//funcao incial do jogo
-function setLevel(arrmap) {
-  //map
-  map = new Map(arrmap, 200, 70);
-
-  //CodeBo
-  codebo = new Codebo(180, 180, 0, 2, 'play', 99);
-
-  actions = [];
-  
-  
-  //ver uma forma de deixar isso modular
-  var size = 60;	
-  var marginx = 0;
-  var posx = 100;
-  var marginbt = 10;
-  
-  
-  var cont1 = new Sprite("container_4_fields", 70,480);
-  
-  var cont2 = new Sprite("container_5_fields", 890,85);
-  
-  bt1 = new Button(
-    'button_forward',
-    posx,
-    500,
-    function () {
-      actions.push('forward');
-    },
-    size,
-    size
-  );
-
-  posx += size+marginbt;
-   
-  bt2 = new Button(
-    'button_backward',
-    posx,
-    500,
-    function () {
-      actions.push('backward');
-    },
-    size,
-    size
-  );
-  
-  posx += size+marginbt;
-  bt3 = new Button(
-    'button_left',
-    posx,
-    500,
-    function () {
-      actions.push('left');
-    },
-    size,
-    size
-  );
-  posx += size+marginbt;
-  bt4 = new Button(
-    'button_right',
-    posx,
-    500,
-    function () {
-      actions.push('right');
-    },
-    size,
-    size
-  );
-
-
-  posx += size+marginbt;
-  bt9 = new Button('button_stack_new', posx, 500, function () {}, 60, 60);
-  
-  posx += size+marginbt;
-  bt10 = new Button(
-    'button_stack_block_push',
-    posx,
-    500,
-    function () {},
-    size,
-    size
-  );
-   
-   posx += size+marginbt;
-  bt11 = new Button('button_stack_block_pop', posx, 500, function () {}, size, size);
-  
-  posx += size+marginbt;
-  bt12 = new Button(
-    'button_stack_character_push',
-    posx,
-    500,
-    function () {},
-    size,
-    size
-  );
-  
-  posx += size+marginbt;
-  
-  bt13 = new Button(
-    'button_stack_character_pop',
-    posx,
-    500,
-    function () {},
-    size,
-    size
-  );
-  
-  
-  
-  
-  bt5 = new Button(
-    'button_play',
-    900,
-    10,
-    function () {
-      codebo.setCommands(actions, arrmap);
-      codebo.stopCommands();
-      codebo.startPosition();
-      setTimeout(function () {
-        codebo.runCommands();
-      }, 100);
-    },
-    70,
-    70
-  );
-
- 
-  bt6 = new Button('button_stop', 980, 10, function () {}, 60, 60);
-  
- 
-  bt7 = new Button('button_reload', 1050, 10, function () {}, 60, 60);
-  
-
-  bt8 = new Button('button_help', 10, 10, function () {}, 70, 70);
-
-
-
 }
