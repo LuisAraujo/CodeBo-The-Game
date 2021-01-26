@@ -196,10 +196,10 @@ se.gameReady = function () {
   //criando um level
   var lv1 = new Scene();
 
-  map = new ReaderXMLFile('map_level_1');
-  console.log(map.getCount());
-
-  //mapa, pode ser obtido do arquivo
+  xmlmap = new ReaderXMLFile('map_level_1');
+  var arrmap = createArrayMap(xmlmap);
+  
+  /*mapa, pode ser obtido do arquivo
   var arrmap = [
     [0, 0, 1, 0, 0, 0],
     [0, 0, 1, 0, 0, 0],
@@ -212,6 +212,7 @@ se.gameReady = function () {
     [0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0],
   ];
+*/
 
 //esse nomes podem vim do xml
  var commands = ["stack_new", "stack_block_push", "stack_block_pop", "stack_character_push", "stack_character_pop"];
@@ -337,4 +338,24 @@ function printCommands() {
     bt.setId(i);
     bt.setTag('btcommands');
   }
+}
+
+
+function createArrayMap(map){
+	 arrayMap = [];
+	 
+	 for(var i=0; i < map.getSize("map"); i++){
+		 sizeline = map.getSize("line"+(i+1));
+		 arrayMap[i] = [];
+		 
+		 for(var j=0; j < sizeline; j++){
+				var a = map.getNode("column"+(j+1), i);
+				var b =  map.getValue(a);
+				arrayMap[i].push( b );
+
+		 }
+	 }
+
+	return arrayMap;    
+	
 }

@@ -3654,39 +3654,6 @@ ReaderTextFile.prototype.getLine = function (index) {
 }
 
 
-
-/**
-* Essa classe é responsávl pela leitura de arquivos xml
-* @class
-*/
-function ReaderXMLFile(path) {
-
-    this.xml = null;
-
-    if(path!=undefined){
-        this.xml = se.loader.getAssets(path);
-    }
-
-    if(this.xml.getElementsByTagName("parsererror").length > 0 )
-        throw new Error("O seu arquivo XML possui algum erro!");
-
-
-}
-
-
-ReaderXMLFile.prototype.getNode = function(tag, index){
-    if(index == undefined)
-        index = 0;
-
-    return this.xml.getElementsByTagName(tag)[index].childNodes[0].nodeValue;
-}
-
-ReaderXMLFile.prototype.getCount = function(tag){
-    return this.xml.getElementsByTagName(tag).length;
-}
-
-
-
 /**
 * Essa classe é responsávl pela leitura de arquivos csv
 * @class
@@ -3811,14 +3778,59 @@ function ReaderXMLFile(path) {
 
 }
 
-
+/**
+ * obtem um nó do XML através da tag e do index, em caso de várias tags com o mesmo nome
+ * @return {XML DOM} node - um nó do arquivo
+ */
 ReaderXMLFile.prototype.getNode = function(tag, index){
     if(index == undefined)
         index = 0;
 
-    return this.xml.getElementsByTagName(tag)[index].childNodes[0].nodeValue;
+   // return this.xml.getElementsByTagName(tag)[0].childNodes[index];
+    return this.xml.getElementsByTagName(tag)[index];
 }
 
+/**
+ * obtem o valor de um nó do XML  
+ * @return {} value - valor no nó
+ */
+ReaderXMLFile.prototype.getValue = function(node){
+ 
+    return node.innerHTML;
+}
+
+
+/**
+ * obtem um filho nó do XML através do index
+ * @return {XML DOM} node - um nó do arquivo
+ */
+ReaderXMLFile.prototype.getChild = function(node, index){
+    if(index == undefined)
+        index = 0;
+
+    return node.childNodes[index];
+}
+
+
+/**
+ * Obtem a quantidade de filhos de um nó do XML através da tag e o index
+ * @return {int} size - tamanho do nó
+ */
+ReaderXMLFile.prototype.getSize = function(tag, index){
+    if(index == undefined)
+        index = 0;
+
+    return this.xml.getElementsByTagName(tag)[index].children.length;
+}
+
+
+
+
+/**
+ * obtem a quantidade de tags com esta tag no documento
+ * @return {int} size - quantidade de tags
+ */
+ 
 ReaderXMLFile.prototype.getCount = function(tag){
     return this.xml.getElementsByTagName(tag).length;
 }
