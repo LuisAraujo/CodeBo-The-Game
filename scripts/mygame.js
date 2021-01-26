@@ -197,7 +197,7 @@ se.gameReady = function () {
   var lv1 = new Scene();
 
   map = new ReaderXMLFile('map_level_1');
-  console.log(map);
+  console.log(map.getCount());
 
   //mapa, pode ser obtido do arquivo
   var arrmap = [
@@ -276,7 +276,7 @@ function setLevel(arrmap) {
 
   bt1 = new Button(
     'button_forward',
-    200,
+    50,
     500,
     function () {
       actions.push('forward');
@@ -287,7 +287,7 @@ function setLevel(arrmap) {
 
   bt2 = new Button(
     'button_backward',
-    250,
+    100,
     500,
     function () {
       actions.push('backward');
@@ -297,7 +297,7 @@ function setLevel(arrmap) {
   );
   bt3 = new Button(
     'button_left',
-    300,
+    150,
     500,
     function () {
       actions.push('left');
@@ -307,7 +307,7 @@ function setLevel(arrmap) {
   );
   bt4 = new Button(
     'button_right',
-    350,
+    200,
     500,
     function () {
       actions.push('right');
@@ -316,9 +316,9 @@ function setLevel(arrmap) {
     40
   );
 
-  bt4 = new Button(
+  bt5 = new Button(
     'button_play',
-    500,
+    450,
     40,
     function () {
       codebo.setCommands(actions, arrmap);
@@ -330,5 +330,36 @@ function setLevel(arrmap) {
     },
     50,
     50
+  );
+
+  bt6 = new Button('button_stop', 510, 40, function () {}, 50, 50);
+  bt7 = new Button('button_reload', 570, 40, function () {}, 50, 50);
+  bt8 = new Button('button_help', 630, 40, function () {}, 50, 50);
+
+  bt9 = new Button('button_stack_new', 300, 500, function () {}, 40, 40);
+  bt10 = new Button(
+    'button_stack_block_push',
+    350,
+    500,
+    function () {},
+    40,
+    40
+  );
+  bt11 = new Button('button_stack_block_pop', 400, 500, function () {}, 40, 40);
+  bt12 = new Button(
+    'button_stack_character_push',
+    450,
+    500,
+    function () {},
+    40,
+    40
+  );
+  bt13 = new Button(
+    'button_stack_character_pop',
+    500,
+    500,
+    function () {},
+    40,
+    40
   );
 }
