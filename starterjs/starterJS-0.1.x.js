@@ -2091,7 +2091,7 @@ ManagerLoader.prototype.print = function(porcent){
         porcentload = 0.99;
 
     ctx.fillStyle="#008080ff";
-    ctx.fillRect(0,0,canvas.width, canvas.height);
+    ctx.fillRect(0,0, canvas.width, canvas.height);
 
     ctx.beginPath();
     ctx.lineWidth="2";
@@ -2101,6 +2101,9 @@ ManagerLoader.prototype.print = function(porcent){
     x = canvas.width/2 - 160;
     y = canvas.height/2 + 200
 
+	x = canvas.width/2 - 160;
+    y = canvas.height/2 + 200
+	
     ctx.moveTo(x,y);
     ctx.lineTo(x+300, y);
     ctx.quadraticCurveTo(x+310,y+15, x+300,y+30 );

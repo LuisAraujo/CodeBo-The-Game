@@ -4,8 +4,8 @@ body{
 
 canvas{
     background-color: #fff;
-    margin-left: calc(50% - 350px);
-    margin-top: 100px;
+    margin-left: calc(50% - 600px);
+    margin-top: 20px;
 }
 
 #nameplayer{

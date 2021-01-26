@@ -235,7 +235,7 @@ function printCommands() {
 
   posx = 0;
   posy = 0;
-  marginx = 500;
+  marginx = 900;
   marginy = 100;
   j = 0;
 
@@ -244,8 +244,8 @@ function printCommands() {
     j++;
 
     //grade de 4 comandos
-    if (i % 4 == 0) j = 0;
-    posy = parseInt(i / 4) * 35;
+    if (i % 6 == 0) j = 0;
+    posy = parseInt(i / 6) * 35;
     posx = j * 35;
 
     bt = new MiniButton(
@@ -273,53 +273,111 @@ function setLevel(arrmap) {
   codebo = new Codebo(180, 180, 0, 2, 'play', 99);
 
   actions = [];
-
+  
+  
+  //ver uma forma de deixar isso modular
+  var size = 60;	
+  var marginx = 0;
+  var posx = 100;
+  var marginbt = 10;
+  
+  
+  var cont1 = new Sprite("container_4_fields", 70,480);
+  
+  var cont2 = new Sprite("container_5_fields", 890,85);
+  
   bt1 = new Button(
     'button_forward',
-    50,
+    posx,
     500,
     function () {
       actions.push('forward');
     },
-    40,
-    40
+    size,
+    size
   );
 
+  posx += size+marginbt;
+   
   bt2 = new Button(
     'button_backward',
-    100,
+    posx,
     500,
     function () {
       actions.push('backward');
     },
-    40,
-    40
+    size,
+    size
   );
+  
+  posx += size+marginbt;
   bt3 = new Button(
     'button_left',
-    150,
+    posx,
     500,
     function () {
       actions.push('left');
     },
-    40,
-    40
+    size,
+    size
   );
+  posx += size+marginbt;
   bt4 = new Button(
     'button_right',
-    200,
+    posx,
     500,
     function () {
       actions.push('right');
     },
-    40,
-    40
+    size,
+    size
   );
 
+
+  posx += size+marginbt;
+  bt9 = new Button('button_stack_new', posx, 500, function () {}, 60, 60);
+  
+  posx += size+marginbt;
+  bt10 = new Button(
+    'button_stack_block_push',
+    posx,
+    500,
+    function () {},
+    size,
+    size
+  );
+   
+   posx += size+marginbt;
+  bt11 = new Button('button_stack_block_pop', posx, 500, function () {}, size, size);
+  
+  posx += size+marginbt;
+  bt12 = new Button(
+    'button_stack_character_push',
+    posx,
+    500,
+    function () {},
+    size,
+    size
+  );
+  
+  posx += size+marginbt;
+  
+  bt13 = new Button(
+    'button_stack_character_pop',
+    posx,
+    500,
+    function () {},
+    size,
+    size
+  );
+  
+  
+  
+  
   bt5 = new Button(
     'button_play',
-    450,
-    40,
+    900,
+    10,
     function () {
       codebo.setCommands(actions, arrmap);
       codebo.stopCommands();
@@ -328,38 +386,19 @@ function setLevel(arrmap) {
         codebo.runCommands();
       }, 100);
     },
-    50,
-    50
+    70,
+    70
   );
 
-  bt6 = new Button('button_stop', 510, 40, function () {}, 50, 50);
-  bt7 = new Button('button_reload', 570, 40, function () {}, 50, 50);
-  bt8 = new Button('button_help', 630, 40, function () {}, 50, 50);
+ 
+  bt6 = new Button('button_stop', 980, 10, function () {}, 60, 60);
+  
+ 
+  bt7 = new Button('button_reload', 1050, 10, function () {}, 60, 60);
+  
 
-  bt9 = new Button('button_stack_new', 300, 500, function () {}, 40, 40);
-  bt10 = new Button(
-    'button_stack_block_push',
-    350,
-    500,
-    function () {},
-    40,
-    40
-  );
-  bt11 = new Button('button_stack_block_pop', 400, 500, function () {}, 40, 40);
-  bt12 = new Button(
-    'button_stack_character_push',
-    450,
-    500,
-    function () {},
-    40,
-    40
-  );
-  bt13 = new Button(
-    'button_stack_character_pop',
-    500,
-    500,
-    function () {},
-    40,
-    40
-  );
+  bt8 = new Button('button_help', 10, 10, function () {}, 70, 70);
+
+
+
 }
