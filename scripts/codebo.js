@@ -75,10 +75,8 @@ Codebo.prototype.runCommands = function () {
 	
 	if(action == "forward"){
 		
-		//mudar animação
-		
-		//if(this.actualx%2 == 0){
-			
+		if(this.actualdirection == this.directions.FRONT){
+		 
 			if(this.map[this.actualx+1][this.actualy] == this.getLevel() ){
 				
 				this.x += 35;
@@ -87,6 +85,15 @@ Codebo.prototype.runCommands = function () {
 				this.actualx+=1;
 				this.actualy;
 			}
+			
+		}else if(this.actualdirection == this.directions.BACK){
+			
+		}else if(this.actualdirection == this.directions.RIGHT){
+			
+		}else if(this.actualdirection == this.directions.LEFT){
+			
+		}
+			
 			
 		/*}else{
 			
@@ -106,7 +113,7 @@ Codebo.prototype.runCommands = function () {
 		//todo 
 		//mudar animação
 		
-		//if(this.actualx%2 != 0){
+		if(this.actualdirection == this.directions.BACK){
 			
 			if(this.map[this.actualx-1][this.actualy] == this.getLevel() ){
 				
@@ -116,7 +123,14 @@ Codebo.prototype.runCommands = function () {
 				this.actualx-=1;
 				this.actualy;
 			}
+		}else if(this.actualdirection == this.directions.BACK){
 			
+		}else if(this.actualdirection == this.directions.RIGHT){
+			
+		}else if(this.actualdirection == this.directions.LEFT){
+			
+		}
+
 		/*}else{
 			
 			if(this.map[this.actualx-1][this.actualy-1]  == this.getLevel()){
