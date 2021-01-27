@@ -27,7 +27,7 @@ Map.prototype.create = function () {
 	
 				//ok
 				}else if(this.map[i][j] == 1){
-					console.log( "x = " + j, "y = " + i);
+					//console.log( "x = " + j, "y = " + i);
 					
 					var x = j; 
 					var y = i;

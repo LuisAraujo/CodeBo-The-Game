@@ -20,15 +20,15 @@ se.setResources = function () {
   );
 
   //sprites CodeBo pra direita
-  this.loader.addResource('codebo_right_sp1', 'codebo/right/sp1.png', 'image');
+  this.loader.addResource('codebo_left_sp1', 'codebo/left/sp1.png', 'image');
 
   //sprites CodeBo pra esquerda
-  this.loader.addResource('codebo_left_sp1', 'codebo/left/sp1.png', 'image');
-  this.loader.addResource('codebo_left_sp2', 'codebo/left/sp2.png', 'image');
-  this.loader.addResource('codebo_left_sp3', 'codebo/left/sp3.png', 'image');
-  this.loader.addResource('codebo_left_sp4', 'codebo/left/sp4.png', 'image');
-  this.loader.addResource('codebo_left_sp5', 'codebo/left/sp5.png', 'image');
-  this.loader.addResource('codebo_left_sp6', 'codebo/left/sp6.png', 'image');
+  this.loader.addResource('codebo_right_sp1', 'codebo/right/sp1.png', 'image');
+  this.loader.addResource('codebo_right_sp2', 'codebo/right/sp2.png', 'image');
+  this.loader.addResource('codebo_right_sp3', 'codebo/right/sp3.png', 'image');
+  this.loader.addResource('codebo_right_sp4', 'codebo/right/sp4.png', 'image');
+  this.loader.addResource('codebo_right_sp5', 'codebo/right/sp5.png', 'image');
+  this.loader.addResource('codebo_right_sp6', 'codebo/right/sp6.png', 'image');
 
   //sprites blocks
   this.loader.addResource('block_0', 'blocks/block_0.png', 'image');
@@ -197,7 +197,7 @@ se.gameReady = function () {
   var lv1 = new Scene();
 
   xmlmap = new ReaderXMLFile('map_level_1');
-  var arrmap = createArrayMap(xmlmap);
+  arrmap = createArrayMap(xmlmap);
   
   /*mapa, pode ser obtido do arquivo
   var arrmap = [
@@ -282,9 +282,8 @@ function createGUiButton(){
     900,
     10,
     function () {
-      codebo.setCommands(actions, arrmap);
-      codebo.stopCommands();
-      codebo.startPosition();
+      codebo.setCommands(window.actions, window.arrmap);
+      codebo.reset();
       setTimeout(function () {
         codebo.runCommands();
       }, 100);

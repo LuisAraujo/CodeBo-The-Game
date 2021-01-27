@@ -279,6 +279,41 @@ GameObject.prototype.setAnimation = function(animations){
 		
 }
 
+
+
+/**
+* Seleciona a animação baseado no index passado
+* @param {int} - index
+*/
+GameObject.prototype.setAnimationByIndex = function(index){
+	this.currentAnimation = index;
+}
+
+
+/**
+* Vai para a próxima animação
+*/
+GameObject.prototype.nextAnimation = function(){
+
+    if(this.currentAnimation < this.animation.length)
+        this.currentAnimation++;
+    else
+        this.currentAnimation = 0;
+
+}
+
+
+/**
+* Vai para animação anterior
+*/
+GameObject.prototype.priorAnimation = function(){
+    if(this.currentAnimation > 0)
+        this.currentAnimation--;
+    else
+        this.currentAnimation =  this.animation.length-1;
+}
+
+
 /**
  * Atualiza a tag do objeto
  * @param {tag} string  - tag de um objeto

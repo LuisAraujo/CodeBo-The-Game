@@ -4,7 +4,14 @@ function Codebo(x, y, actualx, actualy, classename, z) {
 	w = 50;
 	
 	//animation of codebo
-	sprite = [new Animation( ["codebo_sp1","codebo_sp1","codebo_sp1","codebo_sp2","codebo_sp3","codebo_sp4","codebo_sp5","codebo_sp6"], 0.1)];
+	sprite = [
+		new Animation( ["codebo_sp1","codebo_sp1","codebo_sp1","codebo_sp2","codebo_sp3","codebo_sp4","codebo_sp5","codebo_sp6"], 0.1), 
+		
+		new Animation(["codebo_back_sp1"], 0.1), 
+		new Animation(["codebo_left_sp1"], 0.1), 
+		
+		new Animation(["codebo_right_sp1","codebo_right_sp2","codebo_right_sp3","codebo_right_sp4","codebo_right_sp5","codebo_right_sp6"], 0.1)  
+	];
 	
 	this.actions;
 	this.actualaction = -1;
@@ -22,6 +29,16 @@ function Codebo(x, y, actualx, actualy, classename, z) {
 	this.startactualy = actualy;
 	
 	
+	this.directions = {
+		FRONT : 0,
+		BACK : 1,
+		LEFT : 2,
+		RIGHT : 3
+	}
+	
+	this.actualdirection = this.directions.FRONT; 
+	
+	
 	GameObject.call(this, sprite, x, y, classename, h,w, 0, z);
    
 }
@@ -29,8 +46,15 @@ function Codebo(x, y, actualx, actualy, classename, z) {
 //fazendo herança
 Codebo.prototype = Object.create(GameObject.prototype);
 
-
 Codebo.prototype.update = function () {};
+Codebo.prototype.reset = function () {
+	
+	this.stopCommands();
+    this.startPosition();
+	this.setAnimationByIndex(0);
+	this.actualdirection = this.directions.FRONT;
+	  
+};
 
 Codebo.prototype.setCommands = function (actions, map) {
 	
@@ -47,14 +71,13 @@ Codebo.prototype.runCommands = function () {
 	var action = actions[this.actualaction];
 	
 	console.log(this.actualaction);
+	console.log(action);
 	
 	if(action == "forward"){
 		
-		//diagonal (o if é necessario por conta da codificacao do map, nas linhas pares os blocos seguem no mesmo padrao da px linha. No caso de impares isso n ocorre);
-		
-		
 		//mudar animação
-		if(this.actualx%2 == 0){
+		
+		//if(this.actualx%2 == 0){
 			
 			if(this.map[this.actualx+1][this.actualy] == this.getLevel() ){
 				
@@ -65,7 +88,7 @@ Codebo.prototype.runCommands = function () {
 				this.actualy;
 			}
 			
-		}else{
+		/*}else{
 			
 			if(this.map[this.actualx+1][this.actualy+1]  == this.getLevel()){
 				
@@ -75,7 +98,7 @@ Codebo.prototype.runCommands = function () {
 				this.actualx+=1;
 				this.actualy+=1;
 			}
-		}
+		}*/
 		//pensar no que fazer se ele cair na agua (0)
 		
 	}else if(action == "backward"){
@@ -83,7 +106,7 @@ Codebo.prototype.runCommands = function () {
 		//todo 
 		//mudar animação
 		
-		if(this.actualx%2 != 0){
+		//if(this.actualx%2 != 0){
 			
 			if(this.map[this.actualx-1][this.actualy] == this.getLevel() ){
 				
@@ -94,7 +117,7 @@ Codebo.prototype.runCommands = function () {
 				this.actualy;
 			}
 			
-		}else{
+		/*}else{
 			
 			if(this.map[this.actualx-1][this.actualy-1]  == this.getLevel()){
 				
@@ -104,18 +127,48 @@ Codebo.prototype.runCommands = function () {
 				this.actualx-=1;
 				this.actualy-=1;
 			}
-		}
+		} */
 		
 		
 	}else if(action == "left"){
 
-		//todo 
-		//é preciso fazer o mesmo que o forward
+		if(this.actualdirection == this.directions.FRONT){
+			
+			this.setLeftDirection();
+			
+		}else if(this.actualdirection == this.directions.LEFT){
+			
+			this.setBackDirection();
+			
+		}else if(this.actualdirection == this.directions.RIGHT){
+			
+			this.setFrontDirection();
+			
+		}else if(this.actualdirection == this.directions.BACK){
+			
+			this.setRightDirection();
+		}		
 		
 
 	}else if(action == "right"){
-		//todo 
-		//é preciso fazer o mesmo que o forward
+		
+		if(this.actualdirection == this.directions.FRONT){
+			
+			this.setRightDirection();
+			
+		}else if(this.actualdirection == this.directions.RIGHT){
+			
+			this.setBackDirection();
+			
+		}else if(this.actualdirection == this.directions.BACK){
+			
+			this.setLeftDirection();
+			
+		}else if(this.actualdirection == this.directions.LEFT){
+			
+			this.setFrontDirection();
+		}	
+		
 	}
 	
 
@@ -174,4 +227,27 @@ Codebo.prototype.startPosition = function () {
 	this.y = this.starty;
 	
 };
+
+
+Codebo.prototype.setLeftDirection = function(){
+	this.actualdirection = this.directions.LEFT;
+	this.setAnimationByIndex(2);
+}
+
+Codebo.prototype.setRightDirection = function(){
+	this.actualdirection = this.directions.RIGHT; 
+	this.setAnimationByIndex(3);
+}
+
+Codebo.prototype.setFrontDirection = function(){
+	
+	this.actualdirection = this.directions.FRONT; 
+	this.setAnimationByIndex(0);
+}
+
+Codebo.prototype.setBackDirection = function(){
+	
+	this.actualdirection = this.directions.BACK; 
+	this.setAnimationByIndex(1);
+}
 
