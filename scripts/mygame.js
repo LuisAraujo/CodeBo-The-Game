@@ -232,11 +232,12 @@ function updateLevel() {
 
 //funcao incial do jogo
 function setLevel(arrmap, commands) {
+
   //map
   map = new Map(arrmap, 200, 70);
 
   //CodeBo
-  codebo = new Codebo(180, 180, 0, 2, 'play', 99);
+  codebo = new Codebo(220, 220, 0, 0, 'play', 99);
 
   actions = [];
   
