@@ -42,11 +42,12 @@ se.setResources = function () {
   this.loader.addResource('water_2', 'water/water_2.png', 'image');
 
   //sprites buttons: movements
-  this.loader.addResource(
+  /*this.loader.addResource(
     'button_backward',
     'buttons/button_backward.png',
     'image'
-  );
+  );*/
+  
   this.loader.addResource(
     'button_forward',
     'buttons/button_forward.png',
@@ -121,11 +122,12 @@ se.setResources = function () {
     'buttons/button_forward_mini.png',
     'image'
   );
-  this.loader.addResource(
+  /*this.loader.addResource(
     'mini_backward',
     'buttons/button_backward_mini.png',
     'image'
-  );
+  );*/
+  
   this.loader.addResource('mini_left', 'buttons/button_left_mini.png', 'image');
   this.loader.addResource(
     'mini_right',
@@ -257,7 +259,7 @@ function setLevel(arrmap, commands) {
   marginbt = 10;
 
   //FIXO DE TODOS OS LEVELS
-  ['forward', 'backward', 'right', 'left'].forEach(createCommandsButton);
+  ['forward', 'left', 'right'].forEach(createCommandsButton);
 
   //VARIAVEL POR LEVELS
   commands.forEach(createCommandsButton);
