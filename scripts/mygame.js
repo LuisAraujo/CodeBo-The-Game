@@ -210,21 +210,6 @@ se.gameReady = function () {
   xmlmap = new ReaderXMLFile('map_level_1');
   arrmap = createArrayMap(xmlmap);
 
-  /*mapa, pode ser obtido do arquivo
-  var arrmap = [
-    [0, 0, 1, 0, 0, 0],
-    [0, 0, 1, 0, 0, 0],
-    [0, 0, 0, 1, 0, 0],
-    [0, 0, 0, 1, 0, 0],
-    [0, 0, 0, 0, 1, 0],
-    [0, 0, 0, 0, 1, 0],
-    [0, 0, 0, 0, 0, 3],
-    [0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0],
-  ];
-*/
-
   //esse nomes podem vim do xml
   var commands = [
     'stack_new',
@@ -252,7 +237,7 @@ function setLevel(arrmap, commands) {
   map = new Map(arrmap, 200, 70);
 
   //CodeBo
-  codebo = new Codebo(220, 220, 0, 0, 'play', 99);
+  codebo = new Codebo(210, 215, 0, 0, 'play', 99);
 
   new Rect(0, 500, 100, 660, 'rgba(255, 255, 255, 0.5)');
   new Rect(0, 0, 110, 1200, '#30415d');
@@ -303,9 +288,7 @@ function createGUiButton() {
     function () {
       codebo.setCommands(window.actions, window.arrmap);
       codebo.reset();
-      setTimeout(function () {
-        codebo.runCommands();
-      }, 100);
+      codebo.start();
     },
     70,
     70

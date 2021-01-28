@@ -5,12 +5,12 @@ function Codebo(x, y, actualx, actualy, classename, z) {
 	
 	//animation of codebo
 	sprite = [
-		new Animation( ["codebo_sp1","codebo_sp1","codebo_sp1","codebo_sp2","codebo_sp3","codebo_sp4","codebo_sp5","codebo_sp6"], 0.1), 
+		new Animation( ["codebo_sp1","codebo_sp1","codebo_sp1","codebo_sp2","codebo_sp3","codebo_sp4","codebo_sp5","codebo_sp6"], 5), 
 		
-		new Animation(["codebo_back_sp1"], 0.1), 
-		new Animation(["codebo_left_sp1"], 0.1), 
+		new Animation(["codebo_back_sp1"], 5), 
+		new Animation(["codebo_left_sp1"], 5), 
 		
-		new Animation(["codebo_right_sp1","codebo_right_sp2","codebo_right_sp3","codebo_right_sp4","codebo_right_sp5","codebo_right_sp6"], 0.1)  
+		new Animation(["codebo_right_sp1","codebo_right_sp2","codebo_right_sp3","codebo_right_sp4","codebo_right_sp5","codebo_right_sp6"], 5)  
 	];
 	
 	this.actions;
@@ -28,6 +28,7 @@ function Codebo(x, y, actualx, actualy, classename, z) {
 	this.startactualx = actualx;
 	this.startactualy = actualy;
 	
+	this.currentexec = 0;
 	
 	this.directions = {
 		FRONT : 0,
@@ -37,7 +38,6 @@ function Codebo(x, y, actualx, actualy, classename, z) {
 	}
 	
 	this.actualdirection = this.directions.FRONT; 
-	
 	
 	GameObject.call(this, sprite, x, y, classename, h,w, 0, z);
    
@@ -56,6 +56,14 @@ Codebo.prototype.reset = function () {
 	  
 };
 
+Codebo.prototype.start = function () {
+	 _this = this;
+	 this.currentexec++;
+	 
+	 setTimeout(function () {
+        _this.runCommands(_this.currentexec);
+      }, 100); 
+};
 Codebo.prototype.setCommands = function (actions, map) {
 	
 	this.actions = actions;
@@ -64,14 +72,20 @@ Codebo.prototype.setCommands = function (actions, map) {
 };
 
 
-Codebo.prototype.runCommands = function () {
+Codebo.prototype.runCommands = function (exec) {
+	//console.log(exec, this.currentexec);
+	
+	if(exec != this.currentexec){
+		//console.log("ok");
+		return;
+	}
 	
 	//this.stopCommands();
 	this.actualaction++ 
 	var action = actions[this.actualaction];
 	
-	console.log(this.actualaction);
-	console.log(action);
+	//console.log(this.actualaction);
+	//console.log(action);
 	
 	if(action == "forward"){
 		
@@ -88,62 +102,42 @@ Codebo.prototype.runCommands = function () {
 			
 		}else if(this.actualdirection == this.directions.BACK){
 			
-		}else if(this.actualdirection == this.directions.RIGHT){
-			
-		}else if(this.actualdirection == this.directions.LEFT){
-			
-		}
-			
-			
-		/*}else{
-			
-			if(this.map[this.actualx+1][this.actualy+1]  == this.getLevel()){
+			if(this.map[this.actualx+1][this.actualy] == this.getLevel() ){
 				
-				this.x += 35;
-				this.y += 17.5;
+				this.x -= 35;
+				this.y -= 17.5;
 				
 				this.actualx+=1;
-				this.actualy+=1;
-			}
-		}*/
-		//pensar no que fazer se ele cair na agua (0)
-		
-	}else if(action == "backward"){
-		
-		//todo 
-		//mudar animação
-		
-		if(this.actualdirection == this.directions.BACK){
-			
-			if(this.map[this.actualx-1][this.actualy] == this.getLevel() ){
-				
-				this.x -= 35;
-				this.y -= 17.5;
-				
-				this.actualx-=1;
 				this.actualy;
 			}
-		}else if(this.actualdirection == this.directions.BACK){
+			
 			
 		}else if(this.actualdirection == this.directions.RIGHT){
 			
-		}else if(this.actualdirection == this.directions.LEFT){
-			
-		}
-
-		/*}else{
-			
-			if(this.map[this.actualx-1][this.actualy-1]  == this.getLevel()){
+			if(this.map[this.actualx][this.actualy-1] == this.getLevel() ){
 				
-				this.x -= 35;
-				this.y -= 17.5;
+				this.x -= 36;
+				this.y += 18;
 				
-				this.actualx-=1;
+				this.actualx;
 				this.actualy-=1;
 			}
-		} */
-		
-		
+			
+			
+		}else if(this.actualdirection == this.directions.LEFT){
+			
+			if(this.map[this.actualx][this.actualy+1] == this.getLevel() ){
+				
+				this.x += 36;
+				this.y -= 18;
+				
+				this.actualx;
+				this.actualy+=1;
+			}
+			
+		}
+			
+
 	}else if(action == "left"){
 
 		if(this.actualdirection == this.directions.FRONT){
@@ -189,7 +183,7 @@ Codebo.prototype.runCommands = function () {
 	_this = this;
 	
 	if(this.actualaction < actions.length){
-		setTimeout( function(){_this.runCommands();}, 100);
+		setTimeout( function(){_this.runCommands(exec);}, 100);
 	}
 	
 	

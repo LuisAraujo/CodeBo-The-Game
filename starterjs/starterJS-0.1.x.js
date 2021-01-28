@@ -18,33 +18,14 @@ function Animation(sprites, timesprite) {
                 throw new Error("Ocorreu um erro ao carregar a imagem" + sprite_temp + ". Verifique o nome adicionado aos resources");
             }else{
                 this.sprites.push(sprite_temp);
-
             }
         }
 
     }
-
-    /*else{
-
-        console.log(typeof sprites)
-        var sprite_temp = se.loader.getAssets(sprites);
-        if((!this.sprite instanceof Image) || (this.sprite == null)){
-            throw new Error("Ocorreu um erro ao carregar a imagem" + sprite + ". Verifique o nome adicionado aos resources");
-        }else{
-            this.currentsprite = 0;
-            this.sprites.push(sprite_temp);
-
-            if(this.h == 0)
-                this.h = this.sprite.height;
-            if(this.w == 0)
-                this.w = this.sprite.width;
-        }
-    }*/
-
-
-
+	
     this.currentsprite = 0;
-    this.timesprite = timesprite?timesprite:1;
+    this.timesprite = timesprite?timesprite:5;
+	this.currenttimestripe = 0;
     this.stop = false;
     this.start();
 	this.animation;
@@ -59,20 +40,40 @@ function Animation(sprites, timesprite) {
 Animation.prototype.start = function () {
 	
     var _this = this;
-	
-    window.setTimeout(
+	//esse time out estava provoando um uso alto da cpu
+   /* window.setTimeout(
         function(){
             _this.update(_this);
         }
         , this.timesprite*1000
-    );
+    );*/
 }
 
 /**
 * Update da animação
 * @method
 */
+Animation.prototype.update = function () {
+	
+	this.currenttimestripe++;
+	
+	if(this.currenttimestripe > this.timesprite){
+		this.currenttimestripe = 0;
+	}else{
+		return;
+	}
+	
+    if(this.stop)
+        return;
 
+    if(this.getCurrentIndexSprite() < this.sprites.length-1)
+        this.nextSprite();
+    else
+        this.setCurrentIndexSprite(0);
+
+   
+}
+/*
 Animation.prototype.update = function (_this) {
 
     if(this.stop)
@@ -90,6 +91,8 @@ Animation.prototype.update = function (_this) {
         , _this.timesprite*1000
     );
 }
+*/
+
 
 /**
  * Avança para o próximo sprite
@@ -362,7 +365,10 @@ GameObject.prototype.getId = function () {
 GameObject.prototype.print = function() {
 
     if(this.animation != null) {
+		
         ctx.drawImage(this.animation[this.currentAnimation].getCurrentSprite(), this.x, this.y, this.w, this.h);
+		
+		this.animation[this.currentAnimation].update();
     }
 }
 
