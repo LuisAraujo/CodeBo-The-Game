@@ -2,6 +2,7 @@ function Codebo(x, y, actualx, actualy, classename, z) {
 
 	h = 50;
 	w = 50;
+	this.level = 1;
 	
 	//animation of codebo
 	sprite = [

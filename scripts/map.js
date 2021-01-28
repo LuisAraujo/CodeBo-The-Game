@@ -1,20 +1,19 @@
 function Map(map, margintop, marginleft) {
 
 	this.map = map;
+	this.block = [];
 	this.margintop = margintop;
 	this.marginleft = marginleft;
 	this.create();
 	
 }
-Map.prototype.adjustmentLevels = function(level, z){
+Map.prototype.adjustmentLevels = function(level, x, y){
 	
 	for(var i = 0; i < this.block.length  ; i++){
-		if(this.block[i].level > z){
-			
-			this.map[i][j].z = 100;
+		if(this.block[i].level > level){
+			this.block[i].z = 100;
 		}else{
-			
-			this.map[i][j].z = 1;
+			this.block[i].z  = 1;
 		}
 	
 	}
@@ -40,7 +39,9 @@ Map.prototype.createBlocks = function(i, j){
 			blockname = "block_3";
 		
 		console.log(blockname);
-		new Block( blockname , posx  , posy - 35*l ,"imagem", 1 );
+		var bt = new Block( blockname , posx  , posy - 35*l ,"imagem", 1, this.map[i][j]);
+		
+		this.block.push(bt);
 	}
 	
 }
