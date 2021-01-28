@@ -98,6 +98,11 @@ se.setResources = function () {
     'buttons/button_stack_character_pop.png',
     'image'
   );
+  this.loader.addResource(
+    'button_stack_pop',
+    'buttons/button_stack_pop.png',
+    'image'
+  );
 
   //sprites buttons: control
   this.loader.addResource('button_play', 'buttons/button_play.png', 'image');
@@ -108,6 +113,7 @@ se.setResources = function () {
     'buttons/button_reload.png',
     'image'
   );
+  this.loader.addResource('button_menu', 'buttons/button_menu.png', 'image');
 
   //sprites mini buttons: movements
   this.loader.addResource(
@@ -170,6 +176,11 @@ se.setResources = function () {
     'buttons/button_stack_character_pop_mini.png',
     'image'
   );
+  this.loader.addResource(
+    'button_stack_pop_mini',
+    'buttons/button_stack_pop_mini.png',
+    'image'
+  );
 
   //remover - teste
   this.loader.addResource('block_blank', 'blocks/block_blank.png', 'image');
@@ -198,7 +209,7 @@ se.gameReady = function () {
 
   xmlmap = new ReaderXMLFile('map_level_1');
   arrmap = createArrayMap(xmlmap);
-  
+
   /*mapa, pode ser obtido do arquivo
   var arrmap = [
     [0, 0, 1, 0, 0, 0],
@@ -214,9 +225,15 @@ se.gameReady = function () {
   ];
 */
 
-//esse nomes podem vim do xml
- var commands = ["stack_new", "stack_block_push", "stack_block_pop", "stack_character_push", "stack_character_pop"];
- 
+  //esse nomes podem vim do xml
+  var commands = [
+    'stack_new',
+    'stack_block_push',
+    'stack_block_pop',
+    'stack_character_push',
+    'stack_character_pop',
+  ];
+
   //configurando as funcoes de inicio e update
   lv1.setFunctionStart(setLevel.bind(null, arrmap, commands));
   lv1.setFunctionUpdate(updateLevel);
@@ -229,58 +246,60 @@ function updateLevel() {
   printCommands();
 }
 
-
 //funcao incial do jogo
 function setLevel(arrmap, commands) {
-
   //map
   map = new Map(arrmap, 200, 70);
 
   //CodeBo
   codebo = new Codebo(220, 220, 0, 0, 'play', 99);
 
+  new Rect(0, 500, 100, 660, 'rgba(255, 255, 255, 0.5)');
+  new Rect(0, 0, 110, 1200, '#30415d');
+  new Rect(880, 150, 580, 1180, 'rgba(255, 255, 255, 0.5)');
+
+  new Rect(0, 470, 40, 200, '#30415d');
+  new Text('Comandos', 20, 495, '#fff');
+
+  new Rect(900, 120, 40, 200, '#30415d');
+  new Text('Principal', 920, 145, '#fff');
+
   actions = [];
-  
-  size = 60;	
+
+  size = 60;
   marginx = 0;
-  posx = 100;
+  posx = 20;
   marginbt = 10;
 
   //FIXO DE TODOS OS LEVELS
-  ["forward","backward","right","left"].forEach( createCommandsButton ); 
- 
+  ['forward', 'backward', 'right', 'left'].forEach(createCommandsButton);
+
   //VARIAVEL POR LEVELS
-  commands.forEach( createCommandsButton ); 
-  
+  commands.forEach(createCommandsButton);
+
   createGUiButton();
-
 }
 
+function createCommandsButton(item) {
+  new Button(
+    'button_' + item,
+    window.posx,
+    520,
+    function () {
+      actions.push(item);
+    },
+    window.size,
+    window.size
+  );
 
-function createCommandsButton(item){
-	
-		new Button(
-		'button_'+item,
-		window.posx,
-		500,
-		function () {
-		  actions.push(item);
-		},
-		window.size,
-		window.size
-	  );
-	  
-	 window.posx += window.size+window.marginbt;
+  window.posx += window.size + window.marginbt;
 }
 
-
-function createGUiButton(){
-
-
-	new Button(
+function createGUiButton() {
+  new Button(
     'button_play',
     900,
-    10,
+    20,
     function () {
       codebo.setCommands(window.actions, window.arrmap);
       codebo.reset();
@@ -293,13 +312,11 @@ function createGUiButton(){
   );
 
   //FIXOS DE TODOS OS LEVEL
-  new Button('button_stop', 980, 10, function () {}, 60, 60);
-  new Button('button_reload', 1050, 10, function () {}, 60, 60)
-  new Button('button_help', 10, 10, function () {}, 70, 70);
-
+  new Button('button_stop', 980, 20, function () {}, 60, 60);
+  new Button('button_reload', 1050, 20, function () {}, 60, 60);
+  new Button('button_help', 20, 20, function () {}, 70, 70);
+  new Button('button_menu', 110, 20, function () {}, 70, 70);
 }
-
-
 
 /*Exibe os comandos abaixo do play*/
 function printCommands() {
@@ -312,7 +329,7 @@ function printCommands() {
   posx = 0;
   posy = 0;
   marginx = 900;
-  marginy = 100;
+  marginy = 180;
   j = 0;
 
   //percorrendo os comandos
@@ -340,22 +357,19 @@ function printCommands() {
   }
 }
 
+function createArrayMap(map) {
+  arrayMap = [];
 
-function createArrayMap(map){
-	 arrayMap = [];
-	 
-	 for(var i=0; i < map.getSize("map"); i++){
-		 sizeline = map.getSize("line"+(i+1));
-		 arrayMap[i] = [];
-		 
-		 for(var j=0; j < sizeline; j++){
-				var a = map.getNode("column"+(j+1), i);
-				var b =  map.getValue(a);
-				arrayMap[i].push( b );
+  for (var i = 0; i < map.getSize('map'); i++) {
+    sizeline = map.getSize('line' + (i + 1));
+    arrayMap[i] = [];
 
-		 }
-	 }
+    for (var j = 0; j < sizeline; j++) {
+      var a = map.getNode('column' + (j + 1), i);
+      var b = map.getValue(a);
+      arrayMap[i].push(b);
+    }
+  }
 
-	return arrayMap;    
-	
+  return arrayMap;
 }
