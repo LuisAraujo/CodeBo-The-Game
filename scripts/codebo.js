@@ -102,12 +102,12 @@ Codebo.prototype.runCommands = function (exec) {
 			
 		}else if(this.actualdirection == this.directions.BACK){
 			
-			if(this.map[this.actualx+1][this.actualy] == this.getLevel() ){
+			if(this.map[this.actualx-1][this.actualy] == this.getLevel() ){
 				
 				this.x -= 35;
 				this.y -= 17.5;
 				
-				this.actualx+=1;
+				this.actualx-=1;
 				this.actualy;
 			}
 			
