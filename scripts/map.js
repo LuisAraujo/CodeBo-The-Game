@@ -84,10 +84,11 @@ Map.prototype.createBlocks = function(i, j){
 
 Map.prototype.create = function () {
 	
-	/*var objectstag = se.mlevel.getCurrentScene().getObjectsByTag('block');
+	var objectstag = se.mlevel.getCurrentScene().getObjectsByTag('block');
+	this.block = [];
 	for (var i = 0; i < objectstag.length; i++) {
 		se.mlevel.removeObject(objectstag[i]);
-	}*/
+	}
 	
 	
 	var anim1 = new Animation( ["water_0","water_1","water_2"], 0.1);

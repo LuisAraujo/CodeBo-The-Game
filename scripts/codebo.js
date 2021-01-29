@@ -50,7 +50,7 @@ Codebo.prototype = Object.create(GameObject.prototype);
 Codebo.prototype.update = function () {};
 
 Codebo.prototype.reset = function () {
-	
+	this.actuallevel = 1;
 	this.stopCommands();
     this.startPosition();
 	this.setAnimationByIndex(0);
@@ -213,24 +213,62 @@ Codebo.prototype.runCommands = function (exec) {
 		if((this.actualdirection == this.directions.FRONT) && (window.map.map[this.actualx+1][this.actualy] < 0 )){
 			
 			window.map.setLevel(this.actualx+1, this.actualy, window.map.map[this.actualx+1][this.actualy]-1);
-			console.log("ok");
+	
 			
 		}else if(this.actualdirection == this.directions.RIGHT)
-			window.map.setLevel(this.actualx, this.actualy-1, -1);
+			 console.log("");
 		else if(this.actualdirection == this.directions.BACK)	
-			window.map.setLevel(this.actualx-1, this.actualy, -1);
+			 console.log("");
 		else if(this.actualdirection == this.directions.LEFT)
-			window.map.setLevel(this.actualx, this.actualy+1, -1);
+			 console.log("");
 		
 		window.map.create();
 		window.map.adjustmentLevels(this.getLevel(), this.actualx, this.actualy);
 		
 	}else if(action == "stack_character_push"){
-		
+		if((this.actualdirection == this.directions.FRONT) && (window.map.map[this.actualx+1][this.actualy] < 0 )){
+			
+			var oldlevel = this.actuallevel;
+			
+			this.actuallevel = Math.abs( window.map.map[this.actualx+1][this.actualy]) ;
+			
+			//up level
+			this.actualx +=1;
+			//move to front
+			this.x += 35;
+			this.y += 17.5;
+			//up
+			this.y -= 35 * (this.actuallevel - oldlevel);
+			
+			
+			
+			window.map.create();
+		window.map.adjustmentLevels(this.getLevel(), this.actualx, this.actualy);
+			
+		}else if(this.actualdirection == this.directions.RIGHT)
+			 console.log("");
+		else if(this.actualdirection == this.directions.BACK)	
+			 console.log("");
+		else if(this.actualdirection == this.directions.LEFT)
+			 console.log("");
 		window.map.create();
 	}else if(action == "stack_block_pop"){
-		
+		 
+		if((this.actualdirection == this.directions.FRONT) && (window.map.map[this.actualx+1][this.actualy] < 0 )){
+			
+			window.map.setLevel(this.actualx+1, this.actualy, window.map.map[this.actualx+1][this.actualy]+1);
+			
+			console.log(window.map.map[this.actualx+1][this.actualy]+1);
+			
+		}else if(this.actualdirection == this.directions.RIGHT)
+			 console.log("");
+		else if(this.actualdirection == this.directions.BACK)	
+			 console.log("");
+		else if(this.actualdirection == this.directions.LEFT)
+			 console.log("");
+	
 		window.map.create();
+		window.map.adjustmentLevels(this.getLevel(), this.actualx, this.actualy);
 	}
 	
 
