@@ -4,87 +4,36 @@
 		<column2>1</column2>
 		<column3>1</column3>
 		<column4>1</column4>
-		<column5>1</column5>
-		<column6>1</column6>
-		<column7>1</column7>
+		<column5>0</column5>
+		<column6>0</column6>
+		<column7>0</column7>
 	</line1>
 	<line2>
 		<column1>1</column1>
-		<column2>0</column2>
-		<column3>0</column3>
-		<column4>0</column4>
+		<column2>1</column2>
+		<column3>1</column3>
+		<column4>2</column4>
 		<column5>0</column5>
 		<column6>0</column6>
-		<column7>1</column7>
+		<column7>0</column7>
 	</line2>
 	<line3>
 		<column1>1</column1>
-		<column2>0</column2>
-		<column3>0</column3>
-		<column4>0</column4>
+		<column2>1</column2>
+		<column3>1</column3>
+		<column4>1</column4>
 		<column5>0</column5>
 		<column6>0</column6>
-		<column7>1</column7>
+		<column7>0</column7>
 	</line3>
 	<line4>
 		<column1>1</column1>
 		<column2>1</column2>
 		<column3>1</column3>
 		<column4>1</column4>
-		<column5>1</column5>
-		<column6>1</column6>
-		<column7>1</column7>
+		<column5>0</column5>
+		<column6>0</column6>
+		<column7>0</column7>
 	</line4>
-	<line5>
-		<column1>1</column1>
-		<column2>0</column2>
-		<column3>0</column3>
-		<column4>0</column4>
-		<column5>0</column5>
-		<column6>0</column6>
-		<column7>0</column7>
-	</line5>
-	<line6>
-		<column1>1</column1>
-		<column2>0</column2>
-		<column3>0</column3>
-		<column4>0</column4>
-		<column5>0</column5>
-		<column6>0</column6>
-		<column7>0</column7>
-	</line6>
-	<line7>
-		<column1>1</column1>
-		<column2>0</column2>
-		<column3>0</column3>
-		<column4>0</column4>
-		<column5>0</column5>
-		<column6>0</column6>
-		<column7>0</column7>
-	</line7>
-	<line8>
-		<column1>1</column1>
-		<column2>0</column2>
-		<column3>0</column3>
-		<column4>0</column4>
-		<column5>0</column5>
-		<column6>0</column6>
-		<column7>0</column7>
-	</line8>
-	<line9>
-		<column1>3</column1>
-		<column2>0</column2>
-		<column3>0</column3>
-		<column4>0</column4>
-		<column5>0</column5>
-		<column6>0</column6>
-	</line9>
-	<line10>
-		<column1>0</column1>
-		<column2>0</column2>
-		<column3>0</column3>
-		<column4>0</column4>
-		<column5>0</column5>
-		<column6>0</column6>
-	</line10>
+	
 </map>

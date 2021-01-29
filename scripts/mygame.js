@@ -239,8 +239,10 @@ function setLevel(arrmap, commands) {
   map = new Map(arrmap, 200, 70);
   
   //CodeBo
-  codebo = new Codebo(210, 215, 0, 0, 'play', 99);
-  map.adjustmentLevels(codebo.level, codebo.x, codebo.y);
+  //codebo = new Codebo(210, 215, 0, 0, 'play', 99);
+  codebo = new Codebo(315, 200, 1, 1, 'play', 99);
+  
+  map.adjustmentLevels(codebo.getLevel(), codebo.actualx, codebo.actualy);
 	
   new Rect(0, 500, 100, 660, 'rgba(255, 255, 255, 0.5)');
   new Rect(0, 0, 110, 1200, '#30415d');

@@ -2,7 +2,7 @@ function Codebo(x, y, actualx, actualy, classename, z) {
 
 	h = 50;
 	w = 50;
-	this.level = 1;
+
 	
 	//animation of codebo
 	sprite = [
@@ -48,6 +48,7 @@ function Codebo(x, y, actualx, actualy, classename, z) {
 Codebo.prototype = Object.create(GameObject.prototype);
 
 Codebo.prototype.update = function () {};
+
 Codebo.prototype.reset = function () {
 	
 	this.stopCommands();
@@ -74,7 +75,6 @@ Codebo.prototype.setCommands = function (actions, map) {
 
 
 Codebo.prototype.runCommands = function (exec) {
-	//console.log(exec, this.currentexec);
 	
 	if(exec != this.currentexec){
 		//console.log("ok");
@@ -89,7 +89,8 @@ Codebo.prototype.runCommands = function (exec) {
 	//console.log(action);
 	
 	if(action == "forward"){
-		
+		console.log("forward");
+	
 		if(this.actualdirection == this.directions.FRONT){
 		 
 			if(this.map[this.actualx+1][this.actualy] == this.getLevel() ){

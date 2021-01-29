@@ -7,13 +7,34 @@ function Map(map, margintop, marginleft) {
 	this.create();
 	
 }
+
+
 Map.prototype.adjustmentLevels = function(level, x, y){
-	
-	for(var i = 0; i < this.block.length  ; i++){
+	//((this.block[i].refx > x) && (this.block[i].refy == y))
+	for(var i = 0; i < this.block.length; i++){
+		
 		if(this.block[i].level > level){
-			this.block[i].z = 100;
-		}else{
-			this.block[i].z  = 1;
+		 
+			console.log(this.block[i]);
+			
+			if(
+			(this.block[i].refy == y) && (this.block[i].refx > x)
+			||(this.block[i].refx == x) && (this.block[i].refy < y)
+			|| (this.block[i].refx > x) && (this.block[i].refy < y)
+			){
+				this.block[i].z = 1;
+			}else{
+				
+			/*(this.block[i].refx == x) && (this.block[i].refy > y)
+			||
+			(this.block[i].refy == y) && (this.block[i].refx < x)
+			||
+			(this.block[i].refx < x) && (this.block[i].refy < y)*/
+				
+				
+				this.block[i].z  = 100;
+			}
+			
 		}
 	
 	}
@@ -39,7 +60,7 @@ Map.prototype.createBlocks = function(i, j){
 			blockname = "block_3";
 		
 		console.log(blockname);
-		var bt = new Block( blockname , posx  , posy - 35*l ,"imagem", 1, this.map[i][j]);
+		var bt = new Block( blockname , posx  , posy - 35*l ,"imagem", 1, x, y, l+1);
 		
 		this.block.push(bt);
 	}
