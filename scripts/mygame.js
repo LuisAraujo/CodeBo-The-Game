@@ -122,6 +122,16 @@ se.setResources = function () {
     'buttons/button_forward_mini.png',
     'image'
   );
+  
+  
+  
+   this.loader.addResource(
+    'mini_blank',
+    'buttons/button_mini.png',
+    'image'
+  );
+  
+  
   /*this.loader.addResource(
     'mini_backward',
     'buttons/button_backward_mini.png',
@@ -240,7 +250,7 @@ function setLevel(arrmap, commands) {
   
   //CodeBo
   //codebo = new Codebo(210, 215, 0, 0, 'play', 99);
-  codebo = new Codebo(315, 200, 1, 1, 'play', 99);
+  codebo = new Codebo(315, 200, 1, 2, 'play', 99);
   
   map.adjustmentLevels(codebo.getLevel(), codebo.actualx, codebo.actualy);
 	
@@ -314,20 +324,21 @@ function printCommands() {
     se.mlevel.removeObject(objectstag[i]);
   }
 
-  posx = 0;
-  posy = 0;
-  marginx = 900;
-  marginy = 180;
-  j = 0;
-
+  var posx = 0;
+  var posy = 0;
+  var marginx = 900;
+  var marginy = 180;
+  var j = 0;
+  var size = 40;	
+  
   //percorrendo os comandos
   for (var i = 0; i < actions.length; i++) {
     j++;
-
+	
     //grade de 4 comandos
     if (i % 6 == 0) j = 0;
-    posy = parseInt(i / 6) * 35;
-    posx = j * 35;
+    posy = parseInt(i / 6) * (size+5);
+    posx = j * (size+5);
 
     bt = new MiniButton(
       'mini_' + actions[i],
@@ -336,13 +347,38 @@ function printCommands() {
       function () {
         actions.splice(this.getId(), 1);
       },
-      30,
-      30
-    );
-
+      size,
+      size
+    ); 
     bt.setId(i);
     bt.setTag('btcommands');
   }
+  
+  limitcommand = 24;
+  
+  for (var i = actions.length; i < limitcommand; i++) {
+    j++;
+
+    //grade de 4 comandos
+    if (i % 6 == 0) j = 0;
+    posy = parseInt(i / 6) * (size+5);
+    posx = j * (size+5);
+
+    bt = new MiniButton(
+      'mini_blank' ,
+      marginx + posx,
+      marginy + posy,
+      function () {
+        actions.splice(this.getId(), 1);
+      },
+      size,
+      size
+    ); 
+    bt.setId(i);
+    bt.setTag('btcommands');
+  }
+  
+  
 }
 
 function createArrayMap(map) {
