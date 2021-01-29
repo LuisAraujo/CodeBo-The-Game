@@ -164,22 +164,24 @@ se.setResources = function () {
 
   //sprites mini buttons: stack
   this.loader.addResource(
-    'button_stack_new_mini',
+    'mini_stack_new',
     'buttons/button_stack_new_mini.png',
     'image'
   );
   this.loader.addResource(
-    'button_stack_block_push_mini',
+    'mini_stack_block_push',
     'buttons/button_stack_block_push_mini.png',
     'image'
   );
+  
+  //pop n pode ser relcionado a um item, pop é geral
   this.loader.addResource(
-    'button_stack_block_pop_mini',
+    'mini_stack_block_pop',
     'buttons/button_stack_block_pop_mini.png',
     'image'
   );
   this.loader.addResource(
-    'button_stack_character_push_mini',
+    'mini_stack_character_push',
     'buttons/button_stack_character_push_mini.png',
     'image'
   );
@@ -226,9 +228,9 @@ se.gameReady = function () {
   var commands = [
     'stack_new',
     'stack_block_push',
-    'stack_block_pop',
     'stack_character_push',
-    'stack_character_pop',
+	'stack_block_pop'
+    //,'stack_character_pop',
   ];
 
   //configurando as funcoes de inicio e update

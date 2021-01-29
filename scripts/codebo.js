@@ -194,6 +194,43 @@ Codebo.prototype.runCommands = function (exec) {
 			this.setFrontDirection();
 		}	
 		
+	}else if(action == "stack_new"){
+		
+		if(this.actualdirection == this.directions.FRONT)
+			window.map.setLevel(this.actualx+1, this.actualy, -1);
+		else if(this.actualdirection == this.directions.RIGHT)
+			window.map.setLevel(this.actualx, this.actualy-1, -1);
+		else if(this.actualdirection == this.directions.BACK)	
+			window.map.setLevel(this.actualx-1, this.actualy, -1);
+		else if(this.actualdirection == this.directions.LEFT)
+			window.map.setLevel(this.actualx, this.actualy+1, -1);
+		
+		window.map.create();
+		window.map.adjustmentLevels(this.getLevel(), this.actualx, this.actualy);
+		
+	}else if(action == "stack_block_push"){
+		
+		if((this.actualdirection == this.directions.FRONT) && (window.map.map[this.actualx+1][this.actualy] < 0 )){
+			
+			window.map.setLevel(this.actualx+1, this.actualy, window.map.map[this.actualx+1][this.actualy]-1);
+			console.log("ok");
+			
+		}else if(this.actualdirection == this.directions.RIGHT)
+			window.map.setLevel(this.actualx, this.actualy-1, -1);
+		else if(this.actualdirection == this.directions.BACK)	
+			window.map.setLevel(this.actualx-1, this.actualy, -1);
+		else if(this.actualdirection == this.directions.LEFT)
+			window.map.setLevel(this.actualx, this.actualy+1, -1);
+		
+		window.map.create();
+		window.map.adjustmentLevels(this.getLevel(), this.actualx, this.actualy);
+		
+	}else if(action == "stack_character_push"){
+		
+		window.map.create();
+	}else if(action == "stack_block_pop"){
+		
+		window.map.create();
 	}
 	
 
