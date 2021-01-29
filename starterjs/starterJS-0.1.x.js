@@ -2623,6 +2623,7 @@ ManagerScene.prototype.killEnemy = function (object) {
  * @param {int} h - Altura do sprite
  */
 function Button(sprite, x, y, callback, w, h){
+	
     this.classename = "button";
     GameObject.call(this, sprite, x, y, "button", h,w);
 

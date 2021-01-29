@@ -1,6 +1,11 @@
 function Map(map, margintop, marginleft) {
 
+	this.initialmap  = [];
 	this.map = map;
+	
+	this.copyMap(this.map, this.initialmap);
+
+	
 	this.block = [];
 	this.margintop = margintop;
 	this.marginleft = marginleft;
@@ -8,12 +13,40 @@ function Map(map, margintop, marginleft) {
 	
 }
 
+
+Map.prototype.getMap = function(){
+	return this.map;
+}
+
+Map.prototype.copyMap = function(map, map2){
+	
+	for(var i = 0; i < map.length; i++){	
+		map2.push([]);
+		for(var j = 0; j < map[i].length ; j++){
+			map2[i][j] = map[i][j];
+		}
+	}
+	
+}
+
+Map.prototype.getInitialMap = function(){
+	return this.initialmap;
+}
+
+
 Map.prototype.setLevel= function(x, y, level){
 	
 	this.map[x][y] = level;
 	
 }
 
+Map.prototype.reset = function(codebo){
+	
+	this.copyMap(this.initialmap, this.map);
+	this.block = [];
+	this.create();
+	this.adjustmentLevels(codebo.actuallevel, codebo.actualx, codebo.actualy);
+}
 
 
 Map.prototype.adjustmentLevels = function(level, x, y){

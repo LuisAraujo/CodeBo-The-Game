@@ -66,6 +66,7 @@ Codebo.prototype.start = function () {
         _this.runCommands(_this.currentexec);
       }, 100); 
 };
+
 Codebo.prototype.setCommands = function (actions, map) {
 	
 	this.actions = actions;
@@ -75,6 +76,7 @@ Codebo.prototype.setCommands = function (actions, map) {
 
 
 Codebo.prototype.runCommands = function (exec) {
+	console.log(this);
 	
 	if(exec != this.currentexec){
 		//console.log("ok");
@@ -197,22 +199,22 @@ Codebo.prototype.runCommands = function (exec) {
 	}else if(action == "stack_new"){
 		
 		if(this.actualdirection == this.directions.FRONT)
-			window.map.setLevel(this.actualx+1, this.actualy, -1);
+			lv1.getMap().setLevel(this.actualx+1, this.actualy, -1);
 		else if(this.actualdirection == this.directions.RIGHT)
-			window.map.setLevel(this.actualx, this.actualy-1, -1);
+			lv1.getMap().setLevel(this.actualx, this.actualy-1, -1);
 		else if(this.actualdirection == this.directions.BACK)	
-			window.map.setLevel(this.actualx-1, this.actualy, -1);
+			lv1.getMap().setLevel(this.actualx-1, this.actualy, -1);
 		else if(this.actualdirection == this.directions.LEFT)
-			window.map.setLevel(this.actualx, this.actualy+1, -1);
+			lv1.getMap().setLevel(this.actualx, this.actualy+1, -1);
 		
-		window.map.create();
-		window.map.adjustmentLevels(this.getLevel(), this.actualx, this.actualy);
+		lv1.getMap().create();
+		lv1.getMap().adjustmentLevels(this.getLevel(), this.actualx, this.actualy);
 		
 	}else if(action == "stack_block_push"){
 		
-		if((this.actualdirection == this.directions.FRONT) && (window.map.map[this.actualx+1][this.actualy] < 0 )){
+		if((this.actualdirection == this.directions.FRONT) && (lv1.getMap().map[this.actualx+1][this.actualy] < 0 )){
 			
-			window.map.setLevel(this.actualx+1, this.actualy, window.map.map[this.actualx+1][this.actualy]-1);
+			lv1.getMap().setLevel(this.actualx+1, this.actualy, lv1.getMap().map[this.actualx+1][this.actualy]-1);
 	
 			
 		}else if(this.actualdirection == this.directions.RIGHT)
@@ -222,15 +224,15 @@ Codebo.prototype.runCommands = function (exec) {
 		else if(this.actualdirection == this.directions.LEFT)
 			 console.log("");
 		
-		window.map.create();
-		window.map.adjustmentLevels(this.getLevel(), this.actualx, this.actualy);
+		lv1.getMap().create();
+		lv1.getMap().adjustmentLevels(this.getLevel(), this.actualx, this.actualy);
 		
 	}else if(action == "stack_character_push"){
-		if((this.actualdirection == this.directions.FRONT) && (window.map.map[this.actualx+1][this.actualy] < 0 )){
+		if((this.actualdirection == this.directions.FRONT) && (lv1.getMap().map[this.actualx+1][this.actualy] < 0 )){
 			
 			var oldlevel = this.actuallevel;
 			
-			this.actuallevel = Math.abs( window.map.map[this.actualx+1][this.actualy]) ;
+			this.actuallevel = Math.abs( lv1.getMap().map[this.actualx+1][this.actualy]) ;
 			
 			//up level
 			this.actualx +=1;
@@ -242,8 +244,8 @@ Codebo.prototype.runCommands = function (exec) {
 			
 			
 			
-			window.map.create();
-		window.map.adjustmentLevels(this.getLevel(), this.actualx, this.actualy);
+			lv1.getMap().create();
+			lv1.getMap().adjustmentLevels(this.getLevel(), this.actualx, this.actualy);
 			
 		}else if(this.actualdirection == this.directions.RIGHT)
 			 console.log("");
@@ -251,14 +253,14 @@ Codebo.prototype.runCommands = function (exec) {
 			 console.log("");
 		else if(this.actualdirection == this.directions.LEFT)
 			 console.log("");
-		window.map.create();
+		lv1.getMap().create();
 	}else if(action == "stack_block_pop"){
 		 
-		if((this.actualdirection == this.directions.FRONT) && (window.map.map[this.actualx+1][this.actualy] < 0 )){
+		if((this.actualdirection == this.directions.FRONT) && (lv1.getMap().map[this.actualx+1][this.actualy] < 0 )){
 			
-			window.map.setLevel(this.actualx+1, this.actualy, window.map.map[this.actualx+1][this.actualy]+1);
+			lv1.getMap().setLevel(this.actualx+1, this.actualy, lv1.getMap().map[this.actualx+1][this.actualy]+1);
 			
-			console.log(window.map.map[this.actualx+1][this.actualy]+1);
+			console.log(lv1.getMap().map[this.actualx+1][this.actualy]+1);
 			
 		}else if(this.actualdirection == this.directions.RIGHT)
 			 console.log("");
@@ -267,8 +269,8 @@ Codebo.prototype.runCommands = function (exec) {
 		else if(this.actualdirection == this.directions.LEFT)
 			 console.log("");
 	
-		window.map.create();
-		window.map.adjustmentLevels(this.getLevel(), this.actualx, this.actualy);
+		lv1.getMap().create();
+		lv1.getMap().adjustmentLevels(this.getLevel(), this.actualx, this.actualy);
 	}
 	
 
