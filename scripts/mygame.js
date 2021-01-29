@@ -218,8 +218,19 @@ function createCommandsButton(item, limitcommands) {
     window.posx,
     520,
     function () {
+<<<<<<< Updated upstream
       console.log(limitcommands);
       if (actions.length < limitcommands) actions.push(item);
+=======
+<<<<<<< HEAD
+		//console.log(limitcommands);
+		if(actions.length < limitcommands)
+			actions.push(item);
+=======
+      console.log(limitcommands);
+      if (actions.length < limitcommands) actions.push(item);
+>>>>>>> 07c8117fec72a6b234bd929c24a651e94d826dc7
+>>>>>>> Stashed changes
     },
     window.size,
     window.size
@@ -229,6 +240,49 @@ function createCommandsButton(item, limitcommands) {
 }
 
 function createGUIButton() {
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+	
+	new Rect(0, 500, 100, 660, 'rgba(255, 255, 255, 0.5)');
+	new Rect(0, 0, 110, 1200, '#30415d');
+	new Rect(880, 150, 580, 1180, 'rgba(255, 255, 255, 0.5)');
+
+	new Rect(0, 470, 40, 200, '#30415d');
+	new Text('Comandos', 20, 495, '#fff');
+
+	new Rect(900, 120, 40, 200, '#30415d');
+	new Text('Principal', 920, 145, '#fff');
+
+  
+	new Button('button_play',  900,  20,
+		function () {
+		  lv1.getCodebo().setCommands(window.actions, lv1.getMap().getMap() );
+		  lv1.getCodebo().reset();
+		  
+		  lv1.getMap().reset( lv1.getCodebo());
+		  lv1.getCodebo().start();
+		  
+		   
+		},
+	70, 70 );
+
+	//FIXOS DE TODOS OS LEVEL
+	new Button('button_stop', 980, 20, function () {}, 60, 60);
+	new Button('button_reload', 1050, 20, 
+		function () {
+			
+			 lv1.getCodebo().reset();
+			 lv1.getMap().reset();
+			 actions = []
+			
+		}, 
+	60, 60);
+	
+	new Button('button_help', 20, 20, function () {}, 70, 70);
+	new Button('button_menu', 110, 20, function () {}, 70, 70);
+=======
+>>>>>>> Stashed changes
   new Rect(0, 500, 100, 660, 'rgba(255, 255, 255, 0.5)');
   new Rect(0, 0, 110, 1200, '#30415d');
   new Rect(880, 150, 580, 1180, 'rgba(255, 255, 255, 0.5)');
@@ -271,6 +325,10 @@ function createGUIButton() {
 
   new Button('button_help', 20, 20, function () {}, 70, 70);
   new Button('button_menu', 110, 20, function () {}, 70, 70);
+<<<<<<< Updated upstream
+=======
+>>>>>>> 07c8117fec72a6b234bd929c24a651e94d826dc7
+>>>>>>> Stashed changes
 }
 
 /*Exibe os comandos abaixo do play*/
