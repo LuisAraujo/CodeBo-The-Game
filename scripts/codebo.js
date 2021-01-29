@@ -216,18 +216,25 @@ Codebo.prototype.runCommands = function (exec) {
 			
 			lv1.getMap().setLevel(this.actualx+1, this.actualy, lv1.getMap().map[this.actualx+1][this.actualy]-1);
 	
+		}else if((this.actualdirection == this.directions.RIGHT) && (this.map[this.actualx][this.actualy-1]) ){
 			
-		}else if(this.actualdirection == this.directions.RIGHT)
-			 console.log("");
-		else if(this.actualdirection == this.directions.BACK)	
-			 console.log("");
-		else if(this.actualdirection == this.directions.LEFT)
-			 console.log("");
+			 lv1.getMap().setLevel(this.actualx, this.actualy-1, lv1.getMap().map[this.actualx][this.actualy-1]-1);
+	
+		}else if((this.actualdirection == this.directions.BACK) && (this.map[this.actualx-1][this.actualy]) ){	
+			
+			 lv1.getMap().setLevel(this.actualx-1, this.actualy, lv1.getMap().map[this.actualx-1][this.actualy]-1);
+		
+		}else if((this.actualdirection == this.directions.LEFT) && (this.map[this.actualx][this.actualy+1]) ){
+			
+			 lv1.getMap().setLevel(this.actualx, this.actualy+1, lv1.getMap().map[this.actualx][this.actualy+1]-1);
+			 
+		}
 		
 		lv1.getMap().create();
 		lv1.getMap().adjustmentLevels(this.getLevel(), this.actualx, this.actualy);
 		
 	}else if(action == "stack_character_push"){
+		
 		if((this.actualdirection == this.directions.FRONT) && (lv1.getMap().map[this.actualx+1][this.actualy] < 0 )){
 			
 			var oldlevel = this.actuallevel;
@@ -242,18 +249,79 @@ Codebo.prototype.runCommands = function (exec) {
 			//up
 			this.y -= 35 * (this.actuallevel - oldlevel);
 			
+			lv1.getMap().create();
+			lv1.getMap().adjustmentLevels(this.getLevel(), this.actualx, this.actualy);
 			
+		}else if((this.actualdirection == this.directions.RIGHT) && (this.map[this.actualx][this.actualy-1]) ){
+	
+			var oldlevel = this.actuallevel;
+			
+			this.actuallevel = Math.abs( lv1.getMap().map[this.actualx][this.actualy-1]) ;
+			
+			//up level
+			this.actualy-=1;
+			
+			//move to right
+			this.x -= 36;
+			this.y += 18;
+
+			//up
+			this.y -= 35 * (this.actuallevel - oldlevel);
 			
 			lv1.getMap().create();
 			lv1.getMap().adjustmentLevels(this.getLevel(), this.actualx, this.actualy);
 			
-		}else if(this.actualdirection == this.directions.RIGHT)
-			 console.log("");
-		else if(this.actualdirection == this.directions.BACK)	
-			 console.log("");
-		else if(this.actualdirection == this.directions.LEFT)
-			 console.log("");
+			
+		}else if((this.actualdirection == this.directions.BACK) && (this.map[this.actualx-1][this.actualy]) ){	
+			
+			
+			var oldlevel = this.actuallevel;
+			
+			this.actuallevel = Math.abs( lv1.getMap().map[this.actualx-1][this.actualy]) ;
+			
+			//up level
+			this.actualx-=1;
+			
+			//move to back
+			this.x -= 35;
+			this.y -= 17.5;
+
+			//up
+			this.y -= 35 * (this.actuallevel - oldlevel);
+			
+			lv1.getMap().create();
+			lv1.getMap().adjustmentLevels(this.getLevel(), this.actualx, this.actualy);
+		
+			 
+		}else if((this.actualdirection == this.directions.LEFT) && (this.map[this.actualx][this.actualy+1]) ){
+			
+			
+			var oldlevel = this.actuallevel;
+			
+			this.actuallevel = Math.abs( lv1.getMap().map[this.actualx][this.actualy+1]) ;
+			
+			//up level
+			this.actualy+=1;
+			
+			//move to back
+			this.x += 36;
+			this.y -= 18;
+			
+			//up
+			this.y -= 35 * (this.actuallevel - oldlevel);
+			
+			lv1.getMap().create();
+			lv1.getMap().adjustmentLevels(this.getLevel(), this.actualx, this.actualy);
+		
+		
+				 
+		}
+		
+		
 		lv1.getMap().create();
+		lv1.getMap().adjustmentLevels(this.getLevel(), this.actualx, this.actualy);
+
+	
 	}else if(action == "stack_block_pop"){
 		 
 		if((this.actualdirection == this.directions.FRONT) && (lv1.getMap().map[this.actualx+1][this.actualy] < 0 )){

@@ -19,7 +19,7 @@ Map.prototype.getMap = function(){
 }
 
 Map.prototype.copyMap = function(map, map2){
-	
+	//map2 = [];
 	for(var i = 0; i < map.length; i++){	
 		map2.push([]);
 		for(var j = 0; j < map[i].length ; j++){
@@ -50,19 +50,22 @@ Map.prototype.reset = function(codebo){
 
 
 Map.prototype.adjustmentLevels = function(level, x, y){
+	
+	//console.log(this);
+	console.log( "adjustment levels" );
 	//((this.block[i].refx > x) && (this.block[i].refy == y))
 	for(var i = 0; i < this.block.length; i++){
 		
 		if(this.block[i].level > level){
-		 
-			console.log(this.block[i]);
-			
+
 			if(
 			(this.block[i].refy == y) && (this.block[i].refx < x)
-			||(this.block[i].refx == x) && (this.block[i].refy > y)
+			||(this.block[i].refx == x) && (this.block[i].refy < y)
 			|| (this.block[i].refx > x) && (this.block[i].refy < y)
 			){
 				this.block[i].z = 1;
+				console.log( this.block[i] );
+				
 			}else{
 				
 			/*(this.block[i].refx == x) && (this.block[i].refy > y)
@@ -70,7 +73,7 @@ Map.prototype.adjustmentLevels = function(level, x, y){
 			(this.block[i].refy == y) && (this.block[i].refx < x)
 			||
 			(this.block[i].refx < x) && (this.block[i].refy < y)*/
-				
+				a_block = this.block[i];
 				
 				this.block[i].z  = 100;
 			}
@@ -81,7 +84,7 @@ Map.prototype.adjustmentLevels = function(level, x, y){
 }
 
 Map.prototype.createBlocks = function(i, j){
-	
+	console.log("create blocks");
 	x = j;
 	y = i;
 	

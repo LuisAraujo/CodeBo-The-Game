@@ -61,14 +61,14 @@ Level1.prototype.setLevel = function(arrmap, _this) {
   
   //map
   _this.map = new Map(arrmap, _this.map_margintop , this.map_marginleft );
-  console.log(lv1.map);
+  //console.log(lv1.map);
   
   //CodeBo
   _this.codebo = new Codebo(_this.codebo_posx, _this.codebo_posy,  _this.codebox, _this.codeboy, 'play', 99);
   
   //_this.codebo.map = arrmap;
     
-  _this.map.adjustmentLevels(_this.codebo.getLevel(), _this.codebo.actualx, _this.codebo.actualy);
+  _this.map.adjustmentLevels(_this.codebo.getLevel(), _this.codebo.actualx, _this.codebo.actualy, _this.map);
 
   
   actions = [];
