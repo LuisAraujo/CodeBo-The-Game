@@ -37,7 +37,7 @@ Map.prototype.getInitialMap = function(){
 
 Map.prototype.setLevel= function(x, y, level){
 	
-	this.map[x][y] = level;
+	this.map[y][x] = level;
 	
 }
 
