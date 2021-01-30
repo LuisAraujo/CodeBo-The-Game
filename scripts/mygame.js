@@ -1,5 +1,6 @@
 const se = new StarterEngine();
 
+
 se.setResources = function () {
   //sprites CodeBo pra frente
   this.loader.addResource('codebo_sp1', 'codebo/forward/sp1.png', 'image');
@@ -183,7 +184,7 @@ se.setResources = function () {
   );
 
   //remover - teste
-  this.loader.addResource('block_blank', 'blocks/block_blank.png', 'image');
+  this.loader.addResource('block_4', 'blocks/block_4.png', 'image');
   //this.loader.addResource('block_blank2', 'blocks/block_blank2.png', 'image');
 
   //sprits container
@@ -202,35 +203,25 @@ se.setResources = function () {
   //Mapas
   this.loader.addResource('map_level_1', 'maps/map_level_1.xml', 'xml');
 };
-
 //Quando o loading dos recursos acaba, esse métodos é executado
 se.gameReady = function () {
   //criando um level
   lv1 = new Level1();
-
+  
   //adicional o level ao jogo
-  this.mlevel.addScene(lv1.getScene());
+  this.mlevel.addScene(lv1.getScene() );
 };
 
 function createCommandsButton(item, limitcommands) {
+	
   new Button(
     'button_' + item,
     window.posx,
     520,
     function () {
-<<<<<<< Updated upstream
-      console.log(limitcommands);
-      if (actions.length < limitcommands) actions.push(item);
-=======
-<<<<<<< HEAD
 		//console.log(limitcommands);
 		if(actions.length < limitcommands)
 			actions.push(item);
-=======
-      console.log(limitcommands);
-      if (actions.length < limitcommands) actions.push(item);
->>>>>>> 07c8117fec72a6b234bd929c24a651e94d826dc7
->>>>>>> Stashed changes
     },
     window.size,
     window.size
@@ -240,9 +231,6 @@ function createCommandsButton(item, limitcommands) {
 }
 
 function createGUIButton() {
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
 	
 	new Rect(0, 500, 100, 660, 'rgba(255, 255, 255, 0.5)');
 	new Rect(0, 0, 110, 1200, '#30415d');
@@ -281,54 +269,6 @@ function createGUIButton() {
 	
 	new Button('button_help', 20, 20, function () {}, 70, 70);
 	new Button('button_menu', 110, 20, function () {}, 70, 70);
-=======
->>>>>>> Stashed changes
-  new Rect(0, 500, 100, 660, 'rgba(255, 255, 255, 0.5)');
-  new Rect(0, 0, 110, 1200, '#30415d');
-  new Rect(880, 150, 580, 1180, 'rgba(255, 255, 255, 0.5)');
-
-  new Rect(0, 470, 40, 200, '#30415d');
-  new Text('Comandos', 20, 495, '#fff');
-
-  new Rect(900, 120, 40, 200, '#30415d');
-  new Text('Principal', 920, 145, '#fff');
-
-  new Button(
-    'button_play',
-    900,
-    20,
-    function () {
-      lv1.getCodebo().setCommands(window.actions, lv1.getMap().getMap());
-      lv1.getCodebo().reset();
-      lv1.getCodebo().start();
-
-      lv1.getMap().reset(lv1.getCodebo());
-    },
-    70,
-    70
-  );
-
-  //FIXOS DE TODOS OS LEVEL
-  new Button('button_stop', 980, 20, function () {}, 60, 60);
-  new Button(
-    'button_reload',
-    1050,
-    20,
-    function () {
-      lv1.getCodebo().reset();
-      lv1.getMap().reset();
-      actions = [];
-    },
-    60,
-    60
-  );
-
-  new Button('button_help', 20, 20, function () {}, 70, 70);
-  new Button('button_menu', 110, 20, function () {}, 70, 70);
-<<<<<<< Updated upstream
-=======
->>>>>>> 07c8117fec72a6b234bd929c24a651e94d826dc7
->>>>>>> Stashed changes
 }
 
 /*Exibe os comandos abaixo do play*/
@@ -344,16 +284,16 @@ function printCommands(limitcommand) {
   var marginx = 900;
   var marginy = 180;
   var j = 0;
-  var size = 40;
-
+  var size = 40;	
+  
   //percorrendo os comandos
   for (var i = 0; i < actions.length; i++) {
     j++;
-
+	
     //grade de 4 comandos
     if (i % 6 == 0) j = 0;
-    posy = parseInt(i / 6) * (size + 5);
-    posx = j * (size + 5);
+    posy = parseInt(i / 6) * (size+5);
+    posx = j * (size+5);
 
     bt = new MiniButton(
       'mini_' + actions[i],
@@ -364,21 +304,21 @@ function printCommands(limitcommand) {
       },
       size,
       size
-    );
+    ); 
     bt.setId(i);
     bt.setTag('btcommands');
   }
-
+  
   for (var i = actions.length; i < limitcommand; i++) {
     j++;
 
     //grade de 4 comandos
     if (i % 6 == 0) j = 0;
-    posy = parseInt(i / 6) * (size + 5);
-    posx = j * (size + 5);
+    posy = parseInt(i / 6) * (size+5);
+    posx = j * (size+5);
 
     bt = new MiniButton(
-      'mini_blank',
+      'mini_blank' ,
       marginx + posx,
       marginy + posy,
       function () {
@@ -386,10 +326,12 @@ function printCommands(limitcommand) {
       },
       size,
       size
-    );
+    ); 
     bt.setId(i);
     bt.setTag('btcommands');
   }
+  
+  
 }
 
 function createArrayMap(map) {

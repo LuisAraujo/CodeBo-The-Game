@@ -60,7 +60,7 @@ Map.prototype.adjustmentLevels = function(level, x, y){
 
 			if(
 			(this.block[i].refy == y) && (this.block[i].refx < x)
-			||(this.block[i].refx == x) && (this.block[i].refy < y)
+			||(this.block[i].refx == x) && (this.block[i].refy > y)
 			|| (this.block[i].refx > x) && (this.block[i].refy < y)
 			){
 				this.block[i].z = 1;
@@ -94,7 +94,7 @@ Map.prototype.createBlocks = function(i, j){
 	for(var l = 0; l < Math.abs( this.map[i][j] ) ; l++){
 		
 		if(this.map[i][j] < 0 ){
-			blockname = "block_blank";
+			blockname = "block_4";
 		}else{ 
 		
 			if( ( l == this.map[i][j]-1) && (l == 0) )
