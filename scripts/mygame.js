@@ -227,7 +227,7 @@ function createGUIButton() {
     20,
     function () {
       lv1.getCodebo().reset();
-      lv1.getMap().reset();
+      lv1.getMap().reset(lv1.getCodebo() );
       actions = [];
     },
     60,

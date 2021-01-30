@@ -52,7 +52,6 @@ Level1.prototype.setLevel = function (arrmap, _this) {
 
   //map
   _this.map = new Map(arrmap, _this.map_margintop, this.map_marginleft);
-  //console.log(lv1.map);
 
   //CodeBo
   _this.codebo = new Codebo(

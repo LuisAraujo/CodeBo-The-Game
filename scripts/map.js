@@ -42,8 +42,9 @@ Map.prototype.setLevel= function(x, y, level){
 }
 
 Map.prototype.reset = function(codebo){
+	console.log(codebo);
 	
-	this.initialmap = this.copyMap(this.map);
+	this.map = this.copyMap(this.initialmap);
 	this.block = [];
 	this.create();
 	this.adjustmentLevels(codebo.actuallevel, codebo.actualx, codebo.actualy);
