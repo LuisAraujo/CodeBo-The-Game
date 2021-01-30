@@ -2417,6 +2417,10 @@ function ManagerScene() {
  */
 ManagerScene.prototype.addScene =function (level) {
     this.scenes.push(level);
+	console.log(level.isActive);
+	if(level.isActive){
+		this.currentScene = this.scenes.length-1;
+	}
 }
 
 /**
@@ -3990,12 +3994,13 @@ StarterEngine.prototype.beginLoad =function () {
  * @method
  */
 StarterEngine.prototype.startGame =function () {
-    this.mlevel.currentScene = 0;
-    if((this.mlevel.scenes.length) > 0 && (this.mlevel.currentScene < this.mlevel.scenes.length)) {
-        this.mlevel.scenes[this.mlevel.currentScene].startFunction();
+    //this.mlevel.currentScene = 0;
+    //if((this.mlevel.scenes.length) > 0 && (this.mlevel.currentScene < this.mlevel.scenes.length)) {
+    if(this.mlevel.currentScene != -1){
+		this.mlevel.scenes[this.mlevel.currentScene].startFunction();
         this.loopgame(ctx);
     }else{
-        console.error("Você precisa adicionar ao menos um Level!")
+        console.error("Você precisa adicionar ao menos um Level ativo!")
     }
 }
 

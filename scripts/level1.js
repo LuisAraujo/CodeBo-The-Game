@@ -1,6 +1,6 @@
-function Level1() {
+function Level1(isActive) {
   this.xmlfile = 'map_level_1';
-  this.scene = new Scene();
+  this.scene = new Scene(undefined, isActive);
   this.start();
 
   this.commands = [

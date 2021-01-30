@@ -43,12 +43,22 @@ function Codebo(x, y, actualx, actualy, classename, z) {
 	
 	this.actualdirection = this.directions.FRONT; 
 	
+	this.inpause = false;
+	
 	GameObject.call(this, sprite, x, y, classename, h,w, 0, z);
    
 }
 
 //fazendo herança
 Codebo.prototype = Object.create(GameObject.prototype);
+
+Codebo.prototype.pause = function () {
+	this.inpause = true;
+};
+
+Codebo.prototype.remot = function () {
+	this.inpause = false;
+};
 
 Codebo.prototype.update = function () {};
 
@@ -62,6 +72,8 @@ Codebo.prototype.reset = function () {
 };
 
 Codebo.prototype.start = function () {
+	 this.remot();
+	 
 	 _this = this;
 	 this.currentexec++;
 	 
@@ -81,7 +93,7 @@ Codebo.prototype.setCommands = function (actions, map) {
 Codebo.prototype.runCommands = function (exec) {
 	//console.log(this);
 	
-	if(exec != this.currentexec){
+	if((exec != this.currentexec) || (this.inpause)){
 		//console.log("ok");
 		return;
 	}

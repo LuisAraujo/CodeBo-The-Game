@@ -170,11 +170,19 @@ se.setResources = function () {
 };
 //Quando o loading dos recursos acaba, esse métodos é executado
 se.gameReady = function () {
+  
+ 
+  //menu
+  mainmenu = new Scene(undefined, false);
+  mainmenu.setFunctionStart(function(){ });
+  mainmenu.setFunctionUpdate(function(){});
+  
+  
   //criando um level
-  lv1 = new Level1();
-
-  //adicional o level ao jogo
-  this.mlevel.addScene(lv1.getScene());
+  lv1 = new Level1(true);
+ 
+  
+  
 };
 
 function createCommandsButton(item, limitcommands) {
@@ -220,7 +228,12 @@ function createGUIButton() {
   );
 
   //FIXOS DE TODOS OS LEVEL
-  new Button('button_stop', 980, 20, function () {}, 60, 60);
+  new Button('button_stop', 980, 20, function () {
+	  
+	  lv1.getCodebo().pause();
+	  
+  }, 60, 60);
+  
   new Button(
     'button_reload',
     1050,
@@ -235,7 +248,11 @@ function createGUIButton() {
   );
 
   new Button('button_help', 20, 20, function () {}, 70, 70);
-  new Button('button_menu', 110, 20, function () {}, 70, 70);
+  new Button('button_menu', 110, 20, function () {
+	  //menu
+	  se.mlevel.loadScene(0);
+	  
+  }, 70, 70);
 }
 
 /*Exibe os comandos abaixo do play*/
