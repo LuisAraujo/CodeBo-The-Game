@@ -10,8 +10,8 @@ function Level1() {
     'stack_pop',
   ];
 
-  this.codebox = 1;
-  this.codeboy = 2;
+  this.codebox = 2;
+  this.codeboy = 1;
 
   this.codebo_posx = 315;
   this.codebo_posy = 200;

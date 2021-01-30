@@ -2,10 +2,9 @@ function Map(map, margintop, marginleft) {
 
 	this.initialmap  = [];
 	this.map = map;
-	
-	this.copyMap(this.map, this.initialmap);
 
-	
+	this.initialmap = this.copyMap(this.map);
+
 	this.block = [];
 	this.margintop = margintop;
 	this.marginleft = marginleft;
@@ -18,15 +17,17 @@ Map.prototype.getMap = function(){
 	return this.map;
 }
 
-Map.prototype.copyMap = function(map, map2){
-	//map2 = [];
+Map.prototype.copyMap = function(map){
+
+	map2 = [];
 	for(var i = 0; i < map.length; i++){	
 		map2.push([]);
 		for(var j = 0; j < map[i].length ; j++){
-			map2[i][j] = map[i][j];
+			map2[i].push(map[i][j]);
 		}
 	}
 	
+	return map2;
 }
 
 Map.prototype.getInitialMap = function(){
@@ -42,7 +43,7 @@ Map.prototype.setLevel= function(x, y, level){
 
 Map.prototype.reset = function(codebo){
 	
-	this.copyMap(this.initialmap, this.map);
+	this.initialmap = this.copyMap(this.map);
 	this.block = [];
 	this.create();
 	this.adjustmentLevels(codebo.actuallevel, codebo.actualx, codebo.actualy);
@@ -52,31 +53,45 @@ Map.prototype.reset = function(codebo){
 Map.prototype.adjustmentLevels = function(level, x, y){
 	
 	//console.log(this);
-	console.log( "adjustment levels" );
+	console.log( "adjustment levels" , level );
 	//((this.block[i].refx > x) && (this.block[i].refy == y))
 	for(var i = 0; i < this.block.length; i++){
 		
 		if(this.block[i].level > level){
-
-			if(
+		console.log( ">", this.block[i] );
+			
+			if(  (this.block[i].refx == x) && (this.block[i].refy > y)
+			||
+			(this.block[i].refy == y) && (this.block[i].refx < x)
+			||
+			(this.block[i].refx < x) && (this.block[i].refy > y)
+			)
+			{
+				this.block[i].z = 100;
+			}else{
+				this.block[i].z = 1;
+				
+			}
+			
+			/*if(
 			(this.block[i].refy == y) && (this.block[i].refx < x)
 			||(this.block[i].refx == x) && (this.block[i].refy > y)
 			|| (this.block[i].refx > x) && (this.block[i].refy < y)
 			){
 				this.block[i].z = 1;
-				console.log( this.block[i] );
+				
 				
 			}else{
 				
-			/*(this.block[i].refx == x) && (this.block[i].refy > y)
+			(this.block[i].refx == x) && (this.block[i].refy > y)
 			||
 			(this.block[i].refy == y) && (this.block[i].refx < x)
 			||
-			(this.block[i].refx < x) && (this.block[i].refy < y)*/
+			(this.block[i].refx < x) && (this.block[i].refy < y)
 				a_block = this.block[i];
 				
 				this.block[i].z  = 100;
-			}
+			}*/
 			
 		}
 	
