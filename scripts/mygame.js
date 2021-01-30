@@ -167,22 +167,24 @@ se.setResources = function () {
 
   //first level
   this.loader.addResource('map_level_1', 'maps/map_level_1.xml', 'xml');
+
+  //FLAGS
+
+  this.loader.addResource(
+    'red_flag',
+    'flags/red-flag-with-green-grass.png',
+    'image'
+  );
 };
 //Quando o loading dos recursos acaba, esse métodos é executado
 se.gameReady = function () {
-  
- 
   //menu
   mainmenu = new Scene(undefined, false);
-  mainmenu.setFunctionStart(function(){ });
-  mainmenu.setFunctionUpdate(function(){});
-  
-  
+  mainmenu.setFunctionStart(function () {});
+  mainmenu.setFunctionUpdate(function () {});
+
   //criando um level
   lv1 = new Level1(true);
- 
-  
-  
 };
 
 function createCommandsButton(item, limitcommands) {
@@ -228,19 +230,24 @@ function createGUIButton() {
   );
 
   //FIXOS DE TODOS OS LEVEL
-  new Button('button_stop', 980, 20, function () {
-	  
-	  lv1.getCodebo().pause();
-	  
-  }, 60, 60);
-  
+  new Button(
+    'button_stop',
+    980,
+    20,
+    function () {
+      lv1.getCodebo().pause();
+    },
+    60,
+    60
+  );
+
   new Button(
     'button_reload',
     1050,
     20,
     function () {
       lv1.getCodebo().reset();
-      lv1.getMap().reset(lv1.getCodebo() );
+      lv1.getMap().reset(lv1.getCodebo());
       actions = [];
     },
     60,
@@ -248,11 +255,17 @@ function createGUIButton() {
   );
 
   new Button('button_help', 20, 20, function () {}, 70, 70);
-  new Button('button_menu', 110, 20, function () {
-	  //menu
-	  se.mlevel.loadScene(0);
-	  
-  }, 70, 70);
+  new Button(
+    'button_menu',
+    110,
+    20,
+    function () {
+      //menu
+      se.mlevel.loadScene(0);
+    },
+    70,
+    70
+  );
 }
 
 /*Exibe os comandos abaixo do play*/
