@@ -369,14 +369,14 @@ Codebo.prototype.runCommands = function (exec) {
       if (this.actualdirection == this.directions.FRONT) {
         if (
           this.map[this.actualy] != undefined &&
-          this.map[this.actualy + 1][this.actualx] < this.getLevel()
+          this.map[this.actualy + 1][this.actualx] == this.getLevel()
         ) {
           console.log('POP front!');
           this.x += 35;
           this.y += 17.5;
 
           //this.actualx
-          this.actualy = this.getLevel();
+          this.actualy += 1;
         }
       } else if (this.actualdirection == this.directions.BACK) {
         console.log(
@@ -398,7 +398,7 @@ Codebo.prototype.runCommands = function (exec) {
         );
         if (
           this.map[this.actualy] != undefined &&
-          this.map[this.actualy][this.actualx - 1] < this.getLevel()
+          this.map[this.actualy][this.actualx - 1] == this.getLevel()
         ) {
           this.x -= 36;
           this.y += 18;
@@ -413,7 +413,7 @@ Codebo.prototype.runCommands = function (exec) {
         );
         if (
           this.map[this.actualy] != undefined &&
-          this.map[this.actualy][this.actualx + 1] < this.getLevel()
+          this.map[this.actualy][this.actualx + 1] == this.getLevel()
         ) {
           this.x += 36;
           this.y -= 18;
@@ -426,7 +426,57 @@ Codebo.prototype.runCommands = function (exec) {
         .getMap()
         .adjustmentLevels(this.getLevel(), this.actualx, this.actualy);
     } else {
-      //O CodeBô não está empilhado
+      if (
+        this.actualdirection == this.directions.FRONT &&
+        lv1.getMap().map[this.actualy + 1][this.actualx] < 0
+      ) {
+        lv1
+          .getMap()
+          .setLevel(
+            this.actualx,
+            this.actualy + 1,
+            lv1.getMap().map[this.actualy + 1][this.actualx] + 1
+          );
+      } else if (
+        this.actualdirection == this.directions.RIGHT &&
+        this.map[this.actualy][this.actualx - 1]
+      ) {
+        lv1
+          .getMap()
+          .setLevel(
+            this.actualx - 1,
+            this.actualy,
+            lv1.getMap().map[this.actualy][this.actualx - 1] + 1
+          );
+      } else if (
+        this.actualdirection == this.directions.BACK &&
+        this.map[this.actualy - 1][this.actualx]
+      ) {
+        console.log(this.actualy, this.actualx);
+        lv1
+          .getMap()
+          .setLevel(
+            this.actualx,
+            this.actualy - 1,
+            lv1.getMap().map[this.actualy - 1][this.actualx] + 1
+          );
+      } else if (
+        this.actualdirection == this.directions.LEFT &&
+        this.map[this.actualy][this.actualx + 1]
+      ) {
+        lv1
+          .getMap()
+          .setLevel(
+            this.actualx + 1,
+            this.actualy,
+            lv1.getMap().map[this.actualy][this.actualx + 1] + 1
+          );
+      }
+
+      lv1.getMap().create();
+      lv1
+        .getMap()
+        .adjustmentLevels(this.getLevel(), this.actualx, this.actualy);
     }
 
     /*if (
