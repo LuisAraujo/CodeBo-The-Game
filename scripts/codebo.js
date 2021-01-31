@@ -126,54 +126,73 @@ Codebo.prototype.runCommands = function (exec) {
       console.log('forward');
 
       if (this.actualdirection == this.directions.FRONT) {
-        if (
-          this.map[this.actualy] != undefined &&
-          this.map[this.actualy + 1][this.actualx] == this.getLevel()
-        ) {
-          this.x += 35;
-          this.y += 17.5;
+        
+		//is a block?
+		if( this.map[this.actualy + 1][this.actualx] > 10)
+			if (
+			  this.map[this.actualy] != undefined &&
+			  this.map[this.actualy + 1][this.actualx]%10 == this.getLevel()
+			) {
+			  this.x += 35;
+			  this.y += 17.5;
 
-          //this.actualx
-          this.actualy += 1;
-        }
-      } else if (this.actualdirection == this.directions.BACK) {
-        if (
-          this.map[this.actualy - 1] != undefined &&
-          this.map[this.actualy - 1][this.actualx] == this.getLevel()
-        ) {
-          this.x -= 35;
-          this.y -= 17.5;
+			  //this.actualx
+			  this.actualy += 1;
+			}
+     
 
-          this.actualy -= 1;
-        }
-      } else if (this.actualdirection == this.directions.RIGHT) {
-        if (
-          this.map[this.actualy] != undefined &&
-          this.map[this.actualy][this.actualx - 1] == this.getLevel()
-        ) {
-          this.x -= 36;
-          this.y += 18;
+	 } else if (this.actualdirection == this.directions.BACK) {
+        
+		//is a block?
+		if(this.map[this.actualy - 1][this.actualx] > 10)
+			if (
+			  this.map[this.actualy - 1] != undefined &&
+			  this.map[this.actualy - 1][this.actualx]%10 == this.getLevel()
+			) {
+			  this.x -= 35;
+			  this.y -= 17.5;
 
-          this.actualx -= 1;
-          //this.actualy
-        }
-      } else if (this.actualdirection == this.directions.LEFT) {
-        if (
-          this.map[this.actualy] != undefined &&
-          this.map[this.actualy][this.actualx + 1] == this.getLevel()
-        ) {
-          this.x += 36;
-          this.y -= 18;
+			  this.actualy -= 1;
+			}
+		  
+	  
+	  } else if (this.actualdirection == this.directions.RIGHT) {
+        
+		//is a block
+		if( this.map[this.actualy][this.actualx - 1] > 10)
+			if (
+			  this.map[this.actualy] != undefined &&
+			  this.map[this.actualy][this.actualx - 1]%10 == this.getLevel()
+			) {
+			  this.x -= 36;
+			  this.y += 18;
 
-          this.actualx += 1;
-          //this.actualy+=1;
-        }
+			  this.actualx -= 1;
+			  //this.actualy
+			}
+     
+
+	 } else if (this.actualdirection == this.directions.LEFT) {
+        
+		if(this.map[this.actualy][this.actualx + 1] > 10)
+			if (
+			  this.map[this.actualy] != undefined &&
+			  this.map[this.actualy][this.actualx + 1]%10 == this.getLevel()
+			) {
+			  this.x += 36;
+			  this.y -= 18;
+
+			  this.actualx += 1;
+			  //this.actualy+=1;
+			}
       }
 
       lv1
         .getMap()
         .adjustmentLevels(this.getLevel(), this.actualx, this.actualy);
     }
+  
+  
   } else if (action == 'left') {
     if (this.actualdirection == this.directions.FRONT) {
       this.setLeftDirection();
@@ -201,28 +220,29 @@ Codebo.prototype.runCommands = function (exec) {
   } else if (action == 'stack_new') {
     if (
       this.actualdirection == this.directions.FRONT &&
-      this.map[this.actualy + 1][this.actualx] > 0
+      this.map[this.actualy + 1][this.actualx] > 10
     )
       lv1.getMap().setLevel(this.actualx, this.actualy + 1, -1);
     else if (
       this.actualdirection == this.directions.RIGHT &&
-      this.map[this.actualy][this.actualx - 1] > 0
+      this.map[this.actualy][this.actualx - 1] > 10
     )
       lv1.getMap().setLevel(this.actualx - 1, this.actualy, -1);
     else if (
       this.actualdirection == this.directions.BACK &&
-      this.map[this.actualy - 1][this.actualx] > 0
+      this.map[this.actualy - 1][this.actualx] > 10
     )
       lv1.getMap().setLevel(this.actualx, this.actualy - 1, -1);
     else if (
       this.actualdirection == this.directions.LEFT &&
-      this.map[this.actualy][this.actualx + 1] > 0
+      this.map[this.actualy][this.actualx + 1] > 10
     )
       lv1.getMap().setLevel(this.actualx + 1, this.actualy, -1);
 
     lv1.getMap().create();
     lv1.getMap().adjustmentLevels(this.getLevel(), this.actualx, this.actualy);
-  } else if (action == 'stack_block_push') {
+ 
+ } else if (action == 'stack_block_push') {
     if (
       this.actualdirection == this.directions.FRONT &&
       lv1.getMap().map[this.actualy + 1][this.actualx] < 0
@@ -234,9 +254,10 @@ Codebo.prototype.runCommands = function (exec) {
           this.actualy + 1,
           lv1.getMap().map[this.actualy + 1][this.actualx] - 1
         );
-    } else if (
+    
+	} else if (
       this.actualdirection == this.directions.RIGHT &&
-      this.map[this.actualy][this.actualx - 1] >= 1
+      this.map[this.actualy][this.actualx - 1] < 0
     ) {
       lv1
         .getMap()
@@ -247,7 +268,7 @@ Codebo.prototype.runCommands = function (exec) {
         );
     } else if (
       this.actualdirection == this.directions.BACK &&
-      this.map[this.actualy - 1][this.actualx] >= 1
+      this.map[this.actualy - 1][this.actualx] < 0
     ) {
       console.log(this.actualy, this.actualx);
       lv1
@@ -259,7 +280,7 @@ Codebo.prototype.runCommands = function (exec) {
         );
     } else if (
       this.actualdirection == this.directions.LEFT &&
-      this.map[this.actualy][this.actualx + 1] >= 1
+      this.map[this.actualy][this.actualx + 1] < 0
     ) {
       lv1
         .getMap()
@@ -273,7 +294,8 @@ Codebo.prototype.runCommands = function (exec) {
     lv1.getMap().create();
     lv1.getMap().adjustmentLevels(this.getLevel(), this.actualx, this.actualy);
   } else if (action == 'stack_character_push') {
-    if (
+    
+	if (
       this.actualdirection == this.directions.FRONT &&
       lv1.getMap().map[this.actualy + 1][this.actualx] < 0
     ) {
@@ -298,7 +320,7 @@ Codebo.prototype.runCommands = function (exec) {
         .adjustmentLevels(this.getLevel(), this.actualx, this.actualy);
     } else if (
       this.actualdirection == this.directions.RIGHT &&
-      this.map[this.actualy][this.actualx - 1] >= 1
+      this.map[this.actualy][this.actualx - 1] < 0
     ) {
       var oldlevel = this.actuallevel;
 
@@ -322,7 +344,7 @@ Codebo.prototype.runCommands = function (exec) {
         .adjustmentLevels(this.getLevel(), this.actualx, this.actualy);
     } else if (
       this.actualdirection == this.directions.BACK &&
-      this.map[this.actualy - 1][this.actualx] >= 1
+      this.map[this.actualy - 1][this.actualx] < 0
     ) {
       var oldlevel = this.actuallevel;
 
@@ -346,7 +368,7 @@ Codebo.prototype.runCommands = function (exec) {
         .adjustmentLevels(this.getLevel(), this.actualx, this.actualy);
     } else if (
       this.actualdirection == this.directions.LEFT &&
-      this.map[this.actualy][this.actualx + 1] >= 1
+      this.map[this.actualy][this.actualx + 1] < 0
     ) {
       var oldlevel = this.actuallevel;
 

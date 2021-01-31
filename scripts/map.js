@@ -119,17 +119,19 @@ Map.prototype.createBlocks = function(i, j){
 	posx = 200 + (y*105) - (x*35) + (x-y) * 70;
 	posy = 200 - (y * 17.5) -(x*17.5) + (y+1) * 35;
 	
-	for(var l = 0; l < Math.abs( this.map[i][j] ) ; l++){
+	var valueBlock = this.map[i][j]%10;
+	
+	for(var l = 0; l < Math.abs( valueBlock ) ; l++){
 		
 		if(this.map[i][j] < 0 ){
 			blockname = "block_4";
 		}else{ 
 		
-			if( ( l == this.map[i][j]-1) && (l == 0) )
+			if( ( l == valueBlock-1) && (l == 0) )
 				blockname = "block_1";
 			else if(l == 0) 
 				blockname = "block_0";
-			else if(l == this.map[i][j]-1) 
+			else if(l == valueBlock-1) 
 				blockname = "block_2";
 			else 
 				blockname = "block_3";
@@ -156,7 +158,11 @@ Map.prototype.create = function () {
 		
 	for(var i = 0; i < this.map.length  ; i++){	
 		for(var j = this.map[i].length-1; j >= 0 ; j--){
-				if(this.map[i][j] == 0){
+				
+				if(this.map[i][j] > 10){
+					//itens
+					
+				}if(this.map[i][j] == 10){
 					this.createNonBlocks(i, j);
 				}else{
 					this.createBlocks(i, j);
