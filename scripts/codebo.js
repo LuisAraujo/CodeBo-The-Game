@@ -85,6 +85,7 @@ Codebo.prototype.update = function () {};
 
 Codebo.prototype.reset = function () {
   this.actuallevel = 1;
+  this.is_stacked = false;
   this.stopCommands();
   this.startPosition();
   this.setAnimationByIndex(0);
