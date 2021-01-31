@@ -99,6 +99,18 @@ Map.prototype.adjustmentLevels = function(level, x, y){
 	}
 }
 
+Map.prototype.createNonBlocks = function(i, j){
+	
+	x = j;
+	y = i;
+	var anim1 = new Animation( ["water_0","water_1","water_2"], 0.1);
+	posx = 200 + (y*105) - (x*35) + (x-y) * 70;
+	posy = 235 - (y * 17.5) -(x*17.5) + (y+1) * 35;
+
+	new GameObject( [anim1], posx, posy, "water", 70,35 );
+					
+}
+
 Map.prototype.createBlocks = function(i, j){
 	//console.log("create blocks");
 	x = j;
@@ -141,22 +153,11 @@ Map.prototype.create = function () {
 	for (var i = 0; i < objectstag.length; i++) {
 		se.mlevel.removeObject(objectstag[i]);
 	}
-	
-	
-	var anim1 = new Animation( ["water_0","water_1","water_2"], 0.1);
 		
-	//for(var i = this.map.length-1; i >= 0  ; i--){
 	for(var i = 0; i < this.map.length  ; i++){	
 		for(var j = this.map[i].length-1; j >= 0 ; j--){
-		//for(var j = 0; j < this.map[i].length ; j++){
-			//if(map[i][j] != 0){
-			
-				//@todo
 				if(this.map[i][j] == 0){
-					
-					//new GameObject( [anim1], this.marginleft + m + j* 70, this.margintop + i * 17.5, "water", 70,35 );
-					
-				//ok
+					this.createNonBlocks(i, j);
 				}else{
 					this.createBlocks(i, j);
 				}
