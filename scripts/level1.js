@@ -30,6 +30,9 @@ Level1.prototype.updateLevel = function (limitcommands) {
 };
 
 Level1.prototype.start = function () {
+  
+  actions = [];
+
   xmlmap = new ReaderXMLFile(this.xmlfile);
   this.arrmap = createArrayMap(xmlmap);
 
@@ -72,7 +75,7 @@ Level1.prototype.setLevel = function (arrmap, _this) {
     _this.map
   );
 
-  actions = [];
+  
 
   size = 60;
   marginx = 0;

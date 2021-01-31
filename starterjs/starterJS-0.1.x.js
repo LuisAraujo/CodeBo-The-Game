@@ -2430,7 +2430,8 @@ ManagerScene.prototype.addScene =function (level) {
  */
 ManagerScene.prototype.loadScene =function (index) {
     this.currentScene = index;
-    this.getCurrentScene().setObjects([]);
+	this.scenes[this.currentScene].setActive(true);
+    //this.getCurrentScene().setObjects([]);
     this.getCurrentScene().startFunction();
 }
 

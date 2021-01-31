@@ -1,6 +1,16 @@
 const se = new StarterEngine();
 
 se.setResources = function () {
+	
+	
+  //menu
+  this.loader.addResource('button_play_menu', 'buttons/button_play_menu.png', 'image');
+  this.loader.addResource('button_help_menu',  'buttons/button_help_menu.png', 'image');
+  this.loader.addResource('button_config_menu',  'buttons/button_config_menu.png', 'image');
+  
+  this.loader.addResource('gui_eyecodebo',  'gui/eye_codebo.png', 'image');
+  this.loader.addResource('gui_logo',  'gui/logo.png', 'image');
+  
   //CHARACTER
 
   //CodeBo pra frente
@@ -181,12 +191,39 @@ se.setResources = function () {
 //Quando o loading dos recursos acaba, esse métodos é executado
 se.gameReady = function () {
   //menu
-  mainmenu = new Scene(undefined, false);
-  mainmenu.setFunctionStart(function () {});
+  mainmenu = new Scene(undefined, true);
+  mainmenu.setFunctionStart(function () {
+	  
+	  new Rect(0,0, 40, canvas.width, "#fff");
+	  new Rect(0, canvas.height-40, 40, canvas.width, "#fff");
+	  new Rect(0,0,canvas.height, 40, "#fff");
+	  new Rect(canvas.width-40,0,canvas.height, 40, "#fff");
+	  
+	  new Sprite("gui_logo", canvas.width/2 - 300, 50, 600, 170);
+	  
+	  new Sprite("gui_eyecodebo", 480, 250, 35, 100);
+	  new Sprite("gui_eyecodebo", 700, 250, 35, 100);
+	  
+	   new Button("button_config_menu", 60 ,  canvas.height - 100, function(){},50, 50);
+	   new Button("button_help_menu", 120 ,  canvas.height - 100,function(){}, 50, 50);
+	   new Button("button_play_menu", canvas.width - 210 ,  canvas.height - 120,function(){
+		   
+		   se.mlevel.loadScene(1);
+		   
+	   }, 70, 160);
+	  
+	  
+	  
+  });
   mainmenu.setFunctionUpdate(function () {});
 
   //criando um level
-  lv1 = new Level1(true);
+  lv1 = new Level1(false);
+  
+  
+  //carrega menu
+  se.mlevel.loadScene(0);
+  
 };
 
 function createCommandsButton(item, limitcommands) {
