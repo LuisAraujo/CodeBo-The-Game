@@ -25,6 +25,7 @@ Block.prototype.print = function() {
     if(this.animation != null) {
 		
         ctx.drawImage(this.animation[this.currentAnimation].getCurrentSprite(), this.x, this.y, this.w, this.h);
+		
 		ctx.save();
 		ctx.globalAlpha = 0.5 - (this.level/10);
 		ctx.drawImage(this.shadow , this.x, this.y, this.w, this.h);

@@ -42,7 +42,7 @@ Map.prototype.setLevel= function(x, y, level){
 }
 
 Map.prototype.reset = function(codebo){
-	console.log(codebo);
+	//console.log(codebo);
 	
 	this.map = this.copyMap(this.initialmap);
 	this.block = [];
@@ -54,12 +54,12 @@ Map.prototype.reset = function(codebo){
 Map.prototype.adjustmentLevels = function(level, x, y){
 	
 	//console.log(this);
-	console.log( "adjustment levels" , level );
+	//console.log( "adjustment levels" , level );
 	//((this.block[i].refx > x) && (this.block[i].refy == y))
 	for(var i = 0; i < this.block.length; i++){
 		
 		if(this.block[i].level > level){
-		console.log( ">", this.block[i] );
+		//console.log( ">", this.block[i] );
 			
 			if(  (this.block[i].refx == x) && (this.block[i].refy > y)
 			||
@@ -100,7 +100,7 @@ Map.prototype.adjustmentLevels = function(level, x, y){
 }
 
 Map.prototype.createBlocks = function(i, j){
-	console.log("create blocks");
+	//console.log("create blocks");
 	x = j;
 	y = i;
 	

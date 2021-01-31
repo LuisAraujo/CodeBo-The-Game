@@ -10,9 +10,9 @@
 	</line1>
 	<line2>
 		<column1>1</column1>
-		<column2>2</column2>
+		<column2>1</column2>
 		<column3>1</column3>
-		<column4>2</column4>
+		<column4>1</column4>
 		<column5>0</column5>
 		<column6>0</column6>
 		<column7>0</column7>
@@ -29,14 +29,14 @@
 	<line4>
 		<column1>1</column1>
 		<column2>1</column2>
-		<column3>5</column3>
+		<column3>1</column3>
 		<column4>1</column4>
 		<column5>0</column5>
 		<column6>0</column6>
 		<column7>0</column7>
 	</line4>
 	<line5>
-		<column1>3</column1>
+		<column1>1</column1>
 		<column2>1</column2>
 		<column3>1</column3>
 		<column4>1</column4>
