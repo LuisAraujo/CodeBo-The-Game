@@ -39,6 +39,8 @@ se.setResources = function () {
 
   //metal blocks
   this.loader.addResource('block_4', 'blocks/block_4.png', 'image');
+  this.loader.addResource('block_shadow', 'blocks/block_shadow.png', 'image');
+  this.loader.addResource('block_shadow2', 'blocks/block_shadow5.png', 'image');
   //this.loader.addResource('block_blank2', 'blocks/block_blank2.png', 'image');
 
   //water blocks
