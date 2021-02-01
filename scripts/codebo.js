@@ -131,18 +131,31 @@ Codebo.prototype.runCommands = function (exec) {
       if (this.actualdirection == this.directions.FRONT) {
         
 		//is a block?
-		if( this.map[this.actualy + 1][this.actualx] > 10)
-			if (
+		if( this.map[this.actualy + 1][this.actualx] > 10){
+			if ( 
 			  this.map[this.actualy] != undefined &&
-			  this.map[this.actualy + 1][this.actualx]%10 == this.getLevel()
-			) {
+			  this.map[this.actualy + 1][this.actualx]%10 == this.getLevel() 
+			) 
+			
+			{
 			  this.x += 35;
 			  this.y += 17.5;
 
 			  //this.actualx
 			  this.actualy += 1;
 			}
-     
+		}else if ( 
+			  this.map[this.actualy] != undefined &&
+			  this.map[this.actualy + 1][this.actualx] < 10
+			) 
+			
+			{
+			  this.x += 35;
+			  this.y += 17.5;
+
+			  //this.actualx
+			  this.actualy += 1;
+			}
 
 	 } else if (this.actualdirection == this.directions.BACK) {
         

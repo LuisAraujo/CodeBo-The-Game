@@ -51,6 +51,10 @@ se.setResources = function () {
   this.loader.addResource('block_4', 'blocks/block_4.png', 'image');
   this.loader.addResource('block_shadow', 'blocks/block_shadow.png', 'image');
   this.loader.addResource('block_shadow2', 'blocks/block_shadow5.png', 'image');
+  
+  this.loader.addResource('block_bridge', 'blocks/bridge_0.png', 'image');
+  this.loader.addResource('block_bridge_shadow', 'blocks/bridge_shadow.png', 'image');
+  
   //this.loader.addResource('block_blank2', 'blocks/block_blank2.png', 'image');
 
   //water blocks

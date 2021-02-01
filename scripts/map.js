@@ -112,6 +112,26 @@ Map.prototype.createNonBlocks = function(i, j){
 					
 }
 
+
+Map.prototype.createBlocksItens = function(i, j, blockname){
+	
+	x = j;
+	y = i;
+	var anim1 = new Animation( ["water_0","water_1","water_2"], 0.1);
+	posx = 200 + (y*105) - (x*35) + (x-y) * 70;
+	posy = 235 - (y * 17.5) -(x*17.5) + (y+1) * 35;
+	
+	if(blockname == "block_bridge"){
+		new GameObject( [anim1], posx, posy, "water", 70,35 );
+	}
+	
+	var bt =new Block( blockname , posx  , posy - 35 ,"imagem", 1, x, y, 0);
+	bt.setTag(blockname);
+	
+	
+					
+}
+
 Map.prototype.createBlocks = function(i, j){
 	//console.log("create blocks");
 	x = j;
@@ -160,10 +180,11 @@ Map.prototype.create = function () {
 	for(var i = 0; i < this.map.length  ; i++){	
 		for(var j = this.map[i].length-1; j >= 0 ; j--){
 				
-				if(this.map[i][j] > 10){
-					//itens
+				if( (this.map[i][j] > 0) && (this.map[i][j] < 10)){
+	
+					this.createBlocksItens(i, j, "block_bridge");
 					
-				}if(this.map[i][j] == 10){
+				} else if(this.map[i][j] == 10){
 					this.createNonBlocks(i, j);
 				}else{
 					this.createBlocks(i, j);
