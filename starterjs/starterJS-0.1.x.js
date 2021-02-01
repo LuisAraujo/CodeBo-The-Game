@@ -222,8 +222,9 @@ function GameObject(animations, x, y, classename, w, h, r, z) {
     if(r != undefined)
         this.r = r;
 
-
-    this.currentAnimation = 0;
+    this.alpha = 1;
+    
+	this.currentAnimation = 0;
 
     if(animations != undefined) {
 
@@ -247,6 +248,15 @@ function GameObject(animations, x, y, classename, w, h, r, z) {
  */
 GameObject.prototype.update = function() {
 
+}
+
+
+/**
+ * Configura a função update do game object
+ * @method
+ */
+GameObject.prototype.setUpdateFunction = function(update) {
+	this.update = update;
 }
 
 
@@ -359,14 +369,48 @@ GameObject.prototype.getId = function () {
    
 };
 
+
+/**
+ * Configura o alpha do game object
+ * @return {id} int  - alfa de um objeto
+ */
+GameObject.prototype.setAlpha = function(alpha) {
+ 
+	this.alpha = alpha;
+   
+};
+
+
+/**
+ * Retorna o alpha do game object
+ * @return {id} int  - alfa  de um objeto
+ */
+GameObject.prototype.getAlpha = function(alpha) {
+ 
+	return this.alpha;
+   
+}
+
+
 /**
  * Imprime o estado atual do objeto na tela
  */
 GameObject.prototype.print = function() {
 
     if(this.animation != null) {
+		ctx.save();
+        ctx.globalAlpha = this.alpha;
 		
-        ctx.drawImage(this.animation[this.currentAnimation].getCurrentSprite(), this.x, this.y, this.w, this.h);
+		var centreX = this.x + (this.w / 2);
+		var centreY = this.y + (this.h / 2);
+
+		ctx.save();
+		ctx.translate(centreX, centreY);
+		ctx.rotate(this.r * Math.PI / 180);
+		ctx.translate(-centreX, -centreY);
+	
+		ctx.drawImage(this.animation[this.currentAnimation].getCurrentSprite(), this.x, this.y, this.w, this.h);
+		ctx.restore();
 		
 		this.animation[this.currentAnimation].update();
     }
