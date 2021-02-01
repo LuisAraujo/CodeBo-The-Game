@@ -2,8 +2,6 @@ function Codebo(x, y, actualx, actualy, classename, z) {
   h = 50;
   w = 50;
 
-  this.is_stacked = false;
-
   //animation of codebo
   sprite = [
     new Animation(
@@ -35,27 +33,7 @@ function Codebo(x, y, actualx, actualy, classename, z) {
       5
     ),
   ];
-
-  this.actions;
-  this.actualaction = -1;
-
-  this.map;
-
-  this.actualx = actualx;
-  this.actualy = actualy;
-
-  console.log(actualx, actualy);
-
-  this.actuallevel = 1;
-
-  this.startx = x;
-  this.starty = y;
-
-  this.startactualx = actualx;
-  this.startactualy = actualy;
-
-  this.currentexec = 0;
-
+  
   this.directions = {
     FRONT: 0,
     BACK: 1,
@@ -63,9 +41,27 @@ function Codebo(x, y, actualx, actualy, classename, z) {
     RIGHT: 3,
   };
 
+
+
+  this.is_stacked = false;
+  this.actions;
+  this.actualaction = -1;
+  this.actuallevel = 1;
+  this.currentexec = 0;
+  this.inpause = false;
   this.actualdirection = this.directions.FRONT;
 
-  this.inpause = false;
+  this.map;
+
+  this.actualx = actualx;
+  this.actualy = actualy;
+
+  this.startx = x;
+  this.starty = y;
+
+  this.startactualx = actualx;
+  this.startactualy = actualy;
+
 
   GameObject.call(this, sprite, x, y, classename, h, w, 0, z);
 }
@@ -84,12 +80,17 @@ Codebo.prototype.remot = function () {
 Codebo.prototype.update = function () {};
 
 Codebo.prototype.reset = function () {
-  this.actuallevel = 1;
   this.is_stacked = false;
+  this.actions;
+  this.actuallevel = 1;
+  this.currentexec = 0;
+  this.inpause = false;
+  this.actualdirection = this.directions.FRONT;
+  
   this.stopCommands();
   this.startPosition();
   this.setAnimationByIndex(0);
-  this.actualdirection = this.directions.FRONT;
+
 };
 
 Codebo.prototype.start = function () {
@@ -109,8 +110,10 @@ Codebo.prototype.setCommands = function (actions, map) {
 };
 
 Codebo.prototype.runCommands = function (exec) {
+	console.log("run commands", this.actualaction, actions);
+	
   if (exec != this.currentexec || this.inpause) {
-    //console.log("ok");
+    console.log("ok");
     return;
   }
 
@@ -218,6 +221,8 @@ Codebo.prototype.runCommands = function (exec) {
 
     lv1.getMap().adjustmentLevels(this.getLevel(), this.actualx, this.actualy);
   } else if (action == 'stack_new') {
+	  console.log( this.actualdirection == this.directions.FRONT,
+      this.map[this.actualy + 1][this.actualx])
     if (
       this.actualdirection == this.directions.FRONT &&
       this.map[this.actualy + 1][this.actualx] > 10

@@ -258,11 +258,13 @@ function createGUIButton() {
     900,
     20,
     function () {
-      lv1.getCodebo().setCommands(window.actions, lv1.getMap().getMap());
-      lv1.getCodebo().reset();
-
-      lv1.getMap().reset(lv1.getCodebo());
+	  
+	  lv1.getCodebo().reset();
+	  lv1.getMap().reset(lv1.getCodebo());
+	  
+      lv1.getCodebo().setCommands(window.actions, lv1.getMap().getMap() );
       lv1.getCodebo().start();
+
     },
     70,
     70

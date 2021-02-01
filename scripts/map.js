@@ -48,6 +48,7 @@ Map.prototype.reset = function(codebo){
 	this.block = [];
 	this.create();
 	this.adjustmentLevels(codebo.actuallevel, codebo.actualx, codebo.actualy);
+	
 }
 
 
