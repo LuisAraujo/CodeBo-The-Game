@@ -244,6 +244,24 @@ function GameObject(animations, x, y, classename, w, h, r, z) {
         console.warn("Impossível inserir objeto no nível atual.");
 }
 
+
+
+/**
+ * Atualiza o z do objeto
+ */
+GameObject.prototype.setZ = function(z) {
+this.z = z;
+}
+
+
+
+/**
+ * Retorna o z do objeto
+ */
+GameObject.prototype.getZ = function(z) {
+	return this.z;
+}
+
 /**
  * Atualiza o estado o objeto, é chamado há cada loop
  * @method
@@ -2681,10 +2699,10 @@ ManagerScene.prototype.killEnemy = function (object) {
  * @param {int} w - Largura do sprite
  * @param {int} h - Altura do sprite
  */
-function Button(sprite, x, y, callback, w, h){
+function Button(sprite, x, y, callback, w, h, r, z){
 	
     this.classename = "button";
-    GameObject.call(this, sprite, x, y, "button", h,w);
+    GameObject.call(this, sprite, x, y, "button", h,w, r, z);
 
     if(callback!= undefined) {
         this.clickFunction = callback;
@@ -3978,7 +3996,17 @@ ReaderTextFile.prototype.getLine = function (index) {
 
 
 
+/**
+* Essa classe que presenta um Modal
+* @class
+*/
+function Modal(items) {
+	
+	this.item = items;
 
+}
+
+Modal.prototype = Object.create(GameObject.prototype);
 
 
 

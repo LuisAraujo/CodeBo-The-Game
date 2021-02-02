@@ -2,7 +2,7 @@ function Level1(isActive) {
 	
   this.xmlfile = 'map_level_1';
   this.scene = new Scene(undefined, isActive);
-  
+  this.itemname = "item_bridge";
   this.scene.setFunctionStart( this.start.bind(this) );
   
   this.commands = [
@@ -10,6 +10,7 @@ function Level1(isActive) {
     'stack_block_push',
     'stack_character_push',
     'stack_pop',
+	'set_item'
   ];
 
   this.codebox = 2;
@@ -21,7 +22,7 @@ function Level1(isActive) {
   this.map_margintop = 200;
   this.map_marginleft = 70;
 
-  this.limitcommands = 10;
+  this.limitcommands = 20;
 
   this.codebo = null;
   this.map;
@@ -36,6 +37,10 @@ function Level1(isActive) {
   this.posxend = 1;
   this.posyend = 0;
   
+  //count ncommands needly to finish level
+  this.commandsneedly = 10;
+  this.namelevel = "teste";
+  this.end = false;
   
 }
 
@@ -44,6 +49,7 @@ Level1.prototype.reset = function(full){
 	if(full)
 		this.blockused = 0;
 	this.hideItem();
+	this.end = false;
 }
 
 Level1.prototype.showItem = function(item){
@@ -128,7 +134,7 @@ Level1.prototype.setLevel = function (arrmap, _this) {
   });
   
    
-  this.sp_item = new Sprite("item_bridge", canvas.width/2 - 15, 40, 30, 30 );
+  this.sp_item = new Sprite(this.itemname, canvas.width/2 - 15, 40, 30, 30 );
   this.sp_item.setAlpha(0);
   createContainerItem(_this.item);
    
@@ -152,3 +158,62 @@ Level1.prototype.getMap = function () {
 Level1.prototype.getLimitBlock = function () {
   return this.limitblock;
 };
+
+
+Level1.prototype.getEnd = function () {
+  return this.end;
+};
+
+
+Level1.prototype.setEnd = function () {
+	 
+	 if(this.end)
+		  return;
+	  
+	 this.end = true;
+	 
+	
+	var sp_bg = new Sprite("bg_modal_finish", 200,100, 800, 400, "imagem", 200);
+
+	var bt_menu = new Button("bt_menu_level", 400, 400,  function(){
+		 //ver o indice menu
+		 se.mlevel.loadScene(0);
+		
+	}, 50,50);
+	
+	bt_menu.setZ(201);
+	
+	var bt_next = new Button("bt_next_level", 700, 400, function(){
+		//ver o indice  px level
+		 se.mlevel.loadScene(0);
+		 
+	}, 50,50);
+	
+	bt_next.setZ(201);
+		
+	var sp_txt = new Sprite("gui_congrats", 500, 200 );
+	sp_txt.setZ(201);
+	
+	//colocar pontos no bd
+	 if(this.commands.length <= this.commandsneedly){
+		var sp_star = new Sprite("gui_star_3", 500, 250);
+		star = 3;
+		sp_star.setZ(201);
+	 
+	 }else  if(this.commands.length <= this.commandsneedly+3){
+		var sp_star = new Sprite("gui_star_2", 530, 250);
+		star = 2;
+		sp_star.setZ(201);
+	 
+	 }else{
+		var sp_star = new Sprite("gui_star_1", 550, 250);
+		star = 1;
+		sp_star.setZ(201);
+	 }
+	 
+	new Modal([sp_bg, bt_next, bt_menu, txt_level, sp_star]);
+	
+	
+  
+};
+

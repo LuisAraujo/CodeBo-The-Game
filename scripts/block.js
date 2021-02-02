@@ -26,21 +26,24 @@ Block.prototype.print = function() {
 
     if(this.animation != null) {
 		
-        ctx.drawImage(this.animation[this.currentAnimation].getCurrentSprite(), this.x, this.y, this.w, this.h);
-		
 		ctx.save();
+		ctx.globalAlpha = this.getAlpha();
 		
-		
+        ctx.drawImage(this.animation[this.currentAnimation].getCurrentSprite(), this.x, this.y, this.w, this.h);
+
 		if(this.tag == "block"){
+			
 			ctx.globalAlpha = 0.5 - (this.level/10);
 			ctx.drawImage(this.shadow , this.x, this.y, this.w, this.h);	
 			ctx.globalAlpha = this.refx/10;
 			ctx.drawImage(this.shadow2 , this.x, this.y, this.w, this.h);
+		
 		}else if(this.tag == "block_bridge"){
 			
 			ctx.globalAlpha = 0.5 - (this.level/10);
 			ctx.drawImage(this.shadow3 , this.x, this.y, this.w, this.h);	
 		}
+		
 		ctx.restore();
 		 
 		this.animation[this.currentAnimation].update();

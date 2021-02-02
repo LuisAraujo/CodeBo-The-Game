@@ -208,6 +208,7 @@ se.setResources = function () {
     'image'
   );
   
+  //PLACEHOLDERS DAQUI --->>>
   
   //ITEM
    this.loader.addResource(
@@ -230,6 +231,69 @@ se.setResources = function () {
     'image'
   );
   
+  
+    //COMMANDO SET ITEM
+   this.loader.addResource(
+    'button_set_item',
+    'buttons/button_set_item.png',
+    'image'
+  );
+  
+  
+   this.loader.addResource(
+    'mini_set_item',
+    'buttons/button_set_item_mini.png',
+    'image'
+  );
+  
+  
+  //MODAL END LEVEL
+    this.loader.addResource(
+    'bg_modal_finish',
+    'gui/bg_modal_finish.png',
+    'image'
+  );
+  //BUTTON NEXT LEVEL
+    this.loader.addResource(
+    'bt_next_level',
+    'buttons/bt_next_level.png',
+    'image'
+  );
+  //BUTTON MENU LEVELS
+    this.loader.addResource(
+    'bt_menu_level',
+    'buttons/bt_menu_level.png',
+    'image'
+  );
+  
+  //STARTS
+  
+    this.loader.addResource(
+    'gui_star_1',
+    'gui/gui_star_1.png',
+    'image'
+  );
+  
+    this.loader.addResource(
+    'gui_star_2',
+    'gui/gui_star_2.png',
+    'image'
+  );
+  
+   this.loader.addResource(
+    'gui_star_3',
+    'gui/gui_star_3.png',
+    'image'
+  );
+  
+  
+     this.loader.addResource(
+    'gui_congrats',
+    'gui/gui_congrats.png',
+    'image'
+  );
+  
+
 
 };
 //Quando o loading dos recursos acaba, esse métodos é executado
@@ -358,7 +422,9 @@ function createGUIButton() {
 /*Exibe os comandos abaixo do play*/
 function printCommands(limitcommand) {
 	
-  	
+  	if(lv1.getEnd())
+		return;
+	
 	qtd_block = 0; 
 	
   // removendo todos os comandos
@@ -385,7 +451,7 @@ function printCommands(limitcommand) {
     if (i % 6 == 0) j = 0;
     posy = parseInt(i / 6) * (size + 5);
     posx = j * (size + 5);
-
+     
     bt = new MiniButton(
       'mini_' + actions[i],
       marginx + posx,
@@ -394,7 +460,9 @@ function printCommands(limitcommand) {
         actions.splice(this.getId(), 1);
       },
       size,
-      size
+      size,
+	  0,
+	  100
     );
     bt.setId(i);
     bt.setTag('btcommands');

@@ -1,3 +1,8 @@
+@font-face {
+  font-family: "poxel";
+  src: url("assets/fonts/poxel-font.ttf") format("ttf")
+}
+
 body{
     background-color: #555;
 }

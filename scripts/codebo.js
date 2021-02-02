@@ -61,8 +61,10 @@ function Codebo(x, y, actualx, actualy, classename, z) {
 
   this.startactualx = actualx;
   this.startactualy = actualy;
-
-
+  this.actualitem = null;
+  
+  this.end = false;
+  
   GameObject.call(this, sprite, x, y, classename, h, w, 0, z);
 }
 
@@ -86,7 +88,7 @@ Codebo.prototype.reset = function () {
   this.currentexec = 0;
   this.inpause = false;
   this.actualdirection = this.directions.FRONT;
-  
+  this.actualitem = null;
   this.stopCommands();
   this.startPosition();
   this.setAnimationByIndex(0);
@@ -211,6 +213,7 @@ Codebo.prototype.runCommands = function (exec) {
         .adjustmentLevels(this.getLevel(), this.actualx, this.actualy);
 		
 		var item = lv1.getMap().getItem();
+		
 		//get item?
 		if((this.actualx == item.refx) && (this.actualy == item.refy) && (item.active) ){
 			
@@ -221,8 +224,13 @@ Codebo.prototype.runCommands = function (exec) {
 		console.log(lv1.posxend);
 		//is in the end?
 		if((this.actualx == lv1.posxend) && (this.actualy == lv1.posyend)){
-		
-			alert("fim")
+		    
+			if(!this.end){
+				console.log("ok");
+				this.end = true;
+				lv1.setEnd();
+				
+			}
 		}
 		
 		
@@ -241,7 +249,8 @@ Codebo.prototype.runCommands = function (exec) {
     }
 
     lv1.getMap().adjustmentLevels(this.getLevel(), this.actualx, this.actualy);
-  } else if (action == 'right') {
+ 
+ } else if (action == 'right') {
     if (this.actualdirection == this.directions.FRONT) {
       this.setRightDirection();
     } else if (this.actualdirection == this.directions.RIGHT) {
@@ -253,7 +262,8 @@ Codebo.prototype.runCommands = function (exec) {
     }
 
     lv1.getMap().adjustmentLevels(this.getLevel(), this.actualx, this.actualy);
-  } else if (action == 'stack_new') {
+ 
+ } else if (action == 'stack_new') {
 	  console.log( this.actualdirection == this.directions.FRONT,
       this.map[this.actualy + 1][this.actualx])
     if (
@@ -561,26 +571,43 @@ Codebo.prototype.runCommands = function (exec) {
         .adjustmentLevels(this.getLevel(), this.actualx, this.actualy);
     }
 
-    /*if (
-      this.actualdirection == this.directions.FRONT &&
-      lv1.getMap().map[this.actualy + 1][this.actualx] < 0
-    ) {
-      lv1
-        .getMap()
-        .setLevel(
-          this.actualx + 1,
-          this.actualy,
-          lv1.getMap().map[this.actualx + 1][this.actualy] + 1
-        );
-
-      console.log(lv1.getMap().map[this.actualx + 1][this.actualy] + 1);
-    } else if (this.actualdirection == this.directions.RIGHT) console.log('');
-    else if (this.actualdirection == this.directions.BACK) console.log('');
-    else if (this.actualdirection == this.directions.LEFT) console.log('');
-
-    lv1.getMap().create();
-    lv1.getMap().adjustmentLevels(this.getLevel(), this.actualx, this.actualy);*/
-  }
+  } else if (action == 'set_item') {
+	  console.log(this)
+	  if(this.actualitem != null){
+	
+			if (
+			  this.actualdirection == this.directions.FRONT &&
+			  this.map[this.actualy + 1][this.actualx] == 10
+			){
+			  lv1.getMap().setLevel(this.actualx, this.actualy + 1, 1);
+			  this.removeItem();
+			  
+			}else if (
+			  this.actualdirection == this.directions.RIGHT &&
+			  this.map[this.actualy][this.actualx - 1] == 10
+			){
+				lv1.getMap().setLevel(this.actualx - 1, this.actualy, 1);
+				this.removeItem();
+			
+			}else if (
+			  this.actualdirection == this.directions.BACK &&
+			  this.map[this.actualy - 1][this.actualx] == 10
+			){
+			  lv1.getMap().setLevel(this.actualx, this.actualy - 1, 1);
+			  this.removeItem();
+			  
+			}else if (
+			  this.actualdirection == this.directions.LEFT &&
+			  this.map[this.actualy][this.actualx + 1] == 10
+			){
+			  lv1.getMap().setLevel(this.actualx + 1, this.actualy, 1);
+			  this.removeItem();
+			}
+			
+			lv1.getMap().create();
+			lv1.getMap().adjustmentLevels(this.getLevel(), this.actualx, this.actualy);
+	  }
+ } 
 
   _this = this;
 
@@ -652,8 +679,17 @@ Codebo.prototype.setBackDirection = function () {
 
 
 Codebo.prototype.getItem = function (item) {
-   
+   console.log(this);
    lv1.showItem(item);
    item.hide();
+   this.actualitem = item;
+
+};
+
+
+Codebo.prototype.removeItem = function (item) {
+   
+   lv1.hideItem(item);
+   this.actualitem = null;
 
 };
