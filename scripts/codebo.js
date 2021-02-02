@@ -206,9 +206,19 @@ Codebo.prototype.runCommands = function (exec) {
       lv1
         .getMap()
         .adjustmentLevels(this.getLevel(), this.actualx, this.actualy);
+		
+		var item = lv1.getMap().getItem();
+		console.log(item);
+		
+		if((this.actualx == item.refx) && (this.actualy == item.refy) && (item.active) ){
+			
+			this.getItem(item);
+			
+		}
+		
     }
   
-  
+    
   } else if (action == 'left') {
     if (this.actualdirection == this.directions.FRONT) {
       this.setLeftDirection();
@@ -627,4 +637,13 @@ Codebo.prototype.setFrontDirection = function () {
 Codebo.prototype.setBackDirection = function () {
   this.actualdirection = this.directions.BACK;
   this.setAnimationByIndex(1);
+};
+
+
+
+Codebo.prototype.getItem = function (item) {
+   
+   lv1.showItem(item);
+   item.hide();
+
 };

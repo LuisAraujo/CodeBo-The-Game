@@ -408,12 +408,12 @@ GameObject.prototype.print = function() {
 		var centreX = this.x + (this.w / 2);
 		var centreY = this.y + (this.h / 2);
 
-		ctx.save();
 		ctx.translate(centreX, centreY);
 		ctx.rotate(this.r * Math.PI / 180);
 		ctx.translate(-centreX, -centreY);
 	
 		ctx.drawImage(this.animation[this.currentAnimation].getCurrentSprite(), this.x, this.y, this.w, this.h);
+		
 		ctx.restore();
 		
 		this.animation[this.currentAnimation].update();

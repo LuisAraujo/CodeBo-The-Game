@@ -207,6 +207,29 @@ se.setResources = function () {
     'flags/red-flag-with-green-grass.png',
     'image'
   );
+  
+  
+  //ITEM
+   this.loader.addResource(
+    'item_bridge',
+    'items/item_1.png',
+    'image'
+  );
+  
+  //CONATINER
+   this.loader.addResource(
+    'container_item',
+    'gui/container_item.png',
+    'image'
+  );
+  
+  //GUI BLOCK
+   this.loader.addResource(
+    'gui_block',
+    'gui/gui_block.png',
+    'image'
+  );
+  
 };
 //Quando o loading dos recursos acaba, esse métodos é executado
 se.gameReady = function () {
@@ -225,6 +248,15 @@ se.gameReady = function () {
   se.mlevel.loadScene(0);
   
 };
+
+function createContainerItem(item) {
+	
+	
+	new Sprite("container_item", canvas.width/2 - 25, 30, 50, 50 );
+	
+	
+}
+
 
 function createCommandsButton(item, limitcommands) {
   new Button(
@@ -259,6 +291,7 @@ function createGUIButton() {
     20,
     function () {
 	  
+	  lv1.reset();
 	  lv1.getCodebo().reset();
 	  lv1.getMap().reset(lv1.getCodebo());
 	  
@@ -287,6 +320,7 @@ function createGUIButton() {
     1050,
     20,
     function () {
+	  lv1.reset();
       lv1.getCodebo().reset();
       lv1.getMap().reset(lv1.getCodebo());
       actions = [];

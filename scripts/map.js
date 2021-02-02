@@ -10,9 +10,13 @@ function Map(map, margintop, marginleft) {
 	this.marginleft = marginleft;
 	this.create();
 	
+	this.item = new Item("item_bridge",  210, 220, "imagem", 100, 0,0);
+	
 }
 
-
+Map.prototype.getItem = function(){
+	return this.item;
+}
 Map.prototype.getMap = function(){
 	return this.map;
 }
@@ -48,15 +52,13 @@ Map.prototype.reset = function(codebo){
 	this.block = [];
 	this.create();
 	this.adjustmentLevels(codebo.actuallevel, codebo.actualx, codebo.actualy);
-	
+	this.item.show();
 }
 
 
 Map.prototype.adjustmentLevels = function(level, x, y){
 	
-	//console.log(this);
-	//console.log( "adjustment levels" , level );
-	//((this.block[i].refx > x) && (this.block[i].refy == y))
+
 	for(var i = 0; i < this.block.length; i++){
 		
 		if(this.block[i].level > level){
@@ -74,26 +76,6 @@ Map.prototype.adjustmentLevels = function(level, x, y){
 				this.block[i].z = 1;
 				
 			}
-			
-			/*if(
-			(this.block[i].refy == y) && (this.block[i].refx < x)
-			||(this.block[i].refx == x) && (this.block[i].refy > y)
-			|| (this.block[i].refx > x) && (this.block[i].refy < y)
-			){
-				this.block[i].z = 1;
-				
-				
-			}else{
-				
-			(this.block[i].refx == x) && (this.block[i].refy > y)
-			||
-			(this.block[i].refy == y) && (this.block[i].refx < x)
-			||
-			(this.block[i].refx < x) && (this.block[i].refy < y)
-				a_block = this.block[i];
-				
-				this.block[i].z  = 100;
-			}*/
 			
 		}
 	
@@ -114,6 +96,8 @@ Map.prototype.createNonBlocks = function(i, j){
 
 
 Map.prototype.createBlocksItens = function(i, j, blockname){
+	
+	
 	
 	x = j;
 	y = i;

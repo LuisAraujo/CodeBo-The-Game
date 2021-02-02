@@ -1,4 +1,5 @@
 function Level1(isActive) {
+	
   this.xmlfile = 'map_level_1';
   this.scene = new Scene(undefined, isActive);
   
@@ -24,11 +25,32 @@ function Level1(isActive) {
 
   this.codebo = null;
   this.map;
+  
+  //this.item;
+  this.sp_item;
+  
+}
+
+
+Level1.prototype.reset = function(){
+	this.hideItem();
+}
+
+Level1.prototype.showItem = function(item){
+	
+	this.sp_item.setAlpha(1);
+	//mudar animação
+	
+}
+
+Level1.prototype.hideItem = function(){
+	this.sp_item.setAlpha(0);
 }
 
 Level1.prototype.updateLevel = function (limitcommands) {
   printCommands(limitcommands);
 };
+
 
 Level1.prototype.start = function () {
 
@@ -50,6 +72,7 @@ Level1.prototype.start = function () {
 };
 
 Level1.prototype.setLevel = function (arrmap, _this) {
+	
   createGUIButton();
 
   var commands = _this.commands;
@@ -66,6 +89,8 @@ Level1.prototype.setLevel = function (arrmap, _this) {
     'play',
     99
   );
+  
+ 
 
   //_this.codebo.map = arrmap;
 
@@ -91,6 +116,13 @@ Level1.prototype.setLevel = function (arrmap, _this) {
   commands.forEach(function (item) {
     createCommandsButton(item, _this.limitcommands);
   });
+  
+   
+  this.sp_item = new Sprite("item_bridge", canvas.width/2 - 15, 40, 30, 30 );
+  this.sp_item.setAlpha(0);
+  createContainerItem(_this.item);
+  
+  
 };
 
 Level1.prototype.getScene = function () {
