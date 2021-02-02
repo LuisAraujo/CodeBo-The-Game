@@ -375,7 +375,11 @@ GameObject.prototype.getId = function () {
  * @return {id} int  - alfa de um objeto
  */
 GameObject.prototype.setAlpha = function(alpha) {
- 
+	if(alpha > 1)
+		alpha = 1;
+	else if(alpha < 0)
+		alpha = 0;
+	
 	this.alpha = alpha;
    
 };
@@ -2461,10 +2465,12 @@ function ManagerScene() {
  */
 ManagerScene.prototype.addScene =function (level) {
     this.scenes.push(level);
-	console.log(level.isActive);
+	
 	if(level.isActive){
 		this.currentScene = this.scenes.length-1;
 	}
+	
+	console.log(this, level.isActive, this.scenes.length-1);
 }
 
 /**
@@ -2473,6 +2479,7 @@ ManagerScene.prototype.addScene =function (level) {
  * @param {int} index
  */
 ManagerScene.prototype.loadScene =function (index) {
+	console.log("index", index);
     this.currentScene = index;
 	this.scenes[this.currentScene].setActive(true);
     this.getCurrentScene().setObjects([]);
@@ -4042,7 +4049,7 @@ StarterEngine.prototype.startGame =function () {
     //this.mlevel.currentScene = 0;
     //if((this.mlevel.scenes.length) > 0 && (this.mlevel.currentScene < this.mlevel.scenes.length)) {
     if(this.mlevel.currentScene != -1){
-		this.mlevel.scenes[this.mlevel.currentScene].startFunction();
+		//this.mlevel.scenes[this.mlevel.currentScene].startFunction();
         this.loopgame(ctx);
     }else{
         console.error("Você precisa adicionar ao menos um Level ativo!")

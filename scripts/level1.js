@@ -1,8 +1,9 @@
 function Level1(isActive) {
   this.xmlfile = 'map_level_1';
   this.scene = new Scene(undefined, isActive);
-  this.start();
-
+  
+  this.scene.setFunctionStart( this.start.bind(this) );
+  
   this.commands = [
     'stack_new',
     'stack_block_push',
@@ -30,22 +31,22 @@ Level1.prototype.updateLevel = function (limitcommands) {
 };
 
 Level1.prototype.start = function () {
-  
+
+  console.log("iniciando", this.xmlfile);
   actions = [];
 
   xmlmap = new ReaderXMLFile(this.xmlfile);
   this.arrmap = createArrayMap(xmlmap);
 
-  _this = this;
-
-  //configurando as funcoes de inicio e update
-  this.scene.setFunctionStart(_this.setLevel.bind(null, _this.arrmap, _this));
-
+ this.setLevel(this.arrmap, this);
+ 
+ _this = this;
   function teste(_this) {
     _this.updateLevel(_this.limitcommands);
   }
 
-  this.scene.setFunctionUpdate(teste.bind(null, _this));
+  this.scene.setFunctionUpdate(teste.bind(null, this));
+  
 };
 
 Level1.prototype.setLevel = function (arrmap, _this) {
