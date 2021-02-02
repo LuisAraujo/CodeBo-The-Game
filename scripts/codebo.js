@@ -125,8 +125,11 @@ Codebo.prototype.runCommands = function (exec) {
   //console.log(action);
 
   if (action == 'forward') {
-    if (this.is_stacked === false) {
-      console.log('forward');
+    
+	
+	if (this.is_stacked === false) {
+      
+	  
 
       if (this.actualdirection == this.directions.FRONT) {
         
@@ -208,13 +211,20 @@ Codebo.prototype.runCommands = function (exec) {
         .adjustmentLevels(this.getLevel(), this.actualx, this.actualy);
 		
 		var item = lv1.getMap().getItem();
-		console.log(item);
-		
+		//get item?
 		if((this.actualx == item.refx) && (this.actualy == item.refy) && (item.active) ){
 			
 			this.getItem(item);
 			
 		}
+		
+		console.log(lv1.posxend);
+		//is in the end?
+		if((this.actualx == lv1.posxend) && (this.actualy == lv1.posyend)){
+		
+			alert("fim")
+		}
+		
 		
     }
   

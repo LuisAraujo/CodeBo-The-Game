@@ -26,11 +26,16 @@ function Level1(isActive) {
   this.codebo = null;
   this.map;
   
-  //this.item;
+  //sprite of item in container;
   this.sp_item;
   
+  //controling blocks' limit 
   this.limitblock = 5;
   this.blockused = 0;
+  
+  this.posxend = 1;
+  this.posyend = 0;
+  
   
 }
 
@@ -126,7 +131,9 @@ Level1.prototype.setLevel = function (arrmap, _this) {
   this.sp_item = new Sprite("item_bridge", canvas.width/2 - 15, 40, 30, 30 );
   this.sp_item.setAlpha(0);
   createContainerItem(_this.item);
-  
+   
+  //verificar modo de automatizar isso e o item
+  this.flag = new Sprite("red_flag", 250, 180, 30, 60, 100);
   
 };
 

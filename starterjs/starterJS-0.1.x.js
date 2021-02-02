@@ -192,6 +192,8 @@ Animation.prototype.autoSize = function(type){
  * @param {int} h - Altura do sprite
  * @constructor
  */
+ 
+ //gameobject here
 function GameObject(animations, x, y, classename, w, h, r, z) {
     //this.sprite = null;
 
@@ -913,9 +915,10 @@ Audio.prototype.setOnEnd  = function (fn) {
  * @param {array} - array of animations
  * @constructor
  */
-function Sprite(animations,x,y, h, w) {
+ //sprite here
+function Sprite(animations,x,y, h, w, z) {
 
-    GameObject.call(this, animations, x, y, "sprite", h, w);
+    GameObject.call(this, animations, x, y, "sprite", h, w, 0, z);
 
     this.effects = "none";
     this.text = "";

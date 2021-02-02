@@ -230,6 +230,7 @@ se.setResources = function () {
     'image'
   );
   
+
 };
 //Quando o loading dos recursos acaba, esse métodos é executado
 se.gameReady = function () {
