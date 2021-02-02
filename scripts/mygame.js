@@ -264,8 +264,19 @@ function createCommandsButton(item, limitcommands) {
     window.posx,
     520,
     function () {
-      //console.log(limitcommands);
-      if (actions.length < limitcommands) actions.push(item);
+      console.log(item);
+      if (actions.length < limitcommands) {
+		 
+		  if(item == "stack_block_push"){
+		    if(lv1.limitblock > lv1.blockused) {
+				lv1.blockused++;	
+				actions.push(item);
+			}
+		  }else{
+			   actions.push(item);
+		  }
+		  
+	  }
     },
     window.size,
     window.size
@@ -320,7 +331,7 @@ function createGUIButton() {
     1050,
     20,
     function () {
-	  lv1.reset();
+	  lv1.reset(true);
       lv1.getCodebo().reset();
       lv1.getMap().reset(lv1.getCodebo());
       actions = [];
@@ -345,6 +356,10 @@ function createGUIButton() {
 
 /*Exibe os comandos abaixo do play*/
 function printCommands(limitcommand) {
+	
+  	
+	qtd_block = 0; 
+	
   // removendo todos os comandos
   var objectstag = se.mlevel.getCurrentScene().getObjectsByTag('btcommands');
   for (var i = 0; i < objectstag.length; i++) {
@@ -360,6 +375,9 @@ function printCommands(limitcommand) {
 
   //percorrendo os comandos
   for (var i = 0; i < actions.length; i++) {
+	 if(actions[i] == "stack_block_push")
+		 qtd_block++;
+	 
     j++;
 
     //grade de 4 comandos
@@ -402,6 +420,17 @@ function printCommands(limitcommand) {
     bt.setId(i);
     bt.setTag('btcommands');
   }
+  
+  
+    gui_block = new Sprite("gui_block", canvas.width - 180, 125, 25,25);
+	txt_qtd_block = new Text("", canvas.width - 150, 147, "white", 25)
+
+	txt_qtd_block.update = function(){
+
+		this.setText("x" + ( lv1.getLimitBlock() - qtd_block) );
+	}
+	
+	
 }
 
 function createArrayMap(map) {

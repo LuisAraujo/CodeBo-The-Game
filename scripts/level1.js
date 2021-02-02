@@ -29,10 +29,15 @@ function Level1(isActive) {
   //this.item;
   this.sp_item;
   
+  this.limitblock = 5;
+  this.blockused = 0;
+  
 }
 
 
-Level1.prototype.reset = function(){
+Level1.prototype.reset = function(full){
+	if(full)
+		this.blockused = 0;
 	this.hideItem();
 }
 
@@ -135,4 +140,8 @@ Level1.prototype.getCodebo = function () {
 
 Level1.prototype.getMap = function () {
   return this.map;
+};
+
+Level1.prototype.getLimitBlock = function () {
+  return this.limitblock;
 };
