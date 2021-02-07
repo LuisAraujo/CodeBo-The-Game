@@ -331,7 +331,7 @@ function createCommandsButton(item, limitcommands) {
  new Button(
     'button_' + item,
     window.posx,
-    520,
+    canvas.height - 70,
     function () {
       if (actions.length < limitcommands) {
 		 
@@ -355,20 +355,30 @@ function createCommandsButton(item, limitcommands) {
 
 function createGUIButton() {
 console.log(canvas.height );
-//barra comandos inferior
+
+	//barra comandos inferior
   new Rect(0, canvas.height - 100, 100, 660, 'rgba(255, 255, 255, 0.5)');
-  new Rect(0, 0, 110, 1200, '#30415d');
-  new Rect(880, 150, 580, 1180, 'rgba(255, 255, 255, 0.5)');
 
-  new Rect(0, 470, 40, 200, '#30415d');
-  new Text('Comandos', 20, 495, '#fff');
+  //barra menu superior
+  new Rect(0, 0, 110, canvas.width, '#30415d');
+  
 
-  new Rect(900, 120, 40, 200, '#30415d');
-  new Text('Principal', 920, 145, '#fff');
+//bara azul comandos
+  new Rect(0, canvas.height - 100  - 30, 40, 200, '#30415d');
+  new Text('Comandos', 20, canvas.height - 105  , '#fff');
+
+	//paine comandos
+new Rect(canvas.width - 300, 150, 580, 1180, 'rgba(255, 255, 255, 0.5)');
+
+//barra azul principal
+  new Rect(canvas.width - 260, 120, 40, 200, '#30415d');
+  new Text('Principal', canvas.width - 240, 145, '#fff');
+  
+  
 
   new Button(
     'button_play',
-    900,
+    canvas.width - 300,
     20,
     function () {
 	  
@@ -387,7 +397,7 @@ console.log(canvas.height );
   //FIXOS DE TODOS OS LEVEL
   new Button(
     'button_stop',
-    980,
+     canvas.width - 220,
     20,
     function () {
       lv1.getCodebo().pause();
@@ -398,7 +408,7 @@ console.log(canvas.height );
 
   new Button(
     'button_reload',
-    1050,
+    canvas.width - 150,
     20,
     function () {
 	  lv1.reset(true);
@@ -445,7 +455,7 @@ function printCommands(limitcommand) {
 
   var posx = 0;
   var posy = 0;
-  var marginx = 900;
+  var marginx = canvas.width - 280;
   var marginy = 180;
   var j = 0;
   var size = 40;

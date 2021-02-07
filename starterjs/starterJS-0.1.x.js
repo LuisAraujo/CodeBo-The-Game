@@ -4265,6 +4265,7 @@ StarterEngine.prototype.loopgame = function (ctx) {
 	}else if(this.pause_adjust){
 		
 		this.pause_adjust = false;
+		if(mobile.isMobile())
 		mobile.adjustSizeScreen();
 		
 	}
