@@ -70,8 +70,7 @@ Level1.prototype.updateLevel = function (limitcommands) {
 
 Level1.prototype.start = function () {
 
-  console.log("iniciando", this.xmlfile);
-  actions = [];
+   actions = [];
 
   xmlmap = new ReaderXMLFile(this.xmlfile);
   this.arrmap = createArrayMap(xmlmap);

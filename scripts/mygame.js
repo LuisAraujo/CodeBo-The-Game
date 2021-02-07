@@ -300,16 +300,11 @@ se.setResources = function () {
 };
 //Quando o loading dos recursos acaba, esse métodos é executado
 se.gameReady = function () {
-	
-	
-  //menu (COLOCAR ISSO EM ARQUIVOS SEPARADOS)
-  //mmenu = new MainMenu(false);
   
- // mapmenu = new MapMenu(true);
-
-  //criando um level
-  lv1 = new Level1(true);
-  
+  currentLevel = 0;	
+  levels = [];
+  levels.push( new Level1(true) );
+  levels[currentLevel]
   
   //carrega menu
   se.mlevel.loadScene(0);
@@ -317,10 +312,12 @@ se.gameReady = function () {
 };
 
 function createContainerItem(item) {
-	
-	
 	new Sprite("container_item", canvas.width/2 - 25, 30, 50, 50 );
+}
+
+function nextLevel(){
 	
+	currentLevel++;
 	
 }
 
@@ -336,8 +333,8 @@ function createCommandsButton(item, limitcommands) {
       if (actions.length < limitcommands) {
 		 
 		  if(item == "stack_block_push"){
-		    if(lv1.limitblock > lv1.blockused) {
-				lv1.blockused++;	
+		    if(levels[currentLevel].limitblock > levels[currentLevel].blockused) {
+				levels[currentLevel].blockused++;	
 				actions.push(item);
 			}
 		  }else{
@@ -382,12 +379,12 @@ new Rect(canvas.width - 300, 150, 580, 1180, 'rgba(255, 255, 255, 0.5)');
     20,
     function () {
 	  
-	  lv1.reset();
-	  lv1.getCodebo().reset();
-	  lv1.getMap().reset(lv1.getCodebo());
+	  levels[currentLevel].reset();
+	  levels[currentLevel].getCodebo().reset();
+	  levels[currentLevel].getMap().reset(levels[currentLevel].getCodebo());
 	  
-      lv1.getCodebo().setCommands(window.actions, lv1.getMap().getMap() );
-      lv1.getCodebo().start();
+      levels[currentLevel].getCodebo().setCommands(window.actions, levels[currentLevel].getMap().getMap() );
+      levels[currentLevel].getCodebo().start();
 
     },
     70,
@@ -400,7 +397,7 @@ new Rect(canvas.width - 300, 150, 580, 1180, 'rgba(255, 255, 255, 0.5)');
      canvas.width - 220,
     20,
     function () {
-      lv1.getCodebo().pause();
+      levels[currentLevel].getCodebo().pause();
     },
     60,
     60
@@ -411,9 +408,9 @@ new Rect(canvas.width - 300, 150, 580, 1180, 'rgba(255, 255, 255, 0.5)');
     canvas.width - 150,
     20,
     function () {
-	  lv1.reset(true);
-      lv1.getCodebo().reset();
-      lv1.getMap().reset(lv1.getCodebo());
+	  levels[currentLevel].reset(true);
+      levels[currentLevel].getCodebo().reset();
+      levels[currentLevel].getMap().reset(levels[currentLevel].getCodebo());
       actions = [];
     },
     60,
@@ -437,7 +434,7 @@ new Rect(canvas.width - 300, 150, 580, 1180, 'rgba(255, 255, 255, 0.5)');
 /*Exibe os comandos abaixo do play*/
 function printCommands(limitcommand) {
 	
-  	if(lv1.getEnd())
+  	if(levels[currentLevel].getEnd())
 		return;
 	
 	qtd_block = 0; 
@@ -518,7 +515,7 @@ function printCommands(limitcommand) {
 
 	txt_qtd_block.update = function(){
 
-		this.setText("x" + ( lv1.getLimitBlock() - qtd_block) );
+		this.setText("x" + ( levels[currentLevel].getLimitBlock() - qtd_block) );
 	}
 	
 	
