@@ -1,0 +1,19 @@
+Oi eu sou o Codebo
+
+Precisamos chegar até a bandeira. Para isso, 
+use os botões de movimento e aperte o Play. 
+
+O Play pode ser acionado sempre, mas cuidado
+com o reload, ele apaga todos os comandos. 
+
+Infelizmente eu não posso me locomover com a diferença de niveis.
+Use os comandos de Emplilhar para me ajudar nisso.
+
+Para criar uma pilha, fique na posição e aponte o codebo para a direção que deseja criar. 
+
+
+É possível desempilhar blocos, basta ficar na direção da pilha desejada.
+
+Itens podem ser coletados ao passar por eles. 
+
+Itens só podem ser utilizados em um espaço vazio. 

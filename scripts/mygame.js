@@ -210,6 +210,29 @@ se.setResources = function () {
     'image'
   );
   
+  this.loader.addResource(
+    'balon_msg',
+    'gui/balon_msg.png',
+    'image'
+  );
+  
+  
+  
+  this.loader.addResource(
+    'bt_close_msg',
+    'flags/bt_close_msg.png',
+    'image'
+  );
+  
+  
+  
+  this.loader.addResource(
+    'bt_next_msg',
+    'flags/bt_next_msg.png',
+    'image'
+  );
+  
+  
   //PLACEHOLDERS DAQUI --->>>
   
   //ITEM
@@ -303,7 +326,11 @@ se.gameReady = function () {
   
   currentLevel = 0;	
   levels = [];
-  levels.push( new Level1(true) );
+ 
+  levels.push( new Level({namelevel:"fase01", map:"map_level_1",item:"item_bridge", commands:['stack_new','stack_block_push', 'stack_character_push', 'stack_pop','set_item'],codebox:2,codeboy:1, codebo_posx:315, codebo_posy:200,map_margintop:200, map_marginleft:70, limitcommands:20,limitblock:5, posxend:4, posyend:3, flag_posx:475, flag_posy:180, commandsneedly:10, isActive:true}) );
+ 
+ 
+  levels.push( new Level(true) );
   levels[currentLevel]
   
   //carrega menu
@@ -508,9 +535,9 @@ function printCommands(limitcommand) {
   }
   
   
-    gui_block = new Sprite("gui_block", canvas.width - 180, 125, 25,25);
+    gui_block = new Sprite("gui_block", canvas.width - 130, 125, 25,25);
 	gui_block.setTag("guicommands");
-	txt_qtd_block = new Text("", canvas.width - 150, 147, "white", 25);
+	txt_qtd_block = new Text("", canvas.width - 100, 147, "white", 25);
 	txt_qtd_block.setTag("guicommands");
 
 	txt_qtd_block.update = function(){

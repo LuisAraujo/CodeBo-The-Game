@@ -1,22 +1,28 @@
-function Level({namelevel,map, item, commands, codebox, codeboy, codebo_posx, codebo_posy, map_margintop,map_marginleft,limitcommands, limitblock, posxend, posyend, flag_posx, flag_posy,commandsneedly,isActive} = {} ) {
+function Level1(namelevel,map, item, commands, codebox, codeboy, codebo_posx, codebo_posy, map_margintop,map_marginleft,limitcommands, limitblock, posxend, posyend, flag_posx, flag_posy,commandsneedly,isActive ) {
 	
-  this.xmlfile = map;
+  this.xmlfile = 'map_level_1';
   this.scene = new Scene(undefined, isActive);
-  this.itemname = item;
+  this.itemname = "item_bridge";
   this.scene.setFunctionStart( this.start.bind(this) );
   
-  this.commands = commands;
-  
-  this.codebox = codebox;
-  this.codeboy = codeboy;
+  this.commands = [
+    'stack_new',
+    'stack_block_push',
+    'stack_character_push',
+    'stack_pop',
+	'set_item'
+  ];
 
-  this.codebo_posx = codebo_posx;
-  this.codebo_posy = codebo_posy;
+  this.codebox = 2;
+  this.codeboy = 1;
 
-  this.map_margintop = map_margintop;
-  this.map_marginleft = map_marginleft;
+  this.codebo_posx = 315;
+  this.codebo_posy = 200;
 
-  this.limitcommands = limitcommands;
+  this.map_margintop = 200;
+  this.map_marginleft = 70;
+
+  this.limitcommands = 20;
 
   this.codebo = null;
   this.map;
@@ -25,18 +31,15 @@ function Level({namelevel,map, item, commands, codebox, codeboy, codebo_posx, co
   this.sp_item;
   
   //controling blocks' limit 
-  this.limitblock = limitblock;
+  this.limitblock = 5;
   this.blockused = 0;
   
-  this.posxend = posxend;
-  this.posyend = posyend;
-  
-  this.flag_posy = flag_posy;
-  this.flag_posx = flag_posx;
+  this.posxend = 1;
+  this.posyend = 0;
   
   //count ncommands needly to finish level
-  this.commandsneedly = commandsneedly;
-  this.namelevel = namelevel;
+  this.commandsneedly = 10;
+  this.namelevel = "teste";
   this.end = false;
   
 }
@@ -135,7 +138,7 @@ Level1.prototype.setLevel = function (arrmap, _this) {
   createContainerItem(_this.item);
    
   //verificar modo de automatizar isso e o item
-  this.flag = new Sprite("red_flag", this.flag_posx, this.flag_posy, 30, 60, 100);
+  this.flag = new Sprite("red_flag", 250, 180, 30, 60, 100);
   
 };
 
