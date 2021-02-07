@@ -3,14 +3,25 @@
   src: url("assets/fonts/poxel-font.ttf") format("ttf")
 }
 
-body{
+html, body{
     background-color: #555;
+	height: 100%;
+	width:100%;
+	overflow: hide;
 }
 
 canvas{
     background-color: #fff;
     margin-left: calc(50% - 600px);
     margin-top: 20px;
+}
+
+.mobile-canvas{
+	 margin: 0px !important;
+	 padding: 0px !important;
+	 position: fixed;
+	 top: 0;
+	 left: 0;
 }
 
 #nameplayer{

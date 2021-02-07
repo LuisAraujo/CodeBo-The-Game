@@ -23,17 +23,16 @@ function Item(sprite, x, y, classename, z, refx, refy,  level) {
 Item.prototype = Object.create(GameObject.prototype);
 
 
-
 Item.prototype.getTypeItem = function () {
 	return this.typeitem;
 }
 
-Item.prototype.hide = function () {
+Item.prototype.hide = function() {
 	this.setAlpha(0);
 	this.active = false;
 }
 
-Item.prototype.show = function () {
+Item.prototype.show = function() {
 	this.setAlpha(1);
 	this.active = true;
 }

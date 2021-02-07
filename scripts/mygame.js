@@ -1,4 +1,6 @@
-const se = new StarterEngine();
+const se = new StarterEngine(1200, 600);
+se.setAsMobile(true);
+
 
 se.setResources = function () {
 	
@@ -324,12 +326,13 @@ function createContainerItem(item) {
 
 
 function createCommandsButton(item, limitcommands) {
-  new Button(
+ 
+
+ new Button(
     'button_' + item,
     window.posx,
     520,
     function () {
-      console.log(item);
       if (actions.length < limitcommands) {
 		 
 		  if(item == "stack_block_push"){
@@ -351,7 +354,9 @@ function createCommandsButton(item, limitcommands) {
 }
 
 function createGUIButton() {
-  new Rect(0, 500, 100, 660, 'rgba(255, 255, 255, 0.5)');
+console.log(canvas.height );
+//barra comandos inferior
+  new Rect(0, canvas.height - 100, 100, 660, 'rgba(255, 255, 255, 0.5)');
   new Rect(0, 0, 110, 1200, '#30415d');
   new Rect(880, 150, 580, 1180, 'rgba(255, 255, 255, 0.5)');
 
@@ -432,6 +437,11 @@ function printCommands(limitcommand) {
   for (var i = 0; i < objectstag.length; i++) {
     se.mlevel.removeObject(objectstag[i]);
   }
+  
+  var objectstag = se.mlevel.getCurrentScene().getObjectsByTag('guicommands');
+  for (var i = 0; i < objectstag.length; i++) {
+    se.mlevel.removeObject(objectstag[i]);
+  }
 
   var posx = 0;
   var posy = 0;
@@ -492,7 +502,9 @@ function printCommands(limitcommand) {
   
   
     gui_block = new Sprite("gui_block", canvas.width - 180, 125, 25,25);
-	txt_qtd_block = new Text("", canvas.width - 150, 147, "white", 25)
+	gui_block.setTag("guicommands");
+	txt_qtd_block = new Text("", canvas.width - 150, 147, "white", 25);
+	txt_qtd_block.setTag("guicommands");
 
 	txt_qtd_block.update = function(){
 

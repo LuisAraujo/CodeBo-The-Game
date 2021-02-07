@@ -235,7 +235,7 @@ function GameObject(animations, x, y, classename, w, h, r, z) {
 
 	this.tag = "";
     this.linklevel = se.mlevel.currentScene;
-
+	this.isshow = true;
 
     //self add in currente level (test)
     if(se.mlevel.getCurrentScene()!= undefined)
@@ -421,6 +421,10 @@ GameObject.prototype.getAlpha = function(alpha) {
  */
 GameObject.prototype.print = function() {
 
+	
+	if(!this.isshow)
+		return;
+	
     if(this.animation != null) {
 		ctx.save();
         ctx.globalAlpha = this.alpha;
@@ -554,6 +558,23 @@ GameObject.prototype.translate = function(x, y) {
 GameObject.prototype.moveMouse = function (x, y) {
 
 }
+
+
+/**
+ * Muda o estado do gameobject para show
+ */
+GameObject.prototype.show = function() {
+		this.isshow = true;
+}
+
+/**
+ * Muda o estado do gameobject para hide
+ */
+GameObject.prototype.hide = function () {
+		this.isshow = false;
+}
+
+
 /**
  * Representa uma figura Geométrica
  * @param {int} x -  Coordenada x do texto
@@ -4006,7 +4027,112 @@ function Modal(items) {
 
 }
 
-Modal.prototype = Object.create(GameObject.prototype);
+
+/**
+* Mostra todos os elementos presentes no modal
+*/
+Modal.prototype.show = function(){
+	
+	for(var i=0; i < this.intems.lenght; i++)
+		items[i].show();
+}
+
+/**
+* Esconde todos os elementos presentes no modal
+*/
+Modal.prototype.hide = function(){
+	
+	for(var i=0; i < this.intems.lenght; i++)
+		items[i].hide();
+}
+
+
+
+
+
+/**
+* Essa classe que possui métodos relacionados à smartphones
+* @class
+*/
+function Mobile(){
+	
+	this.orientation = "";
+	this.ismobile = this.isMobile();
+	
+	//this.setAdjust();
+}
+
+Mobile.prototype.setAdjust = function(){
+	
+	/*window.addEventListener("orientationchange", function(event) {
+		 
+		this.adjustSizeScreen();
+	}.bind(this));  */
+
+}
+/**
+* Obtem informações sobre a plataforma utilizada
+*/
+Mobile.prototype.isMobile = function(){
+	
+	if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) 
+		return true;
+	else
+		return false;
+	
+}
+
+
+
+/**
+* Obtem informações a orientação do smartphone
+*/
+Mobile.prototype.getOrientation = function(){
+	
+	orientation =  (screen.orientation || {}).type || screen.mozOrientation || screen.msOrientation;
+	
+	return orientation;
+}
+
+
+Mobile.prototype.adjustSizeScreen = function(){
+	
+	if(this.getOrientation() == 0 || this.getOrientation() == 180){
+		canvas.height = window.innerHeight;
+		canvas.width = window.innerWidth;
+	}else{
+		canvas.width = window.innerWidth;
+		canvas.height =  window.innerHeight;
+	}
+	
+	canvas.classList.add("mobile-canvas");
+		console.log("change orientation" + canvas.height);
+	/* Get the documentElement (<html>) to display the page in fullscreen 
+	var elem = document.documentElement;
+
+	if (elem.requestFullscreen) {
+		elem.requestFullscreen();
+	} else if (elem.webkitRequestFullscreen) { // Safari 
+		elem.webkitRequestFullscreen();
+	} else if (elem.msRequestFullscreen) { // IE11 
+		elem.msRequestFullscreen();
+	}
+*/
+
+	
+}
+
+Mobile.prototype.closeFullScreen = function(){
+	if (document.exitFullscreen) {
+    document.exitFullscreen();
+  } else if (document.webkitExitFullscreen) { /* Safari */
+    document.webkitExitFullscreen();
+  } else if (document.msExitFullscreen) { /* IE11 */
+    document.msExitFullscreen();
+  }
+
+}
+
 
 
 
@@ -4021,9 +4147,32 @@ StarterEngine = function (w,h) {
     this.height = h;
     this.debugmode = false;
     this.starterlogo = null;
+	//exceute in smartphone as mobile?
+	this.asmobile = false;
 
+	/**@global */
+	canvas = null;
+	
     window.onload = function(){
-        window.canvas = document.getElementById("gamecanvas");
+        
+	
+		canvas = document.createElement("canvas");
+		canvas.id = "gamecanvas";
+		canvas.style="background: #909090";
+		
+		mobile = new Mobile();
+		if(mobile.isMobile() && this.asmobile){	
+			mobile.adjustSizeScreen();
+		}else{
+		
+			canvas.height = this.height;
+			canvas.width = this.width;
+		}
+		
+	
+		document.body.appendChild(canvas); 
+		
+		//window.canvas = document.getElementById("gamecanvas");
         window.ctx = canvas.getContext("2d");
         this.mlevel = new ManagerScene();
         this.mmouse = new ManagerMouse();
@@ -4038,7 +4187,8 @@ StarterEngine = function (w,h) {
         //iniciando o jogo
         this.setResources();
         this.beginLoad();
-    }.bind(this);
+    
+	}.bind(this);
 
 	/**@global */
     red = {r:255,b:0,g:0};
@@ -4060,9 +4210,23 @@ StarterEngine = function (w,h) {
 	purple = {r:255,b:255,g:0};
     /**@global */
 	gray = {r:255,b:0,g:0};
+	
+	this.pause = false;
+	this.pause_adjust = true;
+	this.landscape = true;
 
 
 };
+
+
+/**
+ * Configura a opção de executar como o app mobile
+ * @method
+ */
+StarterEngine.prototype.setAsMobile =function (asmobile) {
+    this.asmobile = asmobile;
+}
+
 
 /**
  * Inicia o caregamento dos arquivos
@@ -4092,10 +4256,27 @@ StarterEngine.prototype.startGame =function () {
  * @method
  */
 StarterEngine.prototype.loopgame = function (ctx) {
-	this.mlevel.getCurrentScene().updateFunction();
-    //chama o print do manager level
-    this.mlevel.print(ctx);
-    //requestframe
+
+	//is landscape?
+	if((mobile.isMobile()) && (this.landscape) && ( (mobile.getOrientation() == 0 ) || (mobile.getOrientation() == 180 ))){
+		
+		this.pause_adjust = true;
+			
+	}else if(this.pause_adjust){
+		
+		this.pause_adjust = false;
+		mobile.adjustSizeScreen();
+		
+	}
+	
+	if (!(this.pause_adjust) &&  (!this.pause)){
+		
+		this.mlevel.getCurrentScene().updateFunction();
+		//chama o print do manager level
+		this.mlevel.print(ctx);
+		//requestframe
+	}
+	
     requestAnimFrame(function() {
         se.loopgame(ctx);
     });

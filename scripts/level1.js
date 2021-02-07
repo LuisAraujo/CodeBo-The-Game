@@ -174,7 +174,7 @@ Level1.prototype.setEnd = function () {
 	 
 	
 	var sp_bg = new Sprite("bg_modal_finish", 200,100, 800, 400, "imagem", 200);
-
+	
 	var bt_menu = new Button("bt_menu_level", 400, 400,  function(){
 		 //ver o indice menu
 		 se.mlevel.loadScene(0);
