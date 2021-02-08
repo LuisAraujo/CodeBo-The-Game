@@ -698,6 +698,7 @@ Background.prototype.print = function(ctx) {
  * @constructor
  */
 function Scene(objects, isactive) {
+	this.tutorial = [];
     this.objects = [];
 
     if(objects != undefined)
@@ -710,6 +711,8 @@ function Scene(objects, isactive) {
         this.isActive = isactive;
 
     se.mlevel.addScene(this);
+	
+	this.currentutorial = 0;
 
 }
 
@@ -774,6 +777,80 @@ Scene.prototype.setFunctionStart = function(callback){
 };
 
 
+Scene.prototype.print = function () {
+    //Se a cena não estiver ativa
+    if(this.isActive == false)
+        return;
+
+    //sort by z-index
+    this.objects.sort(function(a,b){
+        return a.z - b.z;
+    });
+	
+	
+
+    for(var i=0; i< this.objects.length; i++) {
+        //chama update de cada objeto
+        this.objects[i].update();
+        //objetos pode ser removidos no update
+        if(this.objects[i] == undefined)
+            continue;
+
+        this.objects[i].print(ctx);
+    }
+}
+
+/**
+ * Configura a função inicial do level
+ * @method
+ * @param callback
+ */
+Scene.prototype.setFunctionStart = function(callback){
+    this.startFunction  = callback;
+};
+
+
+Scene.prototype.printTutorial = function () {
+    //Se a cena não estiver ativa
+    if(this.isActive == false)
+        return;
+
+    //sort by z-index
+    this.tutorial[this.currentutorial].sort(function(a,b){
+        return a.z - b.z;
+    });
+	
+
+    for(var i=0; i< this.tutorial[this.currentutorial].length; i++) {
+        //chama update de cada objeto
+        this.tutorial[this.currentutorial][i].update();
+        //objetos pode ser removidos no update
+        if(this.tutorial[this.currentutorial][i] == undefined)
+            continue;
+
+        this.tutorial[this.currentutorial][i].print(ctx);
+    }
+	
+	
+}
+
+Scene.prototype.addCurrentTutorial = function(){
+	if(this.currentutorial < this.tutorial.length-1)
+		this.currentutorial++;
+	else
+		se.mlevel.istutorial = false;
+	
+}
+
+/**
+ * Configura a função inicial do level
+ * @method
+ * @param callback
+ */
+Scene.prototype.setFunctionStart = function(callback){
+    this.startFunction  = callback;
+};
+
 /**
  * Configura a função inicial do level
  * @method
@@ -800,6 +877,17 @@ Scene.prototype.setObjects = function (objects) {
 Scene.prototype.getObjects = function () {
     return this.objects;
 }
+
+
+
+/**
+ * Pega todos os objetos de tutorial do level
+ * @method
+ */ 
+Scene.prototype.getTutorial = function () {
+    return this.tutorial[this.currentutorial];
+}
+
 
 /**
  * Pega um o objeto do level com base no seu classname
@@ -2398,8 +2486,11 @@ ManagerMouse.prototype.start = function () {
 
         var x = event.pageX - canvas.offsetLeft,
             y = event.pageY - canvas.offsetTop;
-
+			
+			
         var objects = se.mlevel.getObjectsCurrentScene();
+        var tutorial = se.mlevel.getTutorialCurrentScene();
+		console.log(tutorial );
 
         for(var i = 0; i < objects.length; i++) {
             element = objects[i];
@@ -2425,6 +2516,37 @@ ManagerMouse.prototype.start = function () {
             }
 
         };
+		
+		
+		for(var i = 0; i < tutorial.length; i++) {
+            element = tutorial[i];
+console.log(element );
+        if ((element.classename == "dragdrop") && (!element.dragdroped)){
+
+            if (y > element.y && y < element.y + element.h && x > element.x && x < element.x + element.w) {
+                element.click();
+                break;
+            }
+
+        } else if (element.classename == "button") {
+			
+			console.log(y ,element.y,x , element.x );
+			
+            if (y > element.y && y < element.y + element.h && x > element.x && x < element.x + element.w) {
+                element.click();
+                break;
+            }
+
+        }
+
+            if(i == tutorial.length-1){
+                se.mlevel.offDragdropFlag();
+                console.log("off")
+            }
+
+        }
+		
+		
 
     }, false);
 
@@ -2604,6 +2726,19 @@ ManagerScene.prototype.getObjectsCurrentScene = function () {
 }
 
 
+
+
+/**
+ * todo precisa documentar
+ */
+ManagerScene.prototype.getTutorialCurrentScene = function () {
+    if(this.currentScene != -1)
+        return this.scenes[this.currentScene].getTutorial();
+    else
+        return [];
+}
+
+
 /**
  * Remove um objeto no level em que ele foi criado
  * @method
@@ -2629,6 +2764,11 @@ ManagerScene.prototype.addScore = function(scorename){
     //this.score++;
 }
 
+
+ManagerScene.prototype.printTutorial = function(){
+	
+    this.scenes[this.currentScene].printTutorial(ctx);
+}
 
 /**
  * Chamado quando ocorre o Game Over
@@ -4270,6 +4410,7 @@ StarterEngine.prototype.loopgame = function (ctx) {
 		
 	}
 	
+	
 	if (!(this.pause_adjust) &&  (!this.pause)){
 		
 		this.mlevel.getCurrentScene().updateFunction();
@@ -4277,6 +4418,10 @@ StarterEngine.prototype.loopgame = function (ctx) {
 		this.mlevel.print(ctx);
 		//requestframe
 	}
+	
+	
+	if(this.mlevel.istutorial)
+		this.mlevel.printTutorial(ctx)
 	
     requestAnimFrame(function() {
         se.loopgame(ctx);

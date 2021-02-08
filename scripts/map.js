@@ -1,4 +1,4 @@
-function Map(map, margintop, marginleft) {
+function Map(map, margintop, marginleft, item) {
 
 	this.initialmap  = [];
 	this.map = map;
@@ -10,13 +10,19 @@ function Map(map, margintop, marginleft) {
 	this.marginleft = marginleft;
 	this.create();
 	
-	this.item = new Item("item_bridge",  210, 220, "imagem", 100, 0,0);
+	this.item = item
 	
+}
+
+
+Map.prototype.setItem = function(item){
+	this.item = item;
 }
 
 Map.prototype.getItem = function(){
 	return this.item;
 }
+
 Map.prototype.getMap = function(){
 	return this.map;
 }
@@ -53,7 +59,8 @@ Map.prototype.reset = function(codebo){
 	this.create();
 	this.adjustmentLevels(codebo.actuallevel, codebo.actualx, codebo.actualy);
 	console.log(this.item);
-	this.item.show();
+	if(this.item != undefined)
+		this.item.show();
 }
 
 

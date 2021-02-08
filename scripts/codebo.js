@@ -215,13 +215,12 @@ Codebo.prototype.runCommands = function (exec) {
 		var item = levels[currentLevel].getMap().getItem();
 		
 		//get item?
-		if((this.actualx == item.refx) && (this.actualy == item.refy) && (item.active) ){
+		if( (item != undefined) && (this.actualx == item.refx) && (this.actualy == item.refy) && (item.active) ){	
 			
-			this.getItem(item);
-			
+			this.getItem(item);	
 		}
 		
-		console.log(levels[currentLevel].posxend);
+	
 		//is in the end?
 		if((this.actualx == levels[currentLevel].posxend) && (this.actualy == levels[currentLevel].posyend)){
 		    

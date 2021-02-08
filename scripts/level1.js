@@ -1,4 +1,4 @@
-function Level({namelevel,map, item, commands, codebox, codeboy, codebo_posx, codebo_posy, map_margintop,map_marginleft,limitcommands, limitblock, posxend, posyend, flag_posx, flag_posy,commandsneedly,isActive} = {} ) {
+function Level({namelevel,map, item, commands, codebox, codeboy, codebo_posx, codebo_posy, map_margintop,map_marginleft,limitcommands, limitblock, posxend, posyend, flag_posx, flag_posy,item_posx, item_posy,itemx , itemy, commandsneedly, tutorial, istutorial, isActive} = {} ) {
 	
   this.xmlfile = map;
   this.scene = new Scene(undefined, isActive);
@@ -34,38 +34,55 @@ function Level({namelevel,map, item, commands, codebox, codeboy, codebo_posx, co
   this.flag_posy = flag_posy;
   this.flag_posx = flag_posx;
   
+  
+  this.item_posy = item_posy;
+  this.item_posx = item_posx;
+  
+   this.itemy = itemy;
+  this.itemx = itemx;
+  
+  
+  
   //count ncommands needly to finish level
   this.commandsneedly = commandsneedly;
   this.namelevel = namelevel;
   this.end = false;
   
+  this.tutorial  = tutorial;
+  
+  if(istutorial)
+	  se.mlevel.istutorial = true;
+  
 }
 
+Level.prototype.setTutorial = function(tutorial){
+	return this.scene.tutorial=tutorial;
+}
 
-Level1.prototype.reset = function(full){
+Level.prototype.reset = function(full){
 	if(full)
 		this.blockused = 0;
 	this.hideItem();
 	this.end = false;
 }
 
-Level1.prototype.showItem = function(item){
+Level.prototype.showItem = function(item){
 	
 	this.sp_item.setAlpha(1);
 	//mudar animação
 	
 }
 
-Level1.prototype.hideItem = function(){
+Level.prototype.hideItem = function(){
 	this.sp_item.setAlpha(0);
 }
 
-Level1.prototype.updateLevel = function (limitcommands) {
+Level.prototype.updateLevel = function (limitcommands) {
   printCommands(limitcommands);
 };
 
 
-Level1.prototype.start = function () {
+Level.prototype.start = function () {
 
    actions = [];
 
@@ -83,14 +100,20 @@ Level1.prototype.start = function () {
   
 };
 
-Level1.prototype.setLevel = function (arrmap, _this) {
-	
+Level.prototype.setLevel = function (arrmap, _this) {
+
   createGUIButton();
 
   var commands = _this.commands;
 
   //map
   _this.map = new Map(arrmap, _this.map_margintop, this.map_marginleft);
+  
+  if(_this.itemname != undefined){
+	 
+	  
+	_this.map.setItem( new Item(_this.itemname,  _this.item_posx, _this.item_posy, "imagem", 100, _this.itemx, _this.itemy) )
+  }
 
   //CodeBo
   _this.codebo = new Codebo(
@@ -130,6 +153,7 @@ Level1.prototype.setLevel = function (arrmap, _this) {
   });
   
    
+   
   this.sp_item = new Sprite(this.itemname, canvas.width/2 - 15, 40, 30, 30 );
   this.sp_item.setAlpha(0);
   createContainerItem(_this.item);
@@ -139,29 +163,29 @@ Level1.prototype.setLevel = function (arrmap, _this) {
   
 };
 
-Level1.prototype.getScene = function () {
+Level.prototype.getScene = function () {
   return this.scene;
 };
 
-Level1.prototype.getCodebo = function () {
+Level.prototype.getCodebo = function () {
   return this.codebo;
 };
 
-Level1.prototype.getMap = function () {
+Level.prototype.getMap = function () {
   return this.map;
 };
 
-Level1.prototype.getLimitBlock = function () {
+Level.prototype.getLimitBlock = function () {
   return this.limitblock;
 };
 
 
-Level1.prototype.getEnd = function () {
+Level.prototype.getEnd = function () {
   return this.end;
 };
 
 
-Level1.prototype.setEnd = function () {
+Level.prototype.setEnd = function () {
 	 
 	 if(this.end)
 		  return;
