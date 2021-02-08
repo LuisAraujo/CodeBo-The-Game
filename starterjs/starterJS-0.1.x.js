@@ -238,10 +238,11 @@ function GameObject(animations, x, y, classename, w, h, r, z) {
 	this.isshow = true;
 
     //self add in currente level (test)
-    if(se.mlevel.getCurrentScene()!= undefined)
+    if(se.mlevel.getCurrentScene()!= undefined){
         se.mlevel.getCurrentScene().addObjects(this);
-    else
+	}else{
         console.warn("Impossível inserir objeto no nível atual.");
+	}
 }
 
 
@@ -757,6 +758,7 @@ Scene.prototype.print = function () {
 	
 
     for(var i=0; i< this.objects.length; i++) {
+		
         //chama update de cada objeto
         this.objects[i].update();
         //objetos pode ser removidos no update
@@ -834,6 +836,11 @@ Scene.prototype.printTutorial = function () {
 	
 }
 
+Scene.prototype.resetCurrentTutorial = function(){
+	this.currentutorial = 0;
+}
+
+
 Scene.prototype.addCurrentTutorial = function(){
 	if(this.currentutorial < this.tutorial.length-1)
 		this.currentutorial++;
@@ -842,6 +849,14 @@ Scene.prototype.addCurrentTutorial = function(){
 	
 }
 
+
+
+Scene.prototype.subCurrentTutorial = function(){
+	if(this.currentutorial > 0)
+		this.currentutorial--;
+	
+	
+}
 /**
  * Configura a função inicial do level
  * @method
@@ -4411,7 +4426,7 @@ StarterEngine.prototype.loopgame = function (ctx) {
 	}
 	
 	
-	if (!(this.pause_adjust) &&  (!this.pause)){
+	if ((!this.pause_adjust) &&  (!this.pause)){
 		
 		this.mlevel.getCurrentScene().updateFunction();
 		//chama o print do manager level

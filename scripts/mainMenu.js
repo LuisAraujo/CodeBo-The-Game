@@ -1,19 +1,18 @@
 function MainMenu(isActive) {
 	this.scene =  new Scene(undefined, isActive);
 	this.start();
+	
 }
 
 
 MainMenu.prototype.start = function(){
 	
-	this.scene.setFunctionStart(function () {
-	  
+	this.scene.setFunctionStart( function () {
+	 
 		new Sprite("gui_bg_menu", 0,0,canvas.width,canvas.height);
-
 		new Sprite("gui_block5", 250, 210);
-
 		new Sprite("gui_floor", 170,400);
-
+		
 		s = new Sprite("gui_codebo", 400, 350);
 		s.changeSizeFor(0.6);
 		s.setRotate(355);
@@ -98,7 +97,7 @@ MainMenu.prototype.start = function(){
   });
   
   
-  this.scene.setFunctionUpdate(function () {});
+  this.scene.setFunctionUpdate(function () {  });
   
   
 }

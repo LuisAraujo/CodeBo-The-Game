@@ -234,6 +234,11 @@ se.setResources = function () {
     'image'
   );
   
+    this.loader.addResource(
+    'bt_prior_msg',
+    'gui/bt_prior_msg.png',
+    'image'
+  );
   
   //PLACEHOLDERS DAQUI --->>>
   
@@ -327,72 +332,114 @@ se.setResources = function () {
 se.gameReady = function () {
   
   
-  //TUTORIALS
+  /** MENU
+  mainmenu = new MainMenu(true);
+  mainmap = new MapMenu(true);
+ 
+  se.mlevel.loadScene(0);
+  */
+
+  
+  /***** TUTORIALS */
   bt_next_tutorial = new Button(
-    'bt_next_msg',
-    520,  180,
+    'bt_next_msg', 520,  180,
     function () { 
 		se.mlevel.getCurrentScene().addCurrentTutorial();
 	},
     40,40);
 	
+	//TUTORIALS
+  bt_prior_tutorial = new Button(
+    'bt_prior_msg', 210,  180,
+    function () { 
+		se.mlevel.getCurrentScene().subCurrentTutorial();
+	},
+    40,40);
+	
 	bt_close_tutorial =  new Button(
-    'bt_close_msg',
-    570,  180,
+    'bt_close_msg', 570,  180,
     function () { 
 		se.mlevel.istutorial = false;
 	},
     40,40);
 	
-  tutorial = [ ];
-  tutorial.push([
+	tutorial_1 = [];
+	tutorial_1.push([
   
-	new Rect(0,0, canvas.height, canvas.width, 'rgba(0, 0, 3, 0.5)'),
-	new Sprite("balon_msg", 200,200), 	bt_next_tutorial, bt_close_tutorial,	
-	new Text('Olá, eu sou o codeBô!', 280, 260, '#000', 25),
-	new Text('Vamos seguir juntos, nesta aventura?', 230, 300, '#000', 20)
+		new Rect(0,0, canvas.height, canvas.width, 'rgba(0, 0, 3, 0.5)'),
+		new Sprite("balon_msg", 200,200), 	bt_next_tutorial, bt_close_tutorial, 	
+		new Text('Olá, eu sou o codeBô!', 280, 260, '#000', 25),
+		new Text('Vamos seguir juntos, nesta aventura?', 230, 300, '#000', 20)
 	
 	]);
 	
-	tutorial.push([
+	tutorial_1.push([
   
-	new Rect(0,0, canvas.height, canvas.width, 'rgba(0, 0, 3, 0.5)'),
-	new Sprite("balon_msg", 200,200), 	bt_next_tutorial, bt_close_tutorial,	
-	new Text('Precisamos chegar até a ', 230, 280, '#000', 24),
-	new Sprite("red_flag", 510, 240, 40, 60),
+		new Rect(0,0, canvas.height, canvas.width, 'rgba(0, 0, 3, 0.5)'),
+		new Sprite("balon_msg", 200,200), 	bt_next_tutorial, bt_close_tutorial,bt_prior_tutorial,	
+		new Text('Precisamos chegar até a ', 230, 280, '#000', 24),
+		new Sprite("red_flag", 510, 240, 40, 60)
 
 	]);
   
-  tutorial.push([
-  
-	new Rect(0,0, canvas.height, canvas.width, 'rgba(0, 0, 3, 0.5)'),
-	new Sprite("balon_msg", 200,200), 	bt_next_tutorial, bt_close_tutorial,	
-	new Text('Para isso, use os botões ', 230, 250, '#000', 24),
-	new Text('de movimento:', 230, 280, '#000', 24),
-	new Sprite("button_left", 400, 260, 40, 40),
-	new Sprite("button_forward", 445, 260, 40, 40),
-	new Sprite("button_right", 490, 260, 40, 40),
+	tutorial_1.push([
+		new Rect(0,0, canvas.height, canvas.width, 'rgba(0, 0, 3, 0.5)'),
+		new Sprite("balon_msg", 200,200), bt_next_tutorial, bt_close_tutorial,	bt_prior_tutorial,
+		new Text('Para isso, use os botões ', 250, 260, '#000', 24),
+		new Text('de movimento.', 320, 290, '#000', 24),
+		new Sprite("button_left", 90, 530, 60, 60),
+		new Sprite("button_forward", 20, 530, 60, 60),
+		new Sprite("button_right", 160, 530, 60, 60)
 	]);
-  
-  //LEVELS
-  currentLevel = 0;	
-  levels = [];
- 
+	
+	tutorial_1.push([
+		new Rect(0,0, canvas.height, canvas.width, 'rgba(0, 0, 3, 0.5)'),
+		new Sprite("balon_msg", 200,200), 	bt_next_tutorial, bt_close_tutorial,bt_prior_tutorial,	
+		new Text('Use o botão play para executar ', 230, 260, '#000', 24),
+		new Text('a sua sequência.', 300, 290, '#000', 24),
+		new Sprite("button_play",  canvas.width - 300, 20, 70, 70)
+	]);
+	
+	
+
+	//LEVELS
+	currentLevel = 0;	
+	levels = [];
+
 	//LEVEL1
 	levels.push( new Level({namelevel:"fase01", map:"map_level_1",item: undefined, commands:[],codebox:0,codeboy:0, codebo_posx:205, codebo_posy:215,map_margintop:200, map_marginleft:70, limitcommands:20,limitblock:5, posxend:5, posyend:5, flag_posx:580, flag_posy:190, commandsneedly:10, istutorial: true, isActive:true}) );
+
+	levels[0].setTutorial( tutorial_1 );
+  
+  
+  
+    //TUTORIAL 8
 	
-	levels[0].setTutorial( tutorial );
-  
-  
+	tutorial_8 = [];
+	tutorial_8.push([
+		new Rect(0,0, canvas.height, canvas.width, 'rgba(0, 0, 3, 0.5)'),
+		new Sprite("balon_msg", 200,200), 	bt_next_tutorial, bt_close_tutorial, 	
+		new Text('Uau! Um item.', 320, 260, '#000', 25),
+		new Text('Para capturar, passe pela sua posição.', 230, 300, '#000', 20)
+	]);
+
+	tutorial_8.push([
+		new Rect(0,0, canvas.height, canvas.width, 'rgba(0, 0, 3, 0.5)'),
+		new Sprite("balon_msg", 200,200), 	bt_next_tutorial, bt_close_tutorial, bt_prior_tutorial,
+		new Text('Você poderá usar o item', 280, 260, '#000', 25),
+		new Text('com o comando Adicionar item na cena.', 230, 300, '#000', 20),
+		new Sprite("button_set_item", 510, 530, 60, 60)
+	]);
+	
+	
 	//LEVEL 8
     levels.push( new Level({namelevel:"fase01", map:"map_level_8",item:"item_bridge", item_posx: 220, item_posy: 235, itemx: 0, itemy :0, commands:['stack_new','stack_block_push', 'stack_character_push', 'stack_pop','set_item'],codebox:2,codeboy:1, codebo_posx:315, codebo_posy:200,map_margintop:200, map_marginleft:70, limitcommands:20,limitblock:5, posxend:4, posyend:3, flag_posx:475, flag_posy:180, commandsneedly:10, isActive:true}) );
+	
+	levels[1].setTutorial( tutorial_8 );
  
   
-  
-
-  
-  //carrega menu
-  se.mlevel.loadScene(0);
+	//carrega menu
+	se.mlevel.loadScene(0);
   
 };
 
@@ -401,9 +448,7 @@ function createContainerItem(item) {
 }
 
 function nextLevel(){
-	
 	currentLevel++;
-	
 }
 
 
@@ -502,7 +547,12 @@ new Rect(canvas.width - 300, 150, 580, 1180, 'rgba(255, 255, 255, 0.5)');
     60
   );
 
-  new Button('button_help', 20, 20, function () {}, 70, 70);
+  new Button('button_help', 20, 20, function () {
+	   se.mlevel.getCurrentScene().resetCurrentTutorial();	
+	   se.mlevel.istutorial = true;
+  }, 70, 70);
+  
+  
   new Button(
     'button_menu',
     110,
