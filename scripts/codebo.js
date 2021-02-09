@@ -166,6 +166,10 @@ Codebo.prototype.runCommands = function (exec) {
       
       if (this.actualdirection == this.directions.FRONT) {
         
+		if(this.map[this.actualy + 1] == undefined){
+			consoleWarnig("Impossível seguir!");
+			return;
+		}
 		//is a block?
 		if( this.map[this.actualy + 1][this.actualx] > 10){
 			
@@ -181,14 +185,30 @@ Codebo.prototype.runCommands = function (exec) {
 			  //this.actualx
 			  this.actualy += 1;
 			
+			//sobre o item
 			}else{
 				consoleWarnig("Impossível seguir!");
 			}
 			
-		//is a pilha @todo
-		}else{
+		
+		}else if ( 
+			  this.map[this.actualy + 1][this.actualx] < 10 &&
+			  this.map[this.actualy + 1][this.actualx] > 0
+			) 
+
+			{
+			  this.x += 35;
+			  this.y += 17.5;
+
+			  //this.actualx
+			  this.actualy += 1;
+			  
+			  
+	    }else{
 				consoleWarnig("Impossível seguir!");
-			}
+		}
+		
+		
 
 	 } else if (this.actualdirection == this.directions.BACK) {
         
@@ -205,6 +225,16 @@ Codebo.prototype.runCommands = function (exec) {
 			}else {
 				consoleWarnig("Impossível seguir!");
 			}
+		}else if ( 
+			  this.map[this.actualy - 1][this.actualx] < 10 &&
+			  this.map[this.actualy - 1][this.actualx] > 0
+			) {
+				
+			this.x -= 35;
+			this.y -= 17.5;
+
+			this.actualy -= 1;
+		
 		}else{
 				consoleWarnig("Impossível seguir!");
 			}
@@ -225,6 +255,16 @@ Codebo.prototype.runCommands = function (exec) {
 			}else {
 				consoleWarnig("Impossível seguir!");
 			}
+		}else if ( 
+			  this.map[this.actualy][this.actualx-1] < 10 &&
+			  this.map[this.actualy][this.actualx-1] > 0
+			) {
+		
+			this.x -= 36;
+			this.y += 18;
+
+			this.actualx -= 1;
+		
 		}else{
 				consoleWarnig("Impossível seguir!");
 			}
@@ -240,12 +280,22 @@ Codebo.prototype.runCommands = function (exec) {
 			  this.y -= 18;
 
 			  this.actualx += 1;
-			  //this.actualy+=1;
+			 
 			}else {
 				consoleWarnig("Impossível seguir!");
 			}
+		}else if ( 
+			  this.map[this.actualy][this.actualx + 1] < 10 &&
+			  this.map[this.actualy][this.actualx + 1] > 0
+			) {
+				
+			this.x += 36;
+			this.y -= 18;
+
+			this.actualx += 1;
+		
 		}else{
-				consoleWarnig("Impossível seguir!");
+			consoleWarnig("Impossível seguir!");
 		}
       }
 
@@ -260,19 +310,6 @@ Codebo.prototype.runCommands = function (exec) {
 			
 			this.getItem(item);	
 		}
-		
-	
-		/*is in the end?
-		if((this.actualx == levels[currentLevel].posxend) && (this.actualy == levels[currentLevel].posyend)){
-		    
-			if(!this.end){
-				console.log("ok");
-				this.end = true;
-				levels[currentLevel].setEnd();
-				
-			}
-		}*/
-		
 		
     }else{
 		consoleWarning("Codebo está na pilha!");

@@ -380,7 +380,7 @@ se.gameReady = function () {
 	
 	
 	//LEVELS
-	currentLevel = 7;	
+	currentLevel = 8;	
 	levels = [];
 
 
@@ -582,10 +582,10 @@ se.gameReady = function () {
 	]);
 	
 	
-	/*//LEVEL 9
-    levels.push( new Level({namelevel:"fase09", map:"map_level_9",item:"item_bridge", item_posx: 220, item_posy: 235, itemx: 0, itemy :0, commands:['stack_new','stack_block_push', 'stack_character_push', 'stack_pop','set_item'],codebox:2,codeboy:1, codebo_posx:315, codebo_posy:200,map_margintop:200, map_marginleft:70, limitcommands:20,limitblock:5, posxend:4, posyend:3, flag_posx:475, flag_posy:180, commandsneedly:10, isActive:true}) );
+	//LEVEL 9
+    levels.push( new Level({namelevel:"fase09", map:"map_level_9",item:"item_bridge", item_posx: 220, item_posy: 235, itemx: 0, itemy :0, commands:['stack_new','stack_block_push', 'stack_character_push', 'stack_pop','set_item'],codebox:2,codeboy:1, codebo_posx:315, codebo_posy:200,map_margintop:0, map_marginleft:70, limitcommands:20,limitblock:5, posxend:4, posyend:3, flag_posx:475, flag_posy:180, commandsneedly:10, istutorial: true, isActive:true}) );
 	
-	levels[7].setTutorial( tutorial_9 );*/
+	levels[8].setTutorial( tutorial_9 );
  
   
 	//carrega menu
@@ -654,11 +654,10 @@ function createCommandsButton(item, limitcommands) {
 					}		
 				}
 				
-				if(actions.length == 0){
-					levels[currentLevel].limitblock++;		
-				}
-					
-				if((action_valid) || (actions.length == 0))
+				if((actions.length == 0) && ((currentLevel == 5) || (currentLevel == 7))){
+					levels[currentLevel].limitblock++;	
+					actions.push(item);					
+				}else if(action_valid) 
 					actions.push(item);
 				
 		  }else{
