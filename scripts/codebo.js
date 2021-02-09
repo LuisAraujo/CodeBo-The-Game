@@ -88,6 +88,10 @@ Codebo.prototype.pause = function () {
   this.inpause = true;
 };
 
+Codebo.prototype.getPause = function(){
+	return this.inpause;
+}
+
 Codebo.prototype.remot = function () {
   this.inpause = false;
 };
@@ -116,7 +120,7 @@ Codebo.prototype.start = function () {
 
   setTimeout(function () {
     _this.runCommands(_this.currentexec);
-  }, 100);
+  }, TimeExecuteAction);
   
    console.log(this.codebo_dir);
    if(this.codebo_dir == 0)
@@ -134,6 +138,11 @@ Codebo.prototype.setCommands = function (actions, map) {
   this.actions = actions;
   this.map = map;
 };
+
+Codebo.prototype.getCurrentAction = function(){
+	return this.actualaction;
+}
+
 
 Codebo.prototype.runCommands = function (exec) {
 	console.log("run commands", this.actualaction, actions);
@@ -159,6 +168,7 @@ Codebo.prototype.runCommands = function (exec) {
         
 		//is a block?
 		if( this.map[this.actualy + 1][this.actualx] > 10){
+			
 			if ( 
 			  this.map[this.actualy] != undefined &&
 			  this.map[this.actualy + 1][this.actualx]%10 == this.getLevel() 
@@ -170,22 +180,12 @@ Codebo.prototype.runCommands = function (exec) {
 
 			  //this.actualx
 			  this.actualy += 1;
-			}
-		//is a pilha @todo
-		}else if ( 
-			  this.map[this.actualy] != undefined &&
-			  this.map[this.actualy + 1][this.actualx] < 10
-			) 
-			
-			{
-			  this.x += 35;
-			  this.y += 17.5;
-
-			  //this.actualx
-			  this.actualy += 1;
 			}else{
-				msgconsole = "Impossível seguir!";
+				consoleWarnig("Impossível seguir!");
 			}
+			
+		//is a pilha @todo
+		}
 
 	 } else if (this.actualdirection == this.directions.BACK) {
         
@@ -199,9 +199,9 @@ Codebo.prototype.runCommands = function (exec) {
 			  this.y -= 17.5;
 
 			  this.actualy -= 1;
+			}else {
+				consoleWarnig("Impossível seguir!");
 			}
-		}else {
-			msgconsole = "Impossível seguir!";
 		}
 	  
 	  } else if (this.actualdirection == this.directions.RIGHT) {
@@ -217,9 +217,9 @@ Codebo.prototype.runCommands = function (exec) {
 
 			  this.actualx -= 1;
 			  //this.actualy
+			}else {
+				consoleWarnig("Impossível seguir!");
 			}
-		}else {
-			msgconsole = "Impossível seguir!";
 		}
 
 	 } else if (this.actualdirection == this.directions.LEFT) {
@@ -234,9 +234,9 @@ Codebo.prototype.runCommands = function (exec) {
 
 			  this.actualx += 1;
 			  //this.actualy+=1;
+			}else {
+				consoleWarnig("Impossível seguir!");
 			}
-		}else {
-			msgconsole = "Impossível seguir!";
 		}
       }
 
@@ -266,7 +266,8 @@ Codebo.prototype.runCommands = function (exec) {
 		
 		
     }else{
-		msgconsole = "Codebo está na pilha!";
+		consoleWarning("Codebo está na pilha!");
+
 	}
   
     
@@ -332,8 +333,9 @@ Codebo.prototype.runCommands = function (exec) {
 		(this.map[this.actualy][this.actualx + 1]%10)*-1
 	  );
     
-	else
-		 msgconsole = "pilha não criada!";
+	else{
+		 consoleWarnig("pilha não criada!");
+	}
 	
     levels[currentLevel].getMap().create();
     levels[currentLevel].getMap().adjustmentLevels(this.getLevel(), this.actualx, this.actualy);
@@ -387,7 +389,8 @@ Codebo.prototype.runCommands = function (exec) {
         );
     }else{
 		
-		msgconsole = "Impossível inserir em uma pilha.";
+		consoleError("Impossível inserir em uma pilha!");
+		this.pause();
 		
 	}
 
@@ -502,8 +505,8 @@ Codebo.prototype.runCommands = function (exec) {
         .adjustmentLevels(this.getLevel(), this.actualx, this.actualy);
      this.is_stacked = true;
 	}else{
-		msgconsole = "Impossível inserir em uma pilha.";
-
+		consoleError("Impossível inserir em uma pilha.");
+		this.pause();
 	}
 	
    
@@ -536,9 +539,9 @@ Codebo.prototype.runCommands = function (exec) {
 			  this.actualy += 1;
 			}	
 		}else{
-				console.log('n POP front!');
-				msgconsole = "Codebo não pode sair da pilha!";
-			}
+			consoleError("Codebo não pode sair da pilha!");
+		    this.pause();
+		}
 			
       } else if (this.actualdirection == this.directions.BACK) {
         
@@ -556,7 +559,8 @@ Codebo.prototype.runCommands = function (exec) {
 			  this.actualy -= 1;
 			}
 		}else{
-			msgconsole = "Codebo não pode sair da pilha!";
+			consoleError("Codebo não pode sair da pilha!");
+		    this.pause();
 		}
 			
       } else if (this.actualdirection == this.directions.RIGHT) {
@@ -576,7 +580,8 @@ Codebo.prototype.runCommands = function (exec) {
 			  //this.actualy
 			}
 		}else{
-			msgconsole = "Codebo não pode sair da pilha!";
+			consoleError("Codebo não pode sair da pilha!");
+		    this.pause();
 		}
 		
       } else if (this.actualdirection == this.directions.LEFT) {
@@ -595,7 +600,8 @@ Codebo.prototype.runCommands = function (exec) {
 			  //this.actualy+=1;
 			}
 		}else{
-			msgconsole = "Codebo não pode sair da pilha!";
+			consoleError("Codebo não pode sair da pilha!");
+		    this.pause();
 		}
 	  
       }
@@ -610,7 +616,7 @@ Codebo.prototype.runCommands = function (exec) {
 	  
 	  if (
         this.actualdirection == this.directions.FRONT &&
-        levels[currentLevel].getMap().map[this.actualy + 1][this.actualx] < 0
+        levels[currentLevel].getMap().map[this.actualy + 1][this.actualx] < -1
       ) {
         levels[currentLevel]
           .getMap()
@@ -622,7 +628,7 @@ Codebo.prototype.runCommands = function (exec) {
      
 	 } else if (
         this.actualdirection == this.directions.RIGHT &&
-        this.map[this.actualy][this.actualx - 1] < 0
+        this.map[this.actualy][this.actualx - 1] < -1
       ) {
         levels[currentLevel]
           .getMap()
@@ -633,7 +639,7 @@ Codebo.prototype.runCommands = function (exec) {
           );
       } else if (
         this.actualdirection == this.directions.BACK &&
-        this.map[this.actualy - 1][this.actualx] < 0
+        this.map[this.actualy - 1][this.actualx] < -1
       ) {
         console.log(this.actualy, this.actualx);
         levels[currentLevel]
@@ -645,7 +651,7 @@ Codebo.prototype.runCommands = function (exec) {
           );
       } else if (
         this.actualdirection == this.directions.LEFT &&
-        this.map[this.actualy][this.actualx + 1] < 0
+        this.map[this.actualy][this.actualx + 1] < -1
       ) {
         levels[currentLevel]
           .getMap()
@@ -654,7 +660,11 @@ Codebo.prototype.runCommands = function (exec) {
             this.actualy,
             parseInt(levels[currentLevel].getMap().map[this.actualy][this.actualx + 1]) + 1
           );
-      }
+      
+	  }else{
+		   consoleError("Erro ao desempilhar!!");
+		   this.pause();
+	  }
 
       levels[currentLevel].getMap().create();
       levels[currentLevel]
@@ -719,7 +729,9 @@ Codebo.prototype.runCommands = function (exec) {
   if (this.actualaction < actions.length) {
     setTimeout(function () {
       _this.runCommands(exec);
-    }, 100);
+    }, TimeExecuteAction);
+  }else{
+	  this.pause();
   }
 };
 

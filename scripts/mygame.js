@@ -145,10 +145,19 @@ se.setResources = function () {
 
   //movement mini buttons
   this.loader.addResource(
+    'mini_hightlight',
+    'buttons/buttons_hightlight.png',
+    'image'
+  );
+  
+  
+  this.loader.addResource(
     'mini_forward',
     'buttons/button_forward_mini.png',
     'image'
   );
+  
+  
   this.loader.addResource('mini_left', 'buttons/button_left_mini.png', 'image');
   this.loader.addResource(
     'mini_right',
@@ -338,6 +347,9 @@ se.setResources = function () {
 //Quando o loading dos recursos acaba, esse métodos é executado
 se.gameReady = function () {
   
+  //@todo colocar isso em configurações
+  TimeExecuteAction  = 200;
+  
   msgconsole = "";
   
   /** MENU */
@@ -407,7 +419,7 @@ se.gameReady = function () {
 	
 
 	//LEVELS
-	currentLevel = 0;	
+	currentLevel = 2;	
 	levels = [];
 
 	//LEVEL1
@@ -574,6 +586,7 @@ se.gameReady = function () {
 };
 
 function createContainerItem(item) {
+	new Text("item", canvas.width/2 - 15, 25, "white", 15);
 	new Sprite("container_item", canvas.width/2 - 25, 30, 50, 50 );
 }
 
@@ -680,6 +693,7 @@ new Rect(canvas.width - 300, 150, 580, 1180, 'rgba(255, 255, 255, 0.5)');
     20,
     function () {
 	  msgconsole = "";
+	  txt_console.color = "#fff";
 	  levels[currentLevel].reset();
 	  levels[currentLevel].getCodebo().reset();
 	  levels[currentLevel].getMap().reset(levels[currentLevel].getCodebo());
@@ -764,10 +778,19 @@ function printCommands(limitcommand) {
   var j = 0;
   var size = 40;
 
+
+	actualaction = 0;
+	
+ 
+   
+   
   //percorrendo os comandos
   for (var i = 0; i < actions.length; i++) {
 	 //if(actions[i] == "stack_block_push")
 		// qtd_block++;
+	 
+	 
+	 
 	 
     j++;
 
@@ -775,7 +798,7 @@ function printCommands(limitcommand) {
     if (i % 6 == 0) j = 0;
     posy = parseInt(i / 6) * (size + 5);
     posx = j * (size + 5);
-     
+    
     bt = new MiniButton(
       'mini_' + actions[i],
       marginx + posx,
@@ -826,6 +849,14 @@ function printCommands(limitcommand) {
     );
     bt.setId(i);
     bt.setTag('btcommands');
+	
+	//HIGHLIGHT COMANDOS
+	if((levels[currentLevel].codebo.getCurrentAction() == i) && (!levels[currentLevel].codebo.getPause() )){		 
+		var sp = new Sprite("mini_hightlight", marginx + posx, marginy + posy, size, size, 100);  
+		sp.setTag('btcommands');		
+	 }
+	 
+	 
   }
 
   for (var i = actions.length; i < limitcommand; i++) {
@@ -883,4 +914,14 @@ function createArrayMap(map) {
 }
 
 
+function consoleError(msg){
+	msgconsole = msg;
+	txt_console.color = "#f33";
+}
+
+
+function consoleWarnig(msg){
+	msgconsole = msg;
+	txt_console.color = "#fc0";
+}
 

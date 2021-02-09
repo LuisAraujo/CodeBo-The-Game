@@ -168,7 +168,7 @@ Level.prototype.setLevel = function (arrmap, _this) {
   createContainerItem(_this.item);
    
   //verificar modo de automatizar isso e o item
-  this.flag = new Sprite("red_flag", this.flag_posx, this.flag_posy, 30, 60, 100);
+  this.flag = new Sprite("red_flag", this.flag_posx, this.flag_posy, 30, 60, 101);
   
 };
 
