@@ -180,12 +180,15 @@ Codebo.prototype.runCommands = function (exec) {
 
 			  //this.actualx
 			  this.actualy += 1;
+			
 			}else{
 				consoleWarnig("Impossível seguir!");
 			}
 			
 		//is a pilha @todo
-		}
+		}else{
+				consoleWarnig("Impossível seguir!");
+			}
 
 	 } else if (this.actualdirection == this.directions.BACK) {
         
@@ -202,7 +205,9 @@ Codebo.prototype.runCommands = function (exec) {
 			}else {
 				consoleWarnig("Impossível seguir!");
 			}
-		}
+		}else{
+				consoleWarnig("Impossível seguir!");
+			}
 	  
 	  } else if (this.actualdirection == this.directions.RIGHT) {
         
@@ -220,7 +225,9 @@ Codebo.prototype.runCommands = function (exec) {
 			}else {
 				consoleWarnig("Impossível seguir!");
 			}
-		}
+		}else{
+				consoleWarnig("Impossível seguir!");
+			}
 
 	 } else if (this.actualdirection == this.directions.LEFT) {
         
@@ -237,6 +244,8 @@ Codebo.prototype.runCommands = function (exec) {
 			}else {
 				consoleWarnig("Impossível seguir!");
 			}
+		}else{
+				consoleWarnig("Impossível seguir!");
 		}
       }
 
