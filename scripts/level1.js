@@ -28,6 +28,8 @@ function Level({namelevel,map, item, commands, codebox, codeboy, codebo_posx, co
   
   //controling blocks' limit 
   this.limitblock = limitblock;
+  this.initial_limitblock = limitblock;
+  
   this.blockused = 0;
   
   this.posxend = posxend;
@@ -60,8 +62,11 @@ Level.prototype.setTutorial = function(tutorial){
 }
 
 Level.prototype.reset = function(full){
-	if(full)
+	
+	if(full){
 		this.blockused = 0;
+		this.limitblock = this.initial_limitblock;
+	}
 	this.hideItem();
 	this.end = false;
 }

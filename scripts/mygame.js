@@ -380,7 +380,7 @@ se.gameReady = function () {
 	
 	
 	//LEVELS
-	currentLevel = 5;	
+	currentLevel = 7;	
 	levels = [];
 
 
@@ -559,7 +559,7 @@ se.gameReady = function () {
 	
 	
 	//LEVEL 8 
-	levels.push( new Level({namelevel:"fase08", map:"map_level_8",item: undefined, commands:["stack_new", "stack_block_push", "stack_pop", "stack_character_push"],codebox:0,codeboy:0, codebo_posx:210, codebo_posy:265, codebo_dir:2, map_margintop:50, map_marginleft:70, limitcommands:32,limitblock:2, posxend:6, posyend:2, flag_posx:615, flag_posy:205, commandsneedly:10, istutorial: false, isActive:true}) );
+	levels.push( new Level({namelevel:"fase08", map:"map_level_8",item: undefined, commands:["stack_new", "stack_block_push", "stack_pop", "stack_character_push"],codebox:0,codeboy:0, codebo_posx:210, codebo_posy:265, codebo_dir:2, map_margintop:50, map_marginleft:70, limitcommands:32,limitblock:2, posxend:6, posyend:2, flag_posx:615, flag_posy:155, commandsneedly:10, istutorial: false, isActive:true}) );
 	
 	
   
@@ -622,8 +622,12 @@ function createCommandsButton(item, limitcommands) {
 			}
 		  
 		  }else if(item == "stack_pop"){
-		        actions.push(item);
+			  
 				var pop = 0;
+				var action_valid = false;
+				
+				
+				
 				
 				for(var j = actions.length-1; j >= 0; j--){
 					
@@ -631,22 +635,31 @@ function createCommandsButton(item, limitcommands) {
 						pop++;
 					}
 						
-					if((actions[j] == "stack_character_push") && (pop == 0))
+					if((actions[j] == "stack_character_push") && (pop == 0)){
+						action_valid = true;
 						break;
+					}
 					
-					else if( (actions[j] == "stack_block_push") && (levels[currentLevel].blockused> 0) ){
+					else if( (actions[j] == "stack_block_push") && (levels[currentLevel].blockused > 0) ){
 						levels[currentLevel].blockused--;	
-						
+						action_valid = true;
 						break;
 					}
 
 					//fim do loop (exeções do uso do pop no level 5 e 7
-					if((j == 0) && (pop==1) && ((currentLevel == 5) || (currentLevel == 7))){
+					if((j == 0) && (pop==0) && ((currentLevel == 5) || (currentLevel == 7))){
 						
-						levels[currentLevel].blockused--;	
-						
+						levels[currentLevel].limitblock++;	
+						action_valid = true;
 					}		
 				}
+				
+				if(actions.length == 0){
+					levels[currentLevel].limitblock++;		
+				}
+					
+				if((action_valid) || (actions.length == 0))
+					actions.push(item);
 				
 		  }else{
 			   actions.push(item);
@@ -844,7 +857,7 @@ function printCommands(limitcommand) {
 				//fim do loop (exeções do uso do pop no level 5 e 7
 				if( (j == 0)  && (pop == 1) && ((currentLevel == 5) || (currentLevel == 7))){
 					
-					levels[currentLevel].blockused++;	
+					levels[currentLevel].limitblock--;
 					
 				}	
 			}
