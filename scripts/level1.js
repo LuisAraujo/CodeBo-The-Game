@@ -1,4 +1,4 @@
-function Level({namelevel,map, item, commands, codebox, codeboy, codebo_posx, codebo_posy, map_margintop,map_marginleft,limitcommands, limitblock, posxend, posyend, flag_posx, flag_posy,item_posx, item_posy,itemx , itemy, commandsneedly, tutorial, istutorial, isActive} = {} ) {
+function Level({namelevel,map, item, commands, codebox, codeboy, codebo_posx, codebo_posy, codebo_dir, map_margintop,map_marginleft,limitcommands, limitblock, posxend, posyend, flag_posx, flag_posy,item_posx, item_posy,itemx , itemy, commandsneedly, tutorial, istutorial, isActive} = {} ) {
 	
   this.xmlfile = map;
   this.scene = new Scene(undefined, isActive);
@@ -12,6 +12,8 @@ function Level({namelevel,map, item, commands, codebox, codeboy, codebo_posx, co
 
   this.codebo_posx = codebo_posx;
   this.codebo_posy = codebo_posy;
+  
+  this.codebo_dir = codebo_dir?codebo_dir:0;
 
   this.map_margintop = map_margintop;
   this.map_marginleft = map_marginleft;
@@ -48,15 +50,13 @@ function Level({namelevel,map, item, commands, codebox, codeboy, codebo_posx, co
   this.namelevel = namelevel;
   this.end = false;
   
-  this.tutorial  = tutorial;
-  
-  if(istutorial)
-	  se.mlevel.istutorial = true;
+  this.scene.tutorial = tutorial;
+  this.scene.istutorial = istutorial;
   
 }
 
 Level.prototype.setTutorial = function(tutorial){
-	return this.scene.tutorial=tutorial;
+	this.scene.tutorial=tutorial;
 }
 
 Level.prototype.reset = function(full){
@@ -67,14 +67,15 @@ Level.prototype.reset = function(full){
 }
 
 Level.prototype.showItem = function(item){
-	
-	this.sp_item.setAlpha(1);
+	if(this.sp_item != undefined)
+		this.sp_item.setAlpha(1);
 	//mudar animação
 	
 }
 
 Level.prototype.hideItem = function(){
-	this.sp_item.setAlpha(0);
+	if(this.sp_item != undefined)
+		this.sp_item.setAlpha(0);
 }
 
 Level.prototype.updateLevel = function (limitcommands) {
@@ -83,6 +84,8 @@ Level.prototype.updateLevel = function (limitcommands) {
 
 
 Level.prototype.start = function () {
+
+
 
    actions = [];
 
@@ -102,7 +105,13 @@ Level.prototype.start = function () {
 
 Level.prototype.setLevel = function (arrmap, _this) {
 
+  msgconsole = "";
+  
+  new Text(this.namelevel, 200, 80);
+
+
   createGUIButton();
+  createConsole();
 
   var commands = _this.commands;
 
@@ -110,7 +119,6 @@ Level.prototype.setLevel = function (arrmap, _this) {
   _this.map = new Map(arrmap, _this.map_margintop, this.map_marginleft);
   
   if(_this.itemname != undefined){
-	 
 	  
 	_this.map.setItem( new Item(_this.itemname,  _this.item_posx, _this.item_posy, "imagem", 100, _this.itemx, _this.itemy) )
   }
@@ -122,11 +130,12 @@ Level.prototype.setLevel = function (arrmap, _this) {
     _this.codebox,
     _this.codeboy,
     'play',
-    99
+    99,
+	this.codebo_dir
   );
-  
- 
 
+  _this.codebo.reset();
+  
   //_this.codebo.map = arrmap;
 
   _this.map.adjustmentLevels(
@@ -209,7 +218,7 @@ Level.prototype.setEnd = function () {
 		 //se.mlevel.loadScene(0);
 		 
 		 nextLevel();
-		 se.mlevel.loadScene(currentLevel);
+		 se.mlevel.loadScene(currentLevel+2);
 		 
 		 
 	}, 50,50);

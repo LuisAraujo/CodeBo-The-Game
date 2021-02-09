@@ -201,8 +201,15 @@ se.setResources = function () {
 
   //first level
   this.loader.addResource('map_level_1', 'maps/map_level_1.xml', 'xml');
- //first level
+  this.loader.addResource('map_level_2', 'maps/map_level_2.xml', 'xml');
+  this.loader.addResource('map_level_3', 'maps/map_level_3.xml', 'xml');
+  this.loader.addResource('map_level_4', 'maps/map_level_4.xml', 'xml');
+  this.loader.addResource('map_level_5', 'maps/map_level_5.xml', 'xml');
+  this.loader.addResource('map_level_6', 'maps/map_level_6.xml', 'xml');
+  this.loader.addResource('map_level_7', 'maps/map_level_7.xml', 'xml');
   this.loader.addResource('map_level_8', 'maps/map_level_8.xml', 'xml');
+  this.loader.addResource('map_level_9', 'maps/map_level_9.xml', 'xml');
+  this.loader.addResource('map_level_10', 'maps/map_level_10.xml', 'xml');
 
   //FLAGS
 
@@ -331,16 +338,13 @@ se.setResources = function () {
 //Quando o loading dos recursos acaba, esse métodos é executado
 se.gameReady = function () {
   
+  msgconsole = "";
   
-  /** MENU
+  /** MENU */
   mainmenu = new MainMenu(true);
   mainmap = new MapMenu(true);
  
-  se.mlevel.loadScene(0);
-  */
-
-  
-  /***** TUTORIALS */
+ 
   bt_next_tutorial = new Button(
     'bt_next_msg', 520,  180,
     function () { 
@@ -348,7 +352,6 @@ se.gameReady = function () {
 	},
     40,40);
 	
-	//TUTORIALS
   bt_prior_tutorial = new Button(
     'bt_prior_msg', 210,  180,
     function () { 
@@ -359,10 +362,11 @@ se.gameReady = function () {
 	bt_close_tutorial =  new Button(
     'bt_close_msg', 570,  180,
     function () { 
-		se.mlevel.istutorial = false;
+		se.mlevel.getCurrentScene().istutorial = false;
 	},
     40,40);
 	
+	//TUTORIAL 1
 	tutorial_1 = [];
 	tutorial_1.push([
   
@@ -403,15 +407,141 @@ se.gameReady = function () {
 	
 
 	//LEVELS
-	currentLevel = 0;	
+	currentLevel = 4;	
 	levels = [];
 
 	//LEVEL1
-	levels.push( new Level({namelevel:"fase01", map:"map_level_1",item: undefined, commands:[],codebox:0,codeboy:0, codebo_posx:205, codebo_posy:215,map_margintop:200, map_marginleft:70, limitcommands:20,limitblock:5, posxend:5, posyend:5, flag_posx:580, flag_posy:190, commandsneedly:10, istutorial: true, isActive:true}) );
-
+	levels.push( new Level({namelevel:"fase01", map:"map_level_1",item: undefined, commands:[],codebox:0,codeboy:0, codebo_posx:205, codebo_posy:215, codebo_dir: 2, map_margintop:0, map_marginleft:70, limitcommands:20,limitblock:0, posxend:5, posyend:5, flag_posx:580, flag_posy:190, commandsneedly:10, istutorial: true, isActive:true}) );
+	
 	levels[0].setTutorial( tutorial_1 );
+	
+	
+	//TUTORIAL 2
+	tutorial_2 = [];
+	tutorial_2.push([
   
+		new Rect(0,0, canvas.height, canvas.width, 'rgba(0, 0, 3, 0.5)'),
+		new Sprite("balon_msg", 200,200), 	bt_next_tutorial, bt_close_tutorial, 	
+		new Text('Opa! Não consigo andar', 265, 260, '#000', 25),
+		new Text('por níveis diferentes.', 280, 300, '#000', 25)
+	
+	]);
+	
+	
+	
+	//LEVEL2
+	levels.push( new Level({namelevel:"fase02", map:"map_level_2",item: undefined, commands:[],codebox:0,codeboy:0, codebo_posx:205, codebo_posy:215,map_margintop:0, map_marginleft:70, limitcommands:24,limitblock:0, posxend:0, posyend:2, flag_posx:300, flag_posy:230, commandsneedly:10, istutorial: true, isActive:true}) );
+
+	levels[1].setTutorial( tutorial_2 );
   
+   
+   
+   //TUTORIAL 3
+  
+  	tutorial_3 = [];
+	
+	tutorial_3.push([
+  
+		new Rect(0,0, canvas.height, canvas.width, 'rgba(0, 0, 3, 0.5)'),
+		new Sprite("balon_msg", 200,200), 	bt_next_tutorial, bt_close_tutorial, 
+		new Text('Você tem um limite de 4 comandos.', 220, 260, '#000', 22),
+		new Text('Que tal cortar caminhos?', 260, 300, '#000', 25)
+	
+	]);
+	
+	tutorial_3.push([
+  
+		new Rect(0,0, canvas.height, canvas.width, 'rgba(0, 0, 3, 0.5)'),
+		new Sprite("balon_msg", 200,200), 	bt_next_tutorial, bt_close_tutorial, bt_prior_tutorial,		
+		new Text('Use o comando de empilhar', 250, 260, '#000', 25),
+		new Text('para acessar outros níveis.', 260, 300, '#000', 25),
+		new Sprite("button_stack_block_push", 300, 530, 60, 60)
+	
+	]);
+	
+	tutorial_3.push([
+  
+		new Rect(0,0, canvas.height, canvas.width, 'rgba(0, 0, 3, 0.5)'),
+		new Sprite("balon_msg", 200,200), 	bt_next_tutorial, bt_close_tutorial, bt_prior_tutorial,	
+		new Text('Antes disto, você deve', 280, 260, '#000', 25),
+		new Text('criar uma pilha!', 320, 300, '#000', 25),
+		new Sprite("button_stack_new", 230, 530, 60, 60)
+	
+	]);
+	
+	
+	tutorial_3.push([
+  
+		new Rect(0,0, canvas.height, canvas.width, 'rgba(0, 0, 3, 0.5)'),
+		new Sprite("balon_msg", 200,200), 	bt_next_tutorial, bt_close_tutorial, bt_prior_tutorial,	
+		new Text('Para entrar na pilha, use', 280, 260, '#000', 25),
+		new Text('o comando empilhar robô.', 265, 300, '#000', 25),
+		new Sprite("button_stack_character_push", 440, 530, 60, 60)
+	
+	]);
+	
+	
+	
+	tutorial_3.push([
+  
+		new Rect(0,0, canvas.height, canvas.width, 'rgba(0, 0, 3, 0.5)'),
+		new Sprite("balon_msg", 200,200), 	bt_next_tutorial, bt_close_tutorial, bt_prior_tutorial,	
+		new Text('Para desempilhar o codebô', 260, 260, '#000', 25),
+		new Text('use o comando desempilhar.', 250, 300, '#000', 25),
+		new Sprite("button_stack_pop", 300, 530, 60, 60)
+	
+	]);
+	
+	
+	//LEVEL3
+	levels.push( new Level({namelevel:"fase03", map:"map_level_3",item: undefined, commands:["stack_new", "stack_block_push", "stack_pop", "stack_character_push"],codebox:0,codeboy:0, codebo_posx:205, codebo_posy:215,map_margintop:0, map_marginleft:70, limitcommands:4,limitblock:1, posxend:0, posyend:2, flag_posx:300, flag_posy:190, commandsneedly:10, istutorial: true, isActive:true}) );
+
+	levels[2].setTutorial( tutorial_3 );
+	
+	
+	
+	//LEVEL 4
+	levels.push( new Level({namelevel:"fase03", map:"map_level_4",item: undefined, commands:["stack_new", "stack_block_push", "stack_pop", "stack_character_push"],codebox:0,codeboy:2, codebo_posx:280, codebo_posy:350, codebo_dir:2, map_margintop:100, map_marginleft:70, limitcommands:15,limitblock:4, posxend:6, posyend:2, flag_posx:510, flag_posy:120, commandsneedly:10, istutorial: false, isActive:true}) );
+	
+	//LEVEL 5
+	levels.push( new Level({namelevel:"fase05", map:"map_level_5",item: undefined, commands:["stack_new", "stack_block_push", "stack_pop", "stack_character_push"],codebox:2,codeboy:1, codebo_posx:310, codebo_posy:250, codebo_dir:0, map_margintop:50, map_marginleft:70, limitcommands:15,limitblock:4, posxend:3, posyend:5, flag_posx:510, flag_posy:210, commandsneedly:10, istutorial: false, isActive:true}) );
+	
+
+	//TUTORIAL 6 (@todo há um problema aqui, pois o pop n add 1 no blocos)
+	tutorial_6 = [];
+	
+	tutorial_6.push([
+		new Rect(0,0, canvas.height, canvas.width, 'rgba(0, 0, 3, 0.5)'),
+		new Sprite("balon_msg", 200,200), 	bt_next_tutorial, bt_close_tutorial, 
+		new Text('Ok, pelo visto teremos que', 260, 260, '#000', 24),
+		new Text('utilizar o comando desempilhar!', 240, 300, '#000', 24),
+		new Sprite("button_stack_pop", 300, 530, 60, 60)
+	]);
+	
+	tutorial_6.push([
+		new Rect(0,0, canvas.height, canvas.width, 'rgba(0, 0, 3, 0.5)'),
+		new Sprite("balon_msg", 200,200), 	bt_next_tutorial, bt_close_tutorial, bt_prior_tutorial,
+		new Text('Ao desempilhar um bloco, você', 240, 260, '#000', 24),
+		new Text('ganha mais 1 bloco para empilhar.', 225, 300, '#000', 24),
+		new Rect(canvas.width - 260, 120, 40, 200, '#30415d'),
+		new Text('Principal', canvas.width - 240, 145, '#fff'),
+		new Sprite("gui_block", canvas.width - 130, 125, 25,25),
+		new Text("x0", canvas.width - 100, 147, "white", 25)
+
+	]);
+	
+	
+	//LEVEL 6
+	levels.push( new Level({namelevel:"fase06", map:"map_level_6",item: undefined, commands:["stack_new", "stack_block_push", "stack_pop", "stack_character_push"],codebox:0,codeboy:1, codebo_posx:240, codebo_posy:285, codebo_dir:2, map_margintop:50, map_marginleft:70, limitcommands:15,limitblock:0, posxend:6, posyend:2, flag_posx:510, flag_posy:175, commandsneedly:10, istutorial: true, isActive:true}) );
+			
+	levels[5].setTutorial( tutorial_6 );
+	
+	
+	//LEVEL 7 -> ficou dificil
+	levels.push( new Level({namelevel:"fase07", map:"map_level_7",item: undefined, commands:["stack_new", "stack_block_push", "stack_pop", "stack_character_push"],codebox:0,codeboy:2, codebo_posx:280, codebo_posy:350, codebo_dir:2, map_margintop:100, map_marginleft:70, limitcommands:17,limitblock:2, posxend:6, posyend:2, flag_posx:510, flag_posy:120, commandsneedly:10, istutorial: false, isActive:true}) );
+	
+	
+	
   
     //TUTORIAL 8
 	
@@ -432,14 +562,14 @@ se.gameReady = function () {
 	]);
 	
 	
-	//LEVEL 8
+	/*//LEVEL 8
     levels.push( new Level({namelevel:"fase01", map:"map_level_8",item:"item_bridge", item_posx: 220, item_posy: 235, itemx: 0, itemy :0, commands:['stack_new','stack_block_push', 'stack_character_push', 'stack_pop','set_item'],codebox:2,codeboy:1, codebo_posx:315, codebo_posy:200,map_margintop:200, map_marginleft:70, limitcommands:20,limitblock:5, posxend:4, posyend:3, flag_posx:475, flag_posy:180, commandsneedly:10, isActive:true}) );
 	
-	levels[1].setTutorial( tutorial_8 );
+	levels[1].setTutorial( tutorial_8 );*/
  
   
 	//carrega menu
-	se.mlevel.loadScene(0);
+	se.mlevel.loadScene(2 + currentLevel);
   
 };
 
@@ -448,6 +578,7 @@ function createContainerItem(item) {
 }
 
 function nextLevel(){
+	if(currentLevel < levels.length-1)
 	currentLevel++;
 }
 
@@ -463,10 +594,31 @@ function createCommandsButton(item, limitcommands) {
       if (actions.length < limitcommands) {
 		 
 		  if(item == "stack_block_push"){
-		    if(levels[currentLevel].limitblock > levels[currentLevel].blockused) {
+		    
+			if(levels[currentLevel].limitblock > levels[currentLevel].blockused) {
 				levels[currentLevel].blockused++;	
 				actions.push(item);
 			}
+		  
+		  }else if(item == "stack_pop"){
+		        actions.push(item);
+				var pop = 0;
+				for(var j = actions.length-2; j >= 0; j--){
+					
+					if(actions[j] == "stack_pop"){
+						pop++;
+					}
+						
+					if((actions[j] == "stack_character_push") && (pop == 0))
+						break;
+					
+					else if( (actions[j] == "stack_block_push") && (levels[currentLevel].blockused> 0) ){
+						levels[currentLevel].blockused--;	
+						
+						break;
+					}	
+				}
+				
 		  }else{
 			   actions.push(item);
 		  }
@@ -480,8 +632,27 @@ function createCommandsButton(item, limitcommands) {
   window.posx += window.size + window.marginbt;
 }
 
+function createConsole(){
+	
+	/*CONSOLE*/
+	
+	new Rect(canvas.width - 290, canvas.height - 90, 80, 280, 'rgba(20,20,20,1)');	
+	new Text('>>', canvas.width - 280, canvas.height - 60, '#fff');
+	txt_console = new Text("- ", canvas.width - 280, canvas.height - 40, '#fff', 15, "poxel");
+	
+	txt_console.update = function(){
+
+		//this.setText("x" + ( levels[currentLevel].getLimitBlock() - qtd_block) );
+		this.setText(msgconsole);
+	}
+	
+	/***/
+
+}
+
 function createGUIButton() {
-console.log(canvas.height );
+	
+
 
 	//barra comandos inferior
   new Rect(0, canvas.height - 100, 100, 660, 'rgba(255, 255, 255, 0.5)');
@@ -508,11 +679,10 @@ new Rect(canvas.width - 300, 150, 580, 1180, 'rgba(255, 255, 255, 0.5)');
     canvas.width - 300,
     20,
     function () {
-	  
+	  msgconsole = "";
 	  levels[currentLevel].reset();
 	  levels[currentLevel].getCodebo().reset();
 	  levels[currentLevel].getMap().reset(levels[currentLevel].getCodebo());
-	  
       levels[currentLevel].getCodebo().setCommands(window.actions, levels[currentLevel].getMap().getMap() );
       levels[currentLevel].getCodebo().start();
 
@@ -538,9 +708,11 @@ new Rect(canvas.width - 300, 150, 580, 1180, 'rgba(255, 255, 255, 0.5)');
     canvas.width - 150,
     20,
     function () {
+	  msgconsole = "";
 	  levels[currentLevel].reset(true);
       levels[currentLevel].getCodebo().reset();
       levels[currentLevel].getMap().reset(levels[currentLevel].getCodebo());
+	  levels[currentLevel].blockused = 0;
       actions = [];
     },
     60,
@@ -594,8 +766,8 @@ function printCommands(limitcommand) {
 
   //percorrendo os comandos
   for (var i = 0; i < actions.length; i++) {
-	 if(actions[i] == "stack_block_push")
-		 qtd_block++;
+	 //if(actions[i] == "stack_block_push")
+		// qtd_block++;
 	 
     j++;
 
@@ -609,8 +781,44 @@ function printCommands(limitcommand) {
       marginx + posx,
       marginy + posy,
       function () {
-        actions.splice(this.getId(), 1);
-      },
+		  //removendo as modificações do blockused
+		if( actions[this.getId()] == "stack_block_push"){
+			levels[currentLevel].blockused--;
+			actions.splice(this.getId(), 1);
+		}else if( actions[this.getId()] == "stack_pop"){
+			//verifica se o pop remove um codebo ou um bloco
+			for(var j = actions.length-1; j >= 0; j--){
+							
+				if(actions[j] == "stack_character_push")
+					break;
+				
+				else if( (actions[j] == "stack_block_push") && (levels[currentLevel].blockused< levels[currentLevel].limitblock) ){
+					levels[currentLevel].blockused++;	
+					
+					break;
+				}	
+			}
+			
+			var blockusedtotal = 0;
+			for(var j = actions.length-1; j >= 0; j--){
+				if(actions[j] == "stack_block_push")
+					blockusedtotal++;
+			}
+			
+			if(blockusedtotal <= levels[currentLevel].limitblock)
+				actions.splice(this.getId(), 1);
+			else{
+				 msgconsole = "Não é possivel remover esse bloco"
+			}
+			
+			//levels[currentLevel].blockused++;
+		}else{
+			actions.splice(this.getId(), 1);
+		}
+      
+	  
+	  
+	  },
       size,
       size,
 	  0,
@@ -650,10 +858,11 @@ function printCommands(limitcommand) {
 
 	txt_qtd_block.update = function(){
 
-		this.setText("x" + ( levels[currentLevel].getLimitBlock() - qtd_block) );
+		//this.setText("x" + ( levels[currentLevel].getLimitBlock() - qtd_block) );
+		this.setText("x" + ( levels[currentLevel].getLimitBlock() - levels[currentLevel].blockused) );
 	}
 	
-	
+		
 }
 
 function createArrayMap(map) {
@@ -672,3 +881,6 @@ function createArrayMap(map) {
 
   return arrayMap;
 }
+
+
+

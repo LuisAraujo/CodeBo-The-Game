@@ -97,7 +97,7 @@ Map.prototype.createNonBlocks = function(i, j){
 	y = i;
 	var anim1 = new Animation( ["water_0","water_1","water_2"], 0.1);
 	posx = 200 + (y*105) - (x*35) + (x-y) * 70;
-	posy = 235 - (y * 17.5) -(x*17.5) + (y+1) * 35;
+	posy = 235 - (y * 17.5) -(x*17.5) + (y+1) * 35 + this.margintop;
 
 	var nblock = new GameObject( [anim1], posx, posy, "water", 70,35 );
 	nblock.setTag("nblock");			
@@ -111,7 +111,7 @@ Map.prototype.createBlocksItens = function(i, j, blockname){
 	var anim1 = new Animation( ["water_0","water_1","water_2"], 0.1);
 	
 	posx = 200 + (y*105) - (x*35) + (x-y) * 70;
-	posy = 235 - (y * 17.5) -(x*17.5) + (y+1) * 35;
+	posy = 235 - (y * 17.5) -(x*17.5) + (y+1) * 35 + this.margintop;
 	
 	//create water under bridge
 	if(blockname == "block_bridge"){
@@ -134,7 +134,7 @@ Map.prototype.createBlocks = function(i, j){
 	y = i;
 	
 	posx = 200 + (y*105) - (x*35) + (x-y) * 70;
-	posy = 200 - (y * 17.5) -(x*17.5) + (y+1) * 35;
+	posy = 200 - (y * 17.5) -(x*17.5) + (y+1) * 35 + this.margintop;
 	
 	var valueBlock = this.map[i][j]%10;
 	

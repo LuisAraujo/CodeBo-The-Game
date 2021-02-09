@@ -845,7 +845,7 @@ Scene.prototype.addCurrentTutorial = function(){
 	if(this.currentutorial < this.tutorial.length-1)
 		this.currentutorial++;
 	else
-		se.mlevel.istutorial = false;
+		this.istutorial = false;
 	
 }
 
@@ -900,7 +900,9 @@ Scene.prototype.getObjects = function () {
  * @method
  */ 
 Scene.prototype.getTutorial = function () {
-    return this.tutorial[this.currentutorial];
+	if(this.tutorial!=undefined)
+		return this.tutorial[this.currentutorial];
+	return undefined;
 }
 
 
@@ -1433,9 +1435,6 @@ Sprite.prototype.nextAnimation = function(){
     else
         this.currentAnimation = 0;
 
-
-    console.log(this.currentAnimation)
-
 }
 
 
@@ -1760,7 +1759,6 @@ function MultDirections(animations, x, y, h, w) {
 
     this.setDefaultControll();
 
-    console.log(this.animation)
 
 }
 
@@ -1999,7 +1997,7 @@ MultDirections.prototype.turnToUp = function () {
  * @method
  */
 MultDirections.prototype.turnToDown = function () {
-  console.log(this.getRotate())
+
     if(  (this.getRotate() == 360) || ( ( this.getRotate() > 0) ) && ( this.getRotate() < 45) )  {
        this.setRotate(this.getRotate()+1);
    }else if((this.getRotate() <= 180) && ( this.getRotate() >  135)){
@@ -2502,64 +2500,60 @@ ManagerMouse.prototype.start = function () {
         var x = event.pageX - canvas.offsetLeft,
             y = event.pageY - canvas.offsetTop;
 			
-			
         var objects = se.mlevel.getObjectsCurrentScene();
         var tutorial = se.mlevel.getTutorialCurrentScene();
-		console.log(tutorial );
-
+		
         for(var i = 0; i < objects.length; i++) {
             element = objects[i];
 
-        if ((element.classename == "dragdrop") && (!element.dragdroped)){
+			if ((element.classename == "dragdrop") && (!element.dragdroped)){
 
-            if (y > element.y && y < element.y + element.h && x > element.x && x < element.x + element.w) {
-                element.click();
-                break;
-            }
+				if (y > element.y && y < element.y + element.h && x > element.x && x < element.x + element.w) {
+					element.click();
+					break;
+				}
 
-        } else if (element.classename == "button") {
-            if (y > element.y && y < element.y + element.h && x > element.x && x < element.x + element.w) {
-                element.click();
-                break;
-            }
+			} else if (element.classename == "button") {
+				if (y > element.y && y < element.y + element.h && x > element.x && x < element.x + element.w) {
+					element.click();
+					break;
+				}
 
-        }
+			}
 
             if(i == objects.length-1){
                 se.mlevel.offDragdropFlag();
-                console.log("off")
             }
 
         };
 		
-		
-		for(var i = 0; i < tutorial.length; i++) {
-            element = tutorial[i];
-console.log(element );
-        if ((element.classename == "dragdrop") && (!element.dragdroped)){
+		if(tutorial!=undefined)
+			for(var i = 0; i < tutorial.length; i++) {
+				element = tutorial[i];
 
-            if (y > element.y && y < element.y + element.h && x > element.x && x < element.x + element.w) {
-                element.click();
-                break;
-            }
+			if ((element.classename == "dragdrop") && (!element.dragdroped)){
 
-        } else if (element.classename == "button") {
-			
-			console.log(y ,element.y,x , element.x );
-			
-            if (y > element.y && y < element.y + element.h && x > element.x && x < element.x + element.w) {
-                element.click();
-                break;
-            }
+				if (y > element.y && y < element.y + element.h && x > element.x && x < element.x + element.w) {
+					element.click();
+					break;
+				}
 
-        }
+			} else if (element.classename == "button") {
+				
+				
+				if (y > element.y && y < element.y + element.h && x > element.x && x < element.x + element.w) {
+					element.click();
+					break;
+				}
 
-            if(i == tutorial.length-1){
-                se.mlevel.offDragdropFlag();
-                console.log("off")
-            }
+			}
 
-        }
+				if(i == tutorial.length-1){
+					se.mlevel.offDragdropFlag();
+					console.log("off")
+				}
+
+			}
 		
 		
 
@@ -2649,7 +2643,6 @@ ManagerScene.prototype.addScene =function (level) {
 		this.currentScene = this.scenes.length-1;
 	}
 	
-	console.log(this, level.isActive, this.scenes.length-1);
 }
 
 /**
@@ -2658,7 +2651,6 @@ ManagerScene.prototype.addScene =function (level) {
  * @param {int} index
  */
 ManagerScene.prototype.loadScene =function (index) {
-	console.log("index", index);
     this.currentScene = index;
 	this.scenes[this.currentScene].setActive(true);
     this.getCurrentScene().setObjects([]);
@@ -2794,7 +2786,7 @@ ManagerScene.prototype.gameOver = function () {
 
     for(var i = 0; i< scores.length; i++){
         if(scores[i].score < this.score) {
-            console.log("new score");
+           
             scores[i].name = this.nameplayer;
             scores[i].score = this.score;
             se.storage.setItemJSON("score1",  scores);
@@ -3173,7 +3165,7 @@ function Text(text, x, y, color, size, font, fn) {
     this.text = text;
     this.color = "#FFF";
     this.size = "20";
-    this.font = "Arial";
+    this.font = font?font:"Arial";
 
     if(color != undefined)
         this.color = color;
@@ -4261,7 +4253,7 @@ Mobile.prototype.adjustSizeScreen = function(){
 	}
 	
 	canvas.classList.add("mobile-canvas");
-		console.log("change orientation" + canvas.height);
+		
 	/* Get the documentElement (<html>) to display the page in fullscreen 
 	var elem = document.documentElement;
 
@@ -4435,7 +4427,7 @@ StarterEngine.prototype.loopgame = function (ctx) {
 	}
 	
 	
-	if(this.mlevel.istutorial)
+	if( this.mlevel.getCurrentScene().istutorial )
 		this.mlevel.printTutorial(ctx)
 	
     requestAnimFrame(function() {
