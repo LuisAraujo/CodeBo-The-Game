@@ -380,7 +380,7 @@ se.gameReady = function () {
 	
 	
 	//LEVELS
-	currentLevel = 9;	
+	currentLevel = 7;	
 	levels = [];
 
 
@@ -516,7 +516,7 @@ se.gameReady = function () {
 	
 	
 	//LEVEL 4
-	levels.push( new Level({namelevel:"fase03", map:"map_level_4",item: undefined, commands:["stack_new", "stack_block_push", "stack_pop", "stack_character_push"],codebox:0,codeboy:2, codebo_posx:280, codebo_posy:350, codebo_dir:2, map_margintop:100, map_marginleft:70, limitcommands:15,limitblock:4, posxend:6, posyend:2, flag_posx:510, flag_posy:120, commandsneedly:10, istutorial: false, isActive:true}) );
+	levels.push( new Level({namelevel:"fase04", map:"map_level_4",item: undefined, commands:["stack_new", "stack_block_push", "stack_pop", "stack_character_push"],codebox:0,codeboy:2, codebo_posx:280, codebo_posy:350, codebo_dir:2, map_margintop:100, map_marginleft:70, limitcommands:15,limitblock:4, posxend:6, posyend:2, flag_posx:510, flag_posy:120, commandsneedly:10, istutorial: false, isActive:true}) );
 	
 	//LEVEL 5
 	levels.push( new Level({namelevel:"fase05", map:"map_level_5",item: undefined, commands:["stack_new", "stack_block_push", "stack_pop", "stack_character_push"],codebox:2,codeboy:1, codebo_posx:310, codebo_posy:250, codebo_dir:0, map_margintop:50, map_marginleft:70, limitcommands:15,limitblock:4, posxend:3, posyend:5, flag_posx:510, flag_posy:210, commandsneedly:10, istutorial: false, isActive:true}) );
@@ -557,7 +557,7 @@ se.gameReady = function () {
 	
 	
 	//LEVEL 8 
-	levels.push( new Level({namelevel:"fase08", map:"map_level_8",item: undefined, commands:["stack_new", "stack_block_push", "stack_pop", "stack_character_push"],codebox:0,codeboy:0, codebo_posx:210, codebo_posy:265, codebo_dir:2, map_margintop:50, map_marginleft:70, limitcommands:32,limitblock:2, posxend:6, posyend:2, flag_posx:615, flag_posy:155, commandsneedly:10, istutorial: false, isActive:true}) );
+	levels.push( new Level({namelevel:"fase08", map:"map_level_8",item: undefined, commands:["stack_new", "stack_block_push", "stack_pop", "stack_character_push"],codebox:0,codeboy:0, codebo_posx:210, codebo_posy:265, codebo_dir:2, map_margintop:50, map_marginleft:70, limitcommands:32,limitblock:2, posxend:4, posyend:7, flag_posx:615, flag_posy:155, commandsneedly:10, istutorial: false, isActive:true}) );
 	
 	
   
@@ -846,10 +846,11 @@ function printCommands(limitcommand) {
 				if(actions[j] == "stack_pop")
 					pop++;
 				
-				if(actions[j] == "stack_character_push")
+				if((actions[j] == "stack_character_push") && (pop == 1))
 					break;
 				
 				else if( (actions[j] == "stack_block_push") && (levels[currentLevel].blockused< levels[currentLevel].limitblock) ){
+					
 					levels[currentLevel].blockused++;	
 					
 					break;

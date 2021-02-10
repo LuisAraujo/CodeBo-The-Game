@@ -328,7 +328,7 @@ Codebo.prototype.runCommands = function (exec) {
 		
     }else{
 		
-		consoleWarning("Codebo está na pilha!");
+		consoleWarning("Codebo está na pilha!", this.actualaction);
 
 	}
   
