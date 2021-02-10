@@ -380,7 +380,7 @@ se.gameReady = function () {
 	
 	
 	//LEVELS
-	currentLevel = 7;	
+	currentLevel = 0;	
 	levels = [];
 
 
