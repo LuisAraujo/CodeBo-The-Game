@@ -586,6 +586,10 @@ se.gameReady = function () {
     levels.push( new Level({namelevel:"fase09", map:"map_level_9",item:"item_bridge", item_posx: 220, item_posy: 235, itemx: 0, itemy :0, commands:['stack_new','stack_block_push', 'stack_character_push', 'stack_pop','set_item'],codebox:2,codeboy:1, codebo_posx:315, codebo_posy:200,map_margintop:0, map_marginleft:70, limitcommands:20,limitblock:5, posxend:4, posyend:3, flag_posx:475, flag_posy:180, commandsneedly:10, istutorial: true, isActive:true}) );
 	
 	levels[8].setTutorial( tutorial_9 );
+	
+	
+		//LEVEL 9
+    levels.push( new Level({namelevel:"fase10", map:"map_level_10",item:"item_bridge", item_posx: 220, item_posy: 235, itemx: 0, itemy :0, commands:['stack_new','stack_block_push', 'stack_character_push', 'stack_pop','set_item'],codebox:2,codeboy:1, codebo_posx:315, codebo_posy:200,map_margintop:0, map_marginleft:70, limitcommands:20,limitblock:5, posxend:4, posyend:3, flag_posx:475, flag_posy:180, commandsneedly:10, istutorial: true, isActive:true}) );
  
   
 	//carrega menu
@@ -954,14 +958,14 @@ function createArrayMap(map) {
 }
 
 
-function consoleError(msg){
-	msgconsole = msg;
+function consoleError(msg, line){
+	msgconsole = msg + " c:"+line;
 	txt_console.color = "#f33";
 }
 
 
-function consoleWarnig(msg){
-	msgconsole = msg;
+function consoleWarnig(msg, line){
+	msgconsole = msg + " c:"+line;
 	txt_console.color = "#fc0";
 }
 

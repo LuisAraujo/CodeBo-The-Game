@@ -145,29 +145,24 @@ Codebo.prototype.getCurrentAction = function(){
 
 
 Codebo.prototype.runCommands = function (exec) {
-	console.log("run commands", this.actualaction, actions);
+  console.log("run commands", this.actualaction, actions);
 	
   if (exec != this.currentexec || this.inpause) {
-    console.log("ok");
     return;
   }
 
-  //this.stopCommands();
   this.actualaction++;
   var action = actions[this.actualaction];
-
-  //console.log(this.actualaction);
-  //console.log(action);
-
+  
   if (action == 'forward') {
     
-	
+	//
 	if (this.is_stacked === false) {
       
       if (this.actualdirection == this.directions.FRONT) {
         
 		if(this.map[this.actualy + 1] == undefined){
-			consoleWarnig("Impossível seguir!");
+			consoleWarnig("Impossível seguir!", this.actualaction);
 			return;
 		}
 		//is a block?
@@ -187,7 +182,7 @@ Codebo.prototype.runCommands = function (exec) {
 			
 			//sobre o item
 			}else{
-				consoleWarnig("Impossível seguir!");
+				consoleWarnig("Impossível seguir!", this.actualaction);
 			}
 			
 		
@@ -205,7 +200,7 @@ Codebo.prototype.runCommands = function (exec) {
 			  
 			  
 	    }else{
-				consoleWarnig("Impossível seguir!");
+				consoleWarnig("Impossível seguir!", this.actualaction);
 		}
 		
 		
@@ -223,7 +218,7 @@ Codebo.prototype.runCommands = function (exec) {
 
 			  this.actualy -= 1;
 			}else {
-				consoleWarnig("Impossível seguir!");
+				consoleWarnig("Impossível seguir!", this.actualaction);
 			}
 		}else if ( 
 			  this.map[this.actualy - 1][this.actualx] < 10 &&
@@ -236,7 +231,7 @@ Codebo.prototype.runCommands = function (exec) {
 			this.actualy -= 1;
 		
 		}else{
-				consoleWarnig("Impossível seguir!");
+				consoleWarnig("Impossível seguir!", this.actualaction);
 			}
 	  
 	  } else if (this.actualdirection == this.directions.RIGHT) {
@@ -253,7 +248,7 @@ Codebo.prototype.runCommands = function (exec) {
 			  this.actualx -= 1;
 			  //this.actualy
 			}else {
-				consoleWarnig("Impossível seguir!");
+				consoleWarnig("Impossível seguir!", this.actualaction);
 			}
 		}else if ( 
 			  this.map[this.actualy][this.actualx-1] < 10 &&
@@ -266,7 +261,7 @@ Codebo.prototype.runCommands = function (exec) {
 			this.actualx -= 1;
 		
 		}else{
-				consoleWarnig("Impossível seguir!");
+				consoleWarnig("Impossível seguir!", this.actualaction);
 			}
 
 	 } else if (this.actualdirection == this.directions.LEFT) {
@@ -282,7 +277,7 @@ Codebo.prototype.runCommands = function (exec) {
 			  this.actualx += 1;
 			 
 			}else {
-				consoleWarnig("Impossível seguir!");
+				consoleWarnig("Impossível seguir!", this.actualaction);
 			}
 		}else if ( 
 			  this.map[this.actualy][this.actualx + 1] < 10 &&
@@ -295,7 +290,7 @@ Codebo.prototype.runCommands = function (exec) {
 			this.actualx += 1;
 		
 		}else{
-			consoleWarnig("Impossível seguir!");
+			consoleWarnig("Impossível seguir!", this.actualaction);
 		}
       }
 
@@ -380,7 +375,7 @@ Codebo.prototype.runCommands = function (exec) {
 	  );
     
 	else{
-		 consoleWarnig("pilha não criada!");
+		 consoleWarnig("pilha não criada!", this.actualaction);
 	}
 	
     levels[currentLevel].getMap().create();
@@ -435,7 +430,7 @@ Codebo.prototype.runCommands = function (exec) {
         );
     }else{
 		
-		consoleError("Impossível inserir em uma pilha!");
+		consoleError("Impossível inserir em uma pilha!", this.actualaction);
 		this.pause();
 		
 	}
@@ -551,7 +546,7 @@ Codebo.prototype.runCommands = function (exec) {
         .adjustmentLevels(this.getLevel(), this.actualx, this.actualy);
      this.is_stacked = true;
 	}else{
-		consoleError("Impossível inserir em uma pilha.");
+		consoleError("Impossível inserir em uma pilha.", this.actualaction);
 		this.pause();
 	}
 	
@@ -585,7 +580,7 @@ Codebo.prototype.runCommands = function (exec) {
 			  this.actualy += 1;
 			}	
 		}else{
-			consoleError("Codebo não pode sair da pilha!");
+			consoleError("Codebo não pode sair da pilha!", this.actualaction);
 		    this.pause();
 		}
 			
@@ -605,7 +600,7 @@ Codebo.prototype.runCommands = function (exec) {
 			  this.actualy -= 1;
 			}
 		}else{
-			consoleError("Codebo não pode sair da pilha!");
+			consoleError("Codebo não pode sair da pilha!", this.actualaction);
 		    this.pause();
 		}
 			
@@ -626,7 +621,7 @@ Codebo.prototype.runCommands = function (exec) {
 			  //this.actualy
 			}
 		}else{
-			consoleError("Codebo não pode sair da pilha!");
+			consoleError("Codebo não pode sair da pilha!", this.actualaction);
 		    this.pause();
 		}
 		
@@ -646,7 +641,7 @@ Codebo.prototype.runCommands = function (exec) {
 			  //this.actualy+=1;
 			}
 		}else{
-			consoleError("Codebo não pode sair da pilha!");
+			consoleError("Codebo não pode sair da pilha!", this.actualaction);
 		    this.pause();
 		}
 	  
@@ -708,7 +703,7 @@ Codebo.prototype.runCommands = function (exec) {
           );
       
 	  }else{
-		   consoleError("Erro ao desempilhar!!");
+		   consoleError("Erro ao desempilhar!!", this.actualaction);
 		   this.pause();
 	  }
 
@@ -779,6 +774,7 @@ Codebo.prototype.runCommands = function (exec) {
   }else{
 	  this.pause();
   }
+  
 };
 
 Codebo.prototype.stopCommands = function (actions) {
