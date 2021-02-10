@@ -380,10 +380,8 @@ se.gameReady = function () {
 	
 	
 	//LEVELS
-	currentLevel = 8;	
+	currentLevel = 9;	
 	levels = [];
-
-
 
 
 	//TUTORIAL 1
@@ -589,7 +587,7 @@ se.gameReady = function () {
 	
 	
 		//LEVEL 9
-    levels.push( new Level({namelevel:"fase10", map:"map_level_10",item:"item_bridge", item_posx: 220, item_posy: 235, itemx: 0, itemy :0, commands:['stack_new','stack_block_push', 'stack_character_push', 'stack_pop','set_item'],codebox:2,codeboy:1, codebo_posx:315, codebo_posy:200,map_margintop:0, map_marginleft:70, limitcommands:20,limitblock:5, posxend:4, posyend:3, flag_posx:475, flag_posy:180, commandsneedly:10, istutorial: true, isActive:true}) );
+    levels.push( new Level({namelevel:"fase10", map:"map_level_10",item:"item_bridge", item_posx: 400, item_posy: 230, itemx: 1, itemy :4, commands:['stack_new','stack_block_push', 'stack_character_push', 'stack_pop','set_item'],codebox:0,codeboy:2, codebo_posx:280, codebo_posy:300, codebo_dir: 0, map_margintop:50, map_marginleft:70, limitcommands:36,limitblock:5, posxend:3, posyend:4, flag_posx:475, flag_posy:260, commandsneedly:10, istutorial: false, isActive:true}) );
  
   
 	//carrega menu
@@ -895,7 +893,8 @@ function printCommands(limitcommand) {
     bt.setTag('btcommands');
 	
 	//HIGHLIGHT COMANDOS
-	if((levels[currentLevel].codebo.getCurrentAction() == i) && (!levels[currentLevel].codebo.getPause() )){		 
+	//if((levels[currentLevel].codebo.getCurrentAction() == i) && (!levels[currentLevel].codebo.getPause() )){		 
+	if(levels[currentLevel].codebo.getCurrentAction() == i) {		 
 		var sp = new Sprite("mini_hightlight", marginx + posx, marginy + posy, size, size, 100);  
 		sp.setTag('btcommands');		
 	 }
@@ -959,13 +958,13 @@ function createArrayMap(map) {
 
 
 function consoleError(msg, line){
-	msgconsole = msg + " c:"+line;
+	msgconsole = msg + " c:"+(line+1);
 	txt_console.color = "#f33";
 }
 
 
-function consoleWarnig(msg, line){
-	msgconsole = msg + " c:"+line;
+function consoleWarning(msg, line){
+	msgconsole = msg + " c:"+(line+1);
 	txt_console.color = "#fc0";
 }
 
