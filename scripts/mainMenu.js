@@ -92,7 +92,7 @@ MainMenu.prototype.start = function(){
 		new Rect(canvas.width-40,0,canvas.height, 40, "#0d0e17");
 		  
 		  
-		new Sprite("gui_logo", 20, 20, 300, 85);
+		new Sprite("gui_logo", 20, 20);
 	  
   });
   

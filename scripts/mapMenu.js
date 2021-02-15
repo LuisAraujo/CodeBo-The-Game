@@ -148,7 +148,11 @@ createGUIMenuMap = function(){
 		new Rect(0,0,canvas.height, 40, "#0d0e17");
 		new Rect(canvas.width-40,0,canvas.height, 40, "#0d0e17");
 		  
-		  
-		new Sprite("gui_logo", 20, 20, 300, 85);
+		new Sprite([ new Animation(["gui_logo","gui_logo","gui_logo"], 5)] , 20, 20);
+		
+		
+		
+		
+		
 		
 }

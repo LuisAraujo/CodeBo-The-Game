@@ -2,12 +2,14 @@
 * Representa uma sequência de imagens para animação
 * @param animations
 * @param {array} - array of animations
+* @para {array} - array de propriedades x, y, z e aplha
 * @constructor
 */
-function Animation(sprites, timesprite) {
+function Animation(sprites, timesprite, properties, loop) {
 
     this.sprites = [];
-
+	this.properties = properties;
+	
     if(Array.isArray(sprites)){
 
         for(var i=0; i< sprites.length; i++){
@@ -29,6 +31,7 @@ function Animation(sprites, timesprite) {
     this.stop = false;
     this.start();
 	this.animation;
+	this.loop = loop!=undefined?loop:true;
 	
 	
 }
@@ -58,7 +61,12 @@ Animation.prototype.update = function () {
 	this.currenttimestripe++;
 	
 	if(this.currenttimestripe > this.timesprite){
-		this.currenttimestripe = 0;
+
+		if(this.loop)		
+			this.currenttimestripe = 0;
+		else
+			return;
+		 
 	}else{
 		return;
 	}
@@ -100,6 +108,16 @@ Animation.prototype.update = function (_this) {
  */
 Animation.prototype.nextSprite = function () {
    this.currentsprite++;
+}
+
+
+/**
+ * Retorna as propriedades  sprite
+ * @method
+ */
+Animation.prototype.getProperties = function () {
+   if(this.properties!=undefined)
+		return this.properties[this.currentsprite];
 }
 
 /**
@@ -436,9 +454,23 @@ GameObject.prototype.print = function() {
 		ctx.translate(centreX, centreY);
 		ctx.rotate(this.r * Math.PI / 180);
 		ctx.translate(-centreX, -centreY);
-	
-		ctx.drawImage(this.animation[this.currentAnimation].getCurrentSprite(), this.x, this.y, this.w, this.h);
 		
+		properties = this.animation[this.currentAnimation].getProperties() ;
+		
+		if(properties != undefined)  {
+			console.log(properties.x);
+			ctx.drawImage(
+				this.animation[this.currentAnimation].getCurrentSprite(), 
+				properties.x!=undefined? properties.x:this.x, 
+				properties.y!=undefined?properties.y:this.y, 
+				properties.w!=undefined?properties.w:this.w, 
+				properties.h!=undefined?properties.h:this.h 
+			);
+		
+		}else{
+			
+			ctx.drawImage(this.animation[this.currentAnimation].getCurrentSprite(), this.x, this.y, this.w, this.h);
+		}
 		ctx.restore();
 		
 		this.animation[this.currentAnimation].update();

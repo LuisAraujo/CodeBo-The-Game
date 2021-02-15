@@ -612,7 +612,7 @@ se.gameReady = function () {
   
 	//carrega menu
 	//se.mlevel.loadScene(2 + currentLevel);
-	se.mlevel.loadScene(1);
+	se.mlevel.loadScene(0);
   
 };
 
