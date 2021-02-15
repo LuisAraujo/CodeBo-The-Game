@@ -341,6 +341,26 @@ se.setResources = function () {
     'image'
   );
   
+  this.loader.addResource(
+    'bg_universe',
+    'gui/universe_bg.png',
+    'image'
+  );
+  
+  
+  this.loader.addResource(
+    'world_level_1',
+    'worlds/world_level_1.png ',
+    'image'
+  );
+  
+  this.loader.addResource(
+    'mini_star',
+    'gui/mini_star.png ',
+    'image'
+  );
+  
+  
 
 
 };
@@ -591,7 +611,8 @@ se.gameReady = function () {
  
   
 	//carrega menu
-	se.mlevel.loadScene(2 + currentLevel);
+	//se.mlevel.loadScene(2 + currentLevel);
+	se.mlevel.loadScene(1);
   
 };
 
