@@ -188,8 +188,10 @@ Level.prototype.setLevel = function (arrmap, _this) {
   createContainerItem(_this.item);
 
   //verificar modo de automatizar isso e o item
-  this.flag = new Sprite(
-    'red_flag',
+  anim = new Animation([
+    'red_flag', 'red_flag2', 'red_flag3', 'red_flag2'], 10);
+	
+  this.flag = new Sprite([anim],
     this.flag_posx,
     this.flag_posy,
     30,
@@ -231,7 +233,7 @@ Level.prototype.setEnd = function () {
     400,
     function () {
       //ver o indice menu
-      se.mlevel.loadScene(0);
+      se.mlevel.loadScene(2);
     },
     50,
     58

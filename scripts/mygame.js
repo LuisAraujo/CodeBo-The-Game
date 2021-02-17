@@ -226,9 +226,24 @@ se.setResources = function () {
 
   this.loader.addResource(
     'red_flag',
-    'flags/red-flag-with-green-grass.png',
+    'flags/red-flag-01.png',
     'image'
   );
+  
+   this.loader.addResource(
+    'red_flag2',
+    'flags/red-flag-02.png',
+    'image'
+  );
+  
+  
+  
+   this.loader.addResource(
+    'red_flag3',
+    'flags/red-flag-03.png',
+    'image'
+  );
+  
   
   this.loader.addResource(
     'balon_msg',
@@ -712,7 +727,7 @@ se.gameReady = function () {
   
 	//carrega menu
 	//se.mlevel.loadScene(2 + currentLevel);
-	se.mlevel.loadScene(0);
+	se.mlevel.loadScene(3);
   
 };
 
