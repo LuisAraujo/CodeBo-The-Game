@@ -464,6 +464,7 @@ se.gameReady = function () {
     function () { 
 		this.setAnimationByIndex(1);
 		setTimeout( function(){se.mlevel.getCurrentScene().addCurrentTutorial()}, 200);
+		log.addAction("next_msg");
 	},
     40,40);
 	
@@ -483,6 +484,8 @@ se.gameReady = function () {
     function () { 
 		this.setAnimationByIndex(1);
 		se.mlevel.getCurrentScene().subCurrentTutorial();
+		
+		log.addAction("prior_msg");
 	},
     40,40);
 	
@@ -502,6 +505,7 @@ se.gameReady = function () {
     function () { 
 		this.setAnimationByIndex(1);
 		setTimeout( function(){se.mlevel.getCurrentScene().istutorial = false}, 200);
+		log.addAction("close_msg");
 	},
     40,40);
 
@@ -744,7 +748,8 @@ function nextLevel(){
 
 function createCommandsButton(item, limitcommands) {
  
-
+ log.addAction(item);
+ 
  new Button(
     'button_' + item,
     window.posx,
@@ -865,7 +870,7 @@ new Rect(canvas.width - 300, 150, 580, 1180, 'rgba(255, 255, 255, 0.5)');
 	  levels[currentLevel].getMap().reset(levels[currentLevel].getCodebo());
       levels[currentLevel].getCodebo().setCommands(window.actions, levels[currentLevel].getMap().getMap() );
       levels[currentLevel].getCodebo().start();
-
+	  log.addAction("play");
     },
     70,
     70
@@ -878,6 +883,7 @@ new Rect(canvas.width - 300, 150, 580, 1180, 'rgba(255, 255, 255, 0.5)');
     20,
     function () {
       levels[currentLevel].getCodebo().pause();
+	  log.addAction("stop");
     },
     60,
     60
@@ -894,6 +900,10 @@ new Rect(canvas.width - 300, 150, 580, 1180, 'rgba(255, 255, 255, 0.5)');
       levels[currentLevel].getMap().reset(levels[currentLevel].getCodebo());
 	  levels[currentLevel].blockused = 0;
       actions = [];
+	  
+	  log.addAction("reload");
+	  
+	  
     },
     60,
     60
@@ -970,6 +980,9 @@ function printCommands(limitcommand) {
       marginx + posx,
       marginy + posy,
       function () {
+		  log.addAction("remove > "+actions[this.getId()]);
+		  
+		  
 		  //removendo as modificações do blockused
 		if( actions[this.getId()] == "stack_block_push"){
 			levels[currentLevel].blockused--;
@@ -1097,11 +1110,17 @@ function createArrayMap(map) {
 function consoleError(msg, line){
 	msgconsole = msg + " c:"+(line+1);
 	txt_console.color = "#f33";
+	
+	log.addAction("error>"+msgconsole);
 }
 
 
 function consoleWarning(msg, line){
+	
+	
 	msgconsole = msg + " c:"+(line+1);
 	txt_console.color = "#fc0";
+	
+	log.addAction("warning>"+msgconsole);
 }
 

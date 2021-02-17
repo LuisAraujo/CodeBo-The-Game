@@ -8,6 +8,7 @@ InitialScreen.prototype.start = function(){
 	
 	this.scene.setFunctionStart(function () {
 		
+	
 		new Rect(0,0, canvas.height, canvas.width, "#101118");
 		var tx = new Text("Apoio", 430, 250);
 		var anim =  new Animation();
@@ -50,7 +51,6 @@ InitialScreen.prototype.start = function(){
 			rec = new Rect(0,0, canvas.height, canvas.width, "#101118");
 			rec.setAlpha(0.1);
 			rec.setUpdateFunction ( function(){
-				console.log("okokoko");
 				this.setAlpha( this.getAlpha()  + 0.01 ) ;	
 			});
 		}, 6000);

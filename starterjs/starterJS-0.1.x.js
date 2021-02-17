@@ -298,7 +298,7 @@ Animation.prototype.insertAnimation = function (name, object, count) {
 		up = true;
 		vel = 2;
 		inity = object.y;
-		console.log(up , inity , limitd);
+		
 		while(count--){
 			
 			if(up){
@@ -4086,10 +4086,6 @@ Triangle.prototype.print = function() {
 
     ctx.restore();
 
-
-
-
-
 }
 
 
@@ -4133,10 +4129,8 @@ function ReaderTextFile(path) {
  * @constructor
  */
 function RectRound(x, y, w, h, r, fill, stroke) {
-	console.log(r);
-    
+
 	Geometric.call(this, x, y, "rect round", h, w, fill, stroke);
-	
 	this.r = r;
 }
 

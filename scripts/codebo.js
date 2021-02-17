@@ -817,6 +817,7 @@ Codebo.prototype.runCommands = function (exec) {
       _this.runCommands(exec);
     }, TimeExecuteAction);
   }else{
+	  log.commandsPlay();
 	  this.pause();
   }
   

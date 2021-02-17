@@ -12,7 +12,13 @@
     <script src="starterjs/starterJS-0.1.x.js"></script>
     <!-- css do starterjs  -->
     <link href="resource/style.css" type="text/css" rel="stylesheet" />
-
+    
+	<script src="scripts/log/log.js"></script>
+    <script src="scripts/log/FileSaver.js"></script>
+	
+    <script src="scripts/database/localstorage.js"></script>
+	
+	
     <!-- scripts especificos o exemplo -->
     <script src="scripts/plotmouse.js"></script>
     <script src="scripts/item.js"></script>
@@ -26,16 +32,87 @@
     <script src="scripts/level1.js"></script>
     <script src="scripts/mygame.js"></script>
 
-	
+
+
   </head>
   <body>
   
-    <img src="resource/starterlogo.png" style="display: none" id="logohtml" />
-    <!--<canvas
-      id="gamecanvas"
-      width="1200"
-      height="600"
-      style="background: #909090"
-    ></canvas> -->
+  <div id="bt-show" style="position: fixed; top: 12px; left: 5px; display:inline; margin-left: 10px;  width: 50px; text-decoration: none; text-align: center; background-color:#00aa22; color:#fff; border-radius: 5px; padding: 5px;" target="_black" href="#" > exibir modal </div>
+  
+	<div id="modal" style="display: none; position: fixed; top: 10px; background-color: #fff; border-radius: 5px; padding: 10px; width: 600px">
+	  
+		<div id="bt-close" style="position: fixed; top: 12px; left: 555px; display:inline; margin-left: 10px;  width: 50px; text-decoration: none; text-align: center; background-color:#aa2200; color:#fff; border-radius: 5px; padding: 5px;" target="_black" href="#" > x </div>
+			
+		<div style="font-weight: bold; font-size: 20px"> Atenção </div>
+		<div>
+			<strong>CODEBÔ</strong> é um jogo em desenvolvimento e, neste momento, estamos fazendo sua avaliação. Para isso, estamos coletando dados de suas ações <strong>DENTRO DO JOGO</strong>! 
+		
+			Nós não obtemos seus dados pessoais e os dados coletados são: 
+			<ul>
+				<li>Data e Hora da entrada no jogo/levels;</li>
+				<li>Data e Hora da saida do jogo/levels;</li>
+				<li>Comandos que utilizou nos levels;</li>
+				<li>Mensagens exibidas pelo jogo. </li>  
+			<ul>
+		</div>
+		
+		<div style="font-weight: bold; "> 
+			Ao continuar jogando, você aceita os termos acima mencionados! 
+		</div>
+		
+		
+		<br> 
+		<div>
+			Infelizmente, esses dados não são suficientes para a avaliação científica do jogo! Nesse sentido, pedimos que responda a este formulário de avaliação, <strong>QUANDO TERMINAR DE JOGAR</strong> (você pode parar a qualquer momento).
+		</div>
+		<br>
+		<div>
+			O formulário pedirá os seus metadados (dados que coletamos quando você jogou). Baixe-os <strong>QUANDO TERMINAR DE JOGAR</strong> e coloque na questão apropriada. <span style="color: #d00"> Esse modal reaparecerá toda vez que entrar nesta página! </span>
+			
+			<div style="margin-top: 15px">
+			
+				<a  id="bt-form" style="display:inline; margin-left: 10px; width: 100px; text-decoration: none; text-align: center; background-color:#0022aa; color:#fff; border-radius: 5px; padding: 5px;" target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLSdKmiOBeGyH1GKD7YYIJQm0r5KVFAJr9TIE8GzwykZqxUn4dw/viewform" > Formulário </a>
+				
+				
+				<a id="bt-meta" style="display:inline; margin-left: 10px;  width: 100px; text-decoration: none; text-align: center; background-color:#00aa22; color:#fff; border-radius: 5px; padding: 5px;" target="_black" href="#" > Metadados </a>
+				
+			</div>
+	
+		</div>
+	</div>
+			
+	
+	
+	<img src="resource/starterlogo.png" style="display: none" id="logohtml" />
+    
+	
+	
+	<script>
+		document.getElementById("bt-close").addEventListener("click", 
+		function(){ 
+			document.getElementById("modal").style = "display: none; position: fixed; top: 10px; background-color: #fff; border-radius: 5px; padding: 10px; width: 600px";
+		}
+		);
+		
+		document.getElementById("bt-show").addEventListener("click", 
+		function(){ 
+			document.getElementById("modal").style = "display: block; position: fixed; top: 10px; background-color: #fff; border-radius: 5px; padding: 10px; width: 600px";
+		}
+		);
+		
+		
+		document.getElementById("bt-meta").addEventListener("click", 
+			function(){ 
+				log.getMetaDados();
+			}
+		);
+
+	</script>
+	
+	<script>
+		log.startGame();
+	</script>
+	
+	
   </body>
 </html>
