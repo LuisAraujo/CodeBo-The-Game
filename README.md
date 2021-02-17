@@ -25,7 +25,7 @@ Cada fase possui o seu limite de comandos e criação de blocos. Use sua lógica
 
 # O que vou aprender?
 
-Como diferencial de outros jogos sobre Estrutura de Dados, o CodeBô utiliza estruturas como **Pilha**, **Fila** e **Lista** no *Game Design*.  Por meio dessas estruturas o jogador pode manipular o cenário. 
+Como diferencial de outros code games, o Codebo utiliza os conceitos de **Pilha**, **Fila** e **Lista**. Além disso, os conceitos de cada estrutura foram inseridos como mecânica, no *Game Design*.  Por meio dessas estruturas o jogador pode manipular o cenário. 
 
 As estrutura são manipuladas através de comandos em blocos. 
 
