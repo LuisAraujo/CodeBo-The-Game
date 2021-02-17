@@ -8,34 +8,8 @@ MapMenu.prototype.start = function(){
 	
 	this.scene.setFunctionStart(function () {
 		
-
 		createGUIMenuMap();
-		
-		
-		fnBlock2 = function(limitu, limitd, vel,  _this){
-			
-			if(_this.up){
-				_this.y-=vel;
-				
-				if(_this.y < limitu){
-					_this.down = true;
-					_this.up = false;
-				}
-			}
-			
-			
-			if(_this.down){
-				_this.y+=vel;
-				
-				if(_this.y > limitd){
-					_this.down = false;
-					_this.up = true;
-				}
-			}
-			
-		}
-		
-		
+
 		//MENU (LEVEL)
 		createGUILevels()
 		
@@ -48,22 +22,84 @@ MapMenu.prototype.start = function(){
   
 }
 
+//todo: colocar conexão com bd
+levelIsOpen = function(level){
+	
+	arr = [true, true, true, true, false, false, false, false, false, false];
+	
+	return arr[level];
+	
+}
+
+
 createGUILevels = function(){
+	arr_levels = ["A - 0001", "A - 0010", "A - 0011", "A - 0100", "A - 0101", "A - 0110", "A - 0111", "A - 1000", "A - 1001", "A - 1010"]
+	var j = l = 0;
 	
-	new RectRound(170,160, 20, 120, 5, "#0286b2");
-	new Text("0x001", 200, 178, "#fff");
-	b = new Button("world_level_1", 200,200, function(){
+	for( let i = 0 ; i < arr_levels.length; i ++){
 		
-		currentLevel = 0;
-		se.mlevel.loadScene(2);
+		 if(i == arr_levels.length/2){
+			j++;
+			l = 0;			
+		 }
+		 
+		if( levelIsOpen( i ) )
+			new RectRound(170 + l * 200 , 160 + 170*j , 20, 120, 5, "#0286b2");
+		else
+			new RectRound(170 + l * 200 , 160 + 170*j , 20, 120, 5, "#b1b1af");
 		
-	}, 60, 60);
-	b.up = true;
-	b.setUpdateFunction(  fnBlock2.bind(null, 195, 205,0.2, b) );
-	
-	new Sprite("mini_star",  190, 272, 20, 20);
-	new Sprite("mini_star",  220, 272, 20, 20);
-	new Sprite("mini_star",  250, 272, 20, 20);
+		new Text(arr_levels [i], 195 + l * 200, 178 + 170*j , "#fff");
+
+
+		clickb = undefined;
+		
+		if( levelIsOpen( i ) ){
+			
+			namespriteanimation = "world_level_1";
+			clickb = function(){
+				
+				this.setAnimationByIndex(1);
+				currentLevel = i;
+				setTimeout( function(){se.mlevel.loadScene(3 + i)}, 200);
+				
+			}
+			
+		}else{
+			namespriteanimation = "world_level_locked";
+			clickb = function(){
+				this.setAnimationByIndex(1);	
+			}		
+		}
+		
+		
+		//if this level is open
+		b = new Button( null , 200 + l * 200, 200+ 170*j , clickb, 60, 60);
+		
+		
+		
+		
+		//ANIMACÕES
+		b_anim1 = new Animation(null, 10);
+		b_anim1.insertRepeatAnimation( namespriteanimation, 10  );
+		b_anim1.insertAnimation( "up", b, 10 );
+
+
+		b_anim2 = new Animation()
+		b_anim2.insertRepeatAnimation( namespriteanimation, 4  );
+		b_anim2.insertAnimation( "bounce",b, 2 );
+		b_anim2.setNextAnimation(0);
+		
+		b.setAnimation(  [b_anim1, b_anim2] );
+		
+		
+		if( levelIsOpen( i ) ){
+			new Sprite("mini_star",  190 + l * 200, 272+ 170*j , 20, 20);
+			new Sprite("mini_star",  220+ l * 200, 272+ 170*j , 20, 20);
+			new Sprite("mini_star",  250+ l * 200, 272+ 170*j , 20, 20);
+		}
+		
+		l++;
+	}
 	
 }
 
@@ -148,7 +184,7 @@ createGUIMenuMap = function(){
 		new Rect(0,0,canvas.height, 40, "#0d0e17");
 		new Rect(canvas.width-40,0,canvas.height, 40, "#0d0e17");
 		  
-		new Sprite([ new Animation(["gui_logo","gui_logo","gui_logo"], 5)] , 20, 20);
+		new Sprite([ new Animation(["gui_logo"], 5)] , 20, 20);
 		
 		
 		

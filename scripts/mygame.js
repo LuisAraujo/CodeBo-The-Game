@@ -14,6 +14,8 @@ se.setResources = function () {
   
   
   this.loader.addResource('gui_logo',  'gui/logo.png', 'image');
+  this.loader.addResource('gui_logo_bg',  'gui/logo_bg.png', 'image');
+  
   this.loader.addResource('gui_codebo',  'gui/gui_codebo_menu.png', 'image');
   this.loader.addResource('gui_bg_menu',  'gui/gui_bg_menu.png', 'image');
   this.loader.addResource('gui_block1',  'gui/gui_block_plan_1.png', 'image');
@@ -352,6 +354,12 @@ se.setResources = function () {
     'world_level_1',
     'worlds/world_level_1.png ',
     'image'
+  ); 
+  
+  this.loader.addResource(
+    'world_level_locked',
+    'worlds/world_level_locked.png ',
+    'image'
   );
   
   this.loader.addResource(
@@ -360,8 +368,66 @@ se.setResources = function () {
     'image'
   );
   
+   this.loader.addResource(
+    'logo_unifacs',
+    'logo/unifacs.png ',
+    'image'
+  );
   
-
+  
+   this.loader.addResource(
+    'logo_fapesb',
+    'logo/fapesb.png ',
+    'image'
+  );
+  
+ this.loader.addResource(
+    'logo_anim1',
+    'animation/logo_anim1.png ',
+    'image'
+  );
+  
+  this.loader.addResource(
+    'logo_anim2',
+    'animation/logo_anim2.png ',
+    'image'
+  );
+  
+  
+  this.loader.addResource(
+    'logo_anim3',
+    'animation/logo_anim3.png ',
+    'image'
+  );
+  
+  
+  this.loader.addResource(
+    'logo_anim4',
+    'animation/logo_anim4.png ',
+    'image'
+  );
+  
+  
+  this.loader.addResource(
+    'logo_anim5',
+    'animation/logo_anim5.png ',
+    'image'
+  );
+  
+  
+  this.loader.addResource(
+    'logo_anim6',
+    'animation/logo_anim6.png ',
+    'image'
+  );
+  
+  this.loader.addResource(
+    'logo_anim7',
+    'animation/logo_anim7.png ',
+    'image'
+  );
+  
+  
 
 };
 //Quando o loading dos recursos acaba, esse métodos é executado
@@ -373,31 +439,65 @@ se.gameReady = function () {
   msgconsole = "";
   
   /** MENU */
+  initialscreen = new InitialScreen(true);
   mainmenu = new MainMenu(true);
   mainmap = new MapMenu(true);
  
- 
+  //BT NEXT
   bt_next_tutorial = new Button(
-    'bt_next_msg', 520,  180,
+    null, 520,  180,
     function () { 
-		se.mlevel.getCurrentScene().addCurrentTutorial();
+		this.setAnimationByIndex(1);
+		setTimeout( function(){se.mlevel.getCurrentScene().addCurrentTutorial()}, 200);
 	},
     40,40);
 	
-  bt_prior_tutorial = new Button(
+	//ANIMAÇÕES DO BT NEXT
+	b_next_anim1 = new Animation(["bt_next_msg"]);
+	
+	b_next_anim2 = new Animation(null)
+	b_next_anim2.insertRepeatAnimation( "bt_next_msg", 4 );
+	b_next_anim2.insertAnimation( "bounce", bt_next_tutorial, 2 );
+	b_next_anim2.setNextAnimation( 0 );
+	bt_next_tutorial.setAnimation( [b_next_anim1, b_next_anim2] );
+	
+	
+   //BT PRIOR
+   bt_prior_tutorial = new Button(
     'bt_prior_msg', 210,  180,
     function () { 
+		this.setAnimationByIndex(1);
 		se.mlevel.getCurrentScene().subCurrentTutorial();
 	},
     40,40);
 	
+	//ANIMAÇÕES DO BT PRIOR
+	b_next_anim1 = new Animation(["bt_prior_msg"]);
+	
+	b_next_anim2 = new Animation(null)
+	b_next_anim2.insertRepeatAnimation( "bt_prior_msg", 4 );
+	b_next_anim2.insertAnimation( "bounce", bt_prior_tutorial, 2 );
+	b_next_anim2.setNextAnimation( 0 );
+	bt_prior_tutorial.setAnimation( [b_next_anim1, b_next_anim2] );
+	
+	
+	
 	bt_close_tutorial =  new Button(
-    'bt_close_msg', 570,  180,
+    null, 570,  180,
     function () { 
-		se.mlevel.getCurrentScene().istutorial = false;
+		this.setAnimationByIndex(1);
+		setTimeout( function(){se.mlevel.getCurrentScene().istutorial = false}, 200);
 	},
     40,40);
+
+	//ANIMAÇÕES DO BT CLOSE
+	b_next_anim1 = new Animation(["bt_close_msg"]);
 	
+	b_next_anim2 = new Animation(null)
+	b_next_anim2.insertRepeatAnimation( "bt_close_msg", 4 );
+	b_next_anim2.insertAnimation( "bounce", bt_close_tutorial, 2 );
+	b_next_anim2.setNextAnimation( 0 );
+	bt_close_tutorial.setAnimation( [b_next_anim1, b_next_anim2] );
 	
 	//LEVELS
 	currentLevel = 0;	
@@ -446,7 +546,7 @@ se.gameReady = function () {
 
 
 	//LEVEL1
-	levels.push( new Level({namelevel:"fase01", map:"map_level_1",item: undefined, commands:[],codebox:0,codeboy:0, codebo_posx:205, codebo_posy:215, codebo_dir: 2, map_margintop:0, map_marginleft:70, limitcommands:20,limitblock:0, posxend:5, posyend:5, flag_posx:580, flag_posy:190, commandsneedly:10, istutorial: true, isActive:true}) );
+	levels.push( new Level({namelevel:"0001", map:"map_level_1",item: undefined, commands:[],codebox:0,codeboy:0, codebo_posx:205, codebo_posy:215, codebo_dir: 2, map_margintop:0, map_marginleft:70, limitcommands:20,limitblock:0, posxend:5, posyend:5, flag_posx:580, flag_posy:190, commandsneedly:10, istutorial: true, isActive:true}) );
 	
 	levels[0].setTutorial( tutorial_1 );
 	
@@ -465,7 +565,7 @@ se.gameReady = function () {
 	
 	
 	//LEVEL2
-	levels.push( new Level({namelevel:"fase02", map:"map_level_2",item: undefined, commands:[],codebox:0,codeboy:0, codebo_posx:205, codebo_posy:215,map_margintop:0, map_marginleft:70, limitcommands:24,limitblock:0, posxend:0, posyend:2, flag_posx:300, flag_posy:230, commandsneedly:10, istutorial: true, isActive:true}) );
+	levels.push( new Level({namelevel:"0010", map:"map_level_2",item: undefined, commands:[],codebox:0,codeboy:0, codebo_posx:205, codebo_posy:215,map_margintop:0, map_marginleft:70, limitcommands:24,limitblock:0, posxend:0, posyend:2, flag_posx:300, flag_posy:230, commandsneedly:10, istutorial: true, isActive:true}) );
 
 	levels[1].setTutorial( tutorial_2 );
   
@@ -529,17 +629,17 @@ se.gameReady = function () {
 	
 	
 	//LEVEL3
-	levels.push( new Level({namelevel:"fase03", map:"map_level_3",item: undefined, commands:["stack_new", "stack_block_push", "stack_pop", "stack_character_push"],codebox:0,codeboy:0, codebo_posx:205, codebo_posy:215,map_margintop:0, map_marginleft:70, limitcommands:4,limitblock:1, posxend:0, posyend:2, flag_posx:300, flag_posy:190, commandsneedly:10, istutorial: true, isActive:true}) );
+	levels.push( new Level({namelevel:"0011", map:"map_level_3",item: undefined, commands:["stack_new", "stack_block_push", "stack_pop", "stack_character_push"],codebox:0,codeboy:0, codebo_posx:205, codebo_posy:215,map_margintop:0, map_marginleft:70, limitcommands:4,limitblock:1, posxend:0, posyend:2, flag_posx:300, flag_posy:190, commandsneedly:10, istutorial: true, isActive:true}) );
 
 	levels[2].setTutorial( tutorial_3 );
 	
 	
 	
 	//LEVEL 4
-	levels.push( new Level({namelevel:"fase04", map:"map_level_4",item: undefined, commands:["stack_new", "stack_block_push", "stack_pop", "stack_character_push"],codebox:0,codeboy:2, codebo_posx:280, codebo_posy:350, codebo_dir:2, map_margintop:100, map_marginleft:70, limitcommands:15,limitblock:4, posxend:6, posyend:2, flag_posx:510, flag_posy:120, commandsneedly:10, istutorial: false, isActive:true}) );
+	levels.push( new Level({namelevel:"0100", map:"map_level_4",item: undefined, commands:["stack_new", "stack_block_push", "stack_pop", "stack_character_push"],codebox:0,codeboy:2, codebo_posx:280, codebo_posy:350, codebo_dir:2, map_margintop:100, map_marginleft:70, limitcommands:15,limitblock:4, posxend:6, posyend:2, flag_posx:510, flag_posy:120, commandsneedly:10, istutorial: false, isActive:true}) );
 	
 	//LEVEL 5
-	levels.push( new Level({namelevel:"fase05", map:"map_level_5",item: undefined, commands:["stack_new", "stack_block_push", "stack_pop", "stack_character_push"],codebox:2,codeboy:1, codebo_posx:310, codebo_posy:250, codebo_dir:0, map_margintop:50, map_marginleft:70, limitcommands:15,limitblock:4, posxend:3, posyend:5, flag_posx:510, flag_posy:210, commandsneedly:10, istutorial: false, isActive:true}) );
+	levels.push( new Level({namelevel:"0101", map:"map_level_5",item: undefined, commands:["stack_new", "stack_block_push", "stack_pop", "stack_character_push"],codebox:2,codeboy:1, codebo_posx:310, codebo_posy:250, codebo_dir:0, map_margintop:50, map_marginleft:70, limitcommands:15,limitblock:4, posxend:3, posyend:5, flag_posx:510, flag_posy:210, commandsneedly:10, istutorial: false, isActive:true}) );
 	
 
 	//TUTORIAL 6 (@todo há um problema aqui, pois o pop n add 1 no blocos)
@@ -567,17 +667,17 @@ se.gameReady = function () {
 	
 	
 	//LEVEL 6
-	levels.push( new Level({namelevel:"fase06", map:"map_level_6",item: undefined, commands:["stack_new", "stack_block_push", "stack_pop", "stack_character_push"],codebox:0,codeboy:1, codebo_posx:240, codebo_posy:285, codebo_dir:2, map_margintop:50, map_marginleft:70, limitcommands:15,limitblock:0, posxend:6, posyend:2, flag_posx:510, flag_posy:175, commandsneedly:10, istutorial: true, isActive:true}) );
+	levels.push( new Level({namelevel:"0110", map:"map_level_6",item: undefined, commands:["stack_new", "stack_block_push", "stack_pop", "stack_character_push"],codebox:0,codeboy:1, codebo_posx:240, codebo_posy:285, codebo_dir:2, map_margintop:50, map_marginleft:70, limitcommands:15,limitblock:0, posxend:6, posyend:2, flag_posx:510, flag_posy:175, commandsneedly:10, istutorial: true, isActive:true}) );
 			
 	levels[5].setTutorial( tutorial_6 );
 	
 	
 	//LEVEL 7 -> ficou dificil
-	levels.push( new Level({namelevel:"fase07", map:"map_level_7",item: undefined, commands:["stack_new", "stack_block_push", "stack_pop", "stack_character_push"],codebox:0,codeboy:2, codebo_posx:280, codebo_posy:350, codebo_dir:2, map_margintop:100, map_marginleft:70, limitcommands:17,limitblock:2, posxend:6, posyend:2, flag_posx:510, flag_posy:120, commandsneedly:10, istutorial: false, isActive:true}) );
+	levels.push( new Level({namelevel:"0111", map:"map_level_7",item: undefined, commands:["stack_new", "stack_block_push", "stack_pop", "stack_character_push"],codebox:0,codeboy:2, codebo_posx:280, codebo_posy:350, codebo_dir:2, map_margintop:100, map_marginleft:70, limitcommands:17,limitblock:2, posxend:6, posyend:2, flag_posx:510, flag_posy:120, commandsneedly:10, istutorial: false, isActive:true}) );
 	
 	
 	//LEVEL 8 
-	levels.push( new Level({namelevel:"fase08", map:"map_level_8",item: undefined, commands:["stack_new", "stack_block_push", "stack_pop", "stack_character_push"],codebox:0,codeboy:0, codebo_posx:210, codebo_posy:265, codebo_dir:2, map_margintop:50, map_marginleft:70, limitcommands:32,limitblock:2, posxend:4, posyend:7, flag_posx:615, flag_posy:155, commandsneedly:10, istutorial: false, isActive:true}) );
+	levels.push( new Level({namelevel:"1000", map:"map_level_8",item: undefined, commands:["stack_new", "stack_block_push", "stack_pop", "stack_character_push"],codebox:0,codeboy:0, codebo_posx:210, codebo_posy:265, codebo_dir:2, map_margintop:50, map_marginleft:70, limitcommands:32,limitblock:2, posxend:4, posyend:7, flag_posx:615, flag_posy:155, commandsneedly:10, istutorial: false, isActive:true}) );
 	
 	
   
@@ -601,13 +701,13 @@ se.gameReady = function () {
 	
 	
 	//LEVEL 9
-    levels.push( new Level({namelevel:"fase09", map:"map_level_9",item:"item_bridge", item_posx: 220, item_posy: 235, itemx: 0, itemy :0, commands:['stack_new','stack_block_push', 'stack_character_push', 'stack_pop','set_item'],codebox:2,codeboy:1, codebo_posx:315, codebo_posy:200,map_margintop:0, map_marginleft:70, limitcommands:20,limitblock:5, posxend:4, posyend:3, flag_posx:475, flag_posy:180, commandsneedly:10, istutorial: true, isActive:true}) );
+    levels.push( new Level({namelevel:"1001", map:"map_level_9",item:"item_bridge", item_posx: 220, item_posy: 235, itemx: 0, itemy :0, commands:['stack_new','stack_block_push', 'stack_character_push', 'stack_pop','set_item'],codebox:2,codeboy:1, codebo_posx:315, codebo_posy:200,map_margintop:0, map_marginleft:70, limitcommands:20,limitblock:5, posxend:4, posyend:3, flag_posx:475, flag_posy:180, commandsneedly:10, istutorial: true, isActive:true}) );
 	
 	levels[8].setTutorial( tutorial_9 );
 	
 	
 		//LEVEL 9
-    levels.push( new Level({namelevel:"fase10", map:"map_level_10",item:"item_bridge", item_posx: 400, item_posy: 230, itemx: 1, itemy :4, commands:['stack_new','stack_block_push', 'stack_character_push', 'stack_pop','set_item'],codebox:0,codeboy:2, codebo_posx:280, codebo_posy:300, codebo_dir: 0, map_margintop:50, map_marginleft:70, limitcommands:36,limitblock:5, posxend:3, posyend:4, flag_posx:475, flag_posy:260, commandsneedly:10, istutorial: false, isActive:true}) );
+    levels.push( new Level({namelevel:"1010", map:"map_level_10",item:"item_bridge", item_posx: 400, item_posy: 230, itemx: 1, itemy :4, commands:['stack_new','stack_block_push', 'stack_character_push', 'stack_pop','set_item'],codebox:0,codeboy:2, codebo_posx:280, codebo_posy:300, codebo_dir: 0, map_margintop:50, map_marginleft:70, limitcommands:36,limitblock:5, posxend:3, posyend:4, flag_posx:475, flag_posy:260, commandsneedly:10, istutorial: false, isActive:true}) );
  
   
 	//carrega menu

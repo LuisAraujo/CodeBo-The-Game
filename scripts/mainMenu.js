@@ -81,7 +81,7 @@ MainMenu.prototype.start = function(){
 
 		var btplay = new Button("button_play_menu", canvas.width - 315 ,  canvas.height - 300, 
 			function(){
-			se.mlevel.loadScene(1);   
+			se.mlevel.loadScene(2);   
 			}, 
 		70 , 200);
 

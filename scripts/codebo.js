@@ -49,19 +49,6 @@ function Codebo(x, y, actualx, actualy, classename, z, codebo_dir) {
   this.inpause = false;
   this.actualdirection = 0;
  
-  if(codebo_dir == 0){
-	  this.codebo_dir = this.directions.FRONT;
-	  this.setFrontDirection();
-  }else if (codebo_dir == 1){
-	  this.codebo_dir = this.directions.BACK;
-		this.setBackDirection();	  
-  }else if(codebo_dir == 2){
-	  this.codebo_dir = this.directions.LEFT;
-	  this.setLeftDirection();
-  }else {
-	  this.codebo_dir = this.directions.RIGHT;
-	  this.setRightDirection();
-  }
   
   this.map;
 
@@ -79,6 +66,22 @@ function Codebo(x, y, actualx, actualy, classename, z, codebo_dir) {
  
    
   GameObject.call(this, sprite, x, y, classename, h, w, 0, z);
+  
+  
+  if(codebo_dir == 0){
+	  this.codebo_dir = this.directions.FRONT;
+	  this.setFrontDirection();
+  }else if (codebo_dir == 1){
+	  this.codebo_dir = this.directions.BACK;
+		this.setBackDirection();	  
+  }else if(codebo_dir == 2){
+	  this.codebo_dir = this.directions.LEFT;
+	  this.setLeftDirection();
+  }else {
+	  this.codebo_dir = this.directions.RIGHT;
+	  this.setRightDirection();
+  }
+  
 }
 
 //fazendo herança

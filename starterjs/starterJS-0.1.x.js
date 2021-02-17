@@ -8,9 +8,49 @@
 function Animation(sprites, timesprite, properties, loop) {
 
     this.sprites = [];
-	this.properties = properties;
+	this.properties = properties!=undefined?properties:[];
 	
-    if(Array.isArray(sprites)){
+	if(sprites != undefined)
+		this.verifySprites( sprites );
+	
+    this.currentsprite = 0;
+    this.timesprite = timesprite!=undefined?timesprite:5;
+	this.currenttimestripe = 0;
+    this.stop = false;
+    this.start();
+	this.animation;
+	this.loop = loop!=undefined?loop:true;
+	this.nextanimation = undefined;
+	this.objectparent;
+	
+	
+}
+	
+/**
+* Configura a próxima animaçã. Ao fazer isso, a animação irá executar a próxima, quando finalizar.
+* @method
+*/
+Animation.prototype.setNextAnimation = function (animation) {
+	this.nextanimation  = animation;
+	this.currentsprite = 0;
+}
+
+
+Animation.prototype.setObjectParent = function( objectparent ){
+	this.objectparent = objectparent;
+}
+
+
+Animation.prototype.setLoop = function( loop ){
+	this.loop = loop;
+}
+
+
+
+Animation.prototype.verifySprites = function (sprites) {
+	
+	
+	if(Array.isArray(sprites)){
 
         for(var i=0; i< sprites.length; i++){
 
@@ -23,19 +63,20 @@ function Animation(sprites, timesprite, properties, loop) {
             }
         }
 
+    } else if(typeof sprites == "string"){
+			var sprite_temp =  se.loader.getAssets(sprites) ;
+            if((!sprite_temp instanceof Image) || (sprite_temp == null)){
+                throw new Error("Ocorreu um erro ao carregar a imagem" + sprite_temp + ". Verifique o nome adicionado aos resources");
+            }else{
+                this.sprites.push(sprite_temp);
+            }
     }
-	
-    this.currentsprite = 0;
-    this.timesprite = timesprite?timesprite:5;
-	this.currenttimestripe = 0;
-    this.stop = false;
-    this.start();
-	this.animation;
-	this.loop = loop!=undefined?loop:true;
-	
+
+
+  
 	
 }
-
+	
 /**
 * Inicia a sequência da animação com tempo
 * @method
@@ -43,13 +84,7 @@ function Animation(sprites, timesprite, properties, loop) {
 Animation.prototype.start = function () {
 	
     var _this = this;
-	//esse time out estava provoando um uso alto da cpu
-   /* window.setTimeout(
-        function(){
-            _this.update(_this);
-        }
-        , this.timesprite*1000
-    );*/
+
 }
 
 /**
@@ -60,15 +95,10 @@ Animation.prototype.update = function () {
 	
 	this.currenttimestripe++;
 	
-	if(this.currenttimestripe > this.timesprite){
-
-		if(this.loop)		
-			this.currenttimestripe = 0;
-		else
+	if(this.currenttimestripe < this.timesprite){
 			return;
-		 
 	}else{
-		return;
+		this.currenttimestripe = 0;
 	}
 	
     if(this.stop)
@@ -76,8 +106,11 @@ Animation.prototype.update = function () {
 
     if(this.getCurrentIndexSprite() < this.sprites.length-1)
         this.nextSprite();
-    else
-        this.setCurrentIndexSprite(0);
+	else if(this.nextanimation != undefined){
+		this.objectparent.setAnimationByIndex( this.nextanimation );
+	}else if(this.loop){
+		 this.setCurrentIndexSprite(0);	
+	}
 
    
 }
@@ -118,6 +151,13 @@ Animation.prototype.nextSprite = function () {
 Animation.prototype.getProperties = function () {
    if(this.properties!=undefined)
 		return this.properties[this.currentsprite];
+	else
+		return [];
+}
+
+
+Animation.prototype.setProperties = function (properties) {
+   this.properties = properties;
 }
 
 /**
@@ -186,6 +226,116 @@ Animation.prototype.stopAnimation = function () {
 Animation.prototype.startAnimation = function () {
     this.stop = false;
 }
+
+
+
+
+/**
+* Retoma a obeto que representa uma animação de transição
+* (bounce, side, hide, show)
+*/
+
+//{h:55, w:65, x:197, y:202}
+
+Animation.prototype.insertRepeatAnimation = function (name, count) {
+	arr = [];
+	
+	for(let i = 0; i < count; i++){
+		arr.push(name);
+	}
+	
+	this.verifySprites( arr );
+}
+ 
+
+Animation.prototype.insertAnimation = function (name, object, count) {
+    var arr = [];
+	if(name == "bounce"){
+		
+		initx = object.x;
+		inity = object.y;
+		inith = object.h;
+		initw = object.w;
+		
+		
+		arr.push( {x:initx, y: inity, h : inith, w : initw} );
+		up = true;
+		for(let i = 0; i < count; i++){
+			if(count%2 ==0){
+				if(( i == count/2) && (up))
+					up=false;
+			}else{
+				
+				if(( i > (count-1)/2) && (up))
+					up=false;
+			}
+			
+			
+			if(up){
+				initx = initx - 2.5*count/2;
+				inity = inity + 2.5*count/2;
+				inith = inith - 5*count/2;
+				initw = initw + 5*count/2;
+			}else{
+				initx = initx + 2.5*count/2;
+				inity = inity - 2.5*count/2;
+				inith = inith + 5*count/2;
+				initw = initw - 5*count/2;
+			}
+			
+			
+			arr.push( {x:initx, y: inity, h : inith, w : initw} );
+		}
+		
+		if(count%2 != 0 )
+			arr.push( {x: object.x, y: object.y, h : object.h, w : object.w} );
+	
+	
+	}else if(name == "up"){
+		
+		limitu = object.y - 5;
+		limitd = object.y + 5;
+		up = true;
+		vel = 2;
+		inity = object.y;
+		console.log(up , inity , limitd);
+		while(count--){
+			
+			if(up){
+				inity -=vel;
+				
+				if(inity < limitu){
+					up = false;
+				}
+			}else{
+				inity +=vel;
+				
+				if(inity > limitd){
+					up = true;
+				}
+			}
+			
+			arr.push( {y: inity} );
+		}
+			
+	}else if(name == "fadein"){
+		perc = 1/count;
+		percCurrent = 0;
+		for(let i = 0; i < count; i++){
+			
+			arr.push( {a: percCurrent} );
+			percCurrent += perc;
+		}
+		
+	}
+		
+	
+	
+	this.properties  = arr;
+}
+
+
+
 
 /**
  * Especifica uma altura ou largura do gameobject com base no primeiro sprite da animação
@@ -307,18 +457,24 @@ GameObject.prototype.setAnimation = function(animations){
 	
 		
 	   if(Array.isArray(animations)) {
-
+			_this = this;
             //verificando se algum elemento não é uma animação
             animations.forEach(function(e){
-                if(e.constructor != Animation)
-                    throw new Error("Algum elemento do Array não é uma animação")
+                if(e.constructor != Animation){
+				throw new Error("Algum elemento do Array não é uma animação")
+				}
+				
+				e.setObjectParent( _this );
             });
-
+			
+			
             this.animation = animations;
 
         //se animations for apenas uma string com o nome do sprite
         }else if(typeof animations == "string"){
-            this.animation = [ new Animation([animations] )];
+			anim = new Animation([animations] );
+			anim.setObjectParent( this );
+            this.animation = [ anim ];
         }
 
 
@@ -338,7 +494,11 @@ GameObject.prototype.setAnimation = function(animations){
 * @param {int} - index
 */
 GameObject.prototype.setAnimationByIndex = function(index){
-	this.currentAnimation = index;
+	if(index < this.animation.length )
+		this.currentAnimation = index;
+	
+	//if(this.animation[this.currentAnimation] != undefined)
+	this.animation[this.currentAnimation].currentsprite = 0;
 }
 
 
@@ -346,12 +506,13 @@ GameObject.prototype.setAnimationByIndex = function(index){
 * Vai para a próxima animação
 */
 GameObject.prototype.nextAnimation = function(){
-
+    
     if(this.currentAnimation < this.animation.length)
         this.currentAnimation++;
     else
         this.currentAnimation = 0;
-
+	
+	this.animation[this.currentAnimation].currentsprite = 0;
 }
 
 
@@ -363,6 +524,8 @@ GameObject.prototype.priorAnimation = function(){
         this.currentAnimation--;
     else
         this.currentAnimation =  this.animation.length-1;
+	
+	this.animation[this.currentAnimation].currentsprite = 0;
 }
 
 
@@ -445,20 +608,25 @@ GameObject.prototype.print = function() {
 		return;
 	
     if(this.animation != null) {
-		ctx.save();
-        ctx.globalAlpha = this.alpha;
+		
+		properties = this.animation[this.currentAnimation].getProperties() ;
 		
 		var centreX = this.x + (this.w / 2);
 		var centreY = this.y + (this.h / 2);
-
+		
+		
+		ctx.save();
+        
+		
 		ctx.translate(centreX, centreY);
 		ctx.rotate(this.r * Math.PI / 180);
 		ctx.translate(-centreX, -centreY);
 		
-		properties = this.animation[this.currentAnimation].getProperties() ;
 		
 		if(properties != undefined)  {
-			console.log(properties.x);
+			
+			ctx.globalAlpha = properties.a;
+			//console.log(properties.x);
 			ctx.drawImage(
 				this.animation[this.currentAnimation].getCurrentSprite(), 
 				properties.x!=undefined? properties.x:this.x, 
@@ -468,7 +636,7 @@ GameObject.prototype.print = function() {
 			);
 		
 		}else{
-			
+			ctx.globalAlpha = this.alpha;
 			ctx.drawImage(this.animation[this.currentAnimation].getCurrentSprite(), this.x, this.y, this.w, this.h);
 		}
 		ctx.restore();
@@ -3225,10 +3393,13 @@ Text.prototype = Object.create(GameObject.prototype);
  * @override
  */
 Text.prototype.print = function() {
-    ctx.textAlign=  this.textaling;
-    ctx.fillStyle = this.color;
-    ctx.font = this.size+"px "+this.font;
-    ctx.fillText(this.text, this.x, this.y);
+	
+	if(this.isshow){
+		ctx.textAlign=  this.textaling;
+		ctx.fillStyle = this.color;
+		ctx.font = this.size+"px "+this.font;
+		ctx.fillText(this.text, this.x, this.y);
+	}
 }
 
 /**
@@ -3791,6 +3962,7 @@ Circle.prototype.print = function() {
     var centreY = this.y + (this.radius / 2);
 
     ctx.save();
+	ctx.globalAlpha = this.alpha;
     ctx.translate(centreX, centreY);
     ctx.rotate(this.r * Math.PI / 180);
     ctx.translate(-centreX, -centreY);
@@ -3839,7 +4011,8 @@ Rect.prototype.print = function() {
     var centreX = this.x + (this.w / 2);
     var centreY = this.y + (this.h / 2);
     ctx.save();
-
+	ctx.globalAlpha = this.alpha;
+	
     ctx.translate(this.x + (this.w / 2),this.y + (this.h / 2));
     ctx.rotate(this.r * Math.PI / 180);
 
@@ -3890,6 +4063,7 @@ Triangle.prototype.print = function() {
     ctx.fillRect(centerX, centerY,10,10)
 
     ctx.save();
+	ctx.globalAlpha = this.alpha;
     ctx.translate(centerX, centerY);
     ctx.rotate(this.r*Math.PI/180);
     ctx.translate(-centerX, - centerY);
