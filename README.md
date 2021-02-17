@@ -56,13 +56,13 @@ Codebo oferece três tipos de feedbacks para os alunos:
 ![Destaque](https://github.com/LuisAraujo/CodeBo-The-Game/blob/main/site/destaque_codigo.png?raw=true)
 
 
-#Demo
+# Demo
 
 Acesso o [link](https://luisaraujo.github.io/CodeBo-The-Game/)!
 
 
 
-#Agradecimentos:
+# Agradecimentos:
 
 APOIO: UNIFACS
 
