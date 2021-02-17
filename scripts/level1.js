@@ -83,6 +83,8 @@ Level.prototype.setTutorial = function (tutorial) {
 };
 
 Level.prototype.reset = function (full) {
+
+ 
   if (full) {
     this.blockused = 0;
     this.limitblock = this.initial_limitblock;
@@ -101,10 +103,12 @@ Level.prototype.hideItem = function () {
 };
 
 Level.prototype.updateLevel = function (limitcommands) {
-  printCommands(limitcommands);
+  //printCommands(limitcommands);
 };
 
 Level.prototype.start = function () {
+	
+ 
   actions = [];
 
   xmlmap = new ReaderXMLFile(this.xmlfile);
@@ -118,6 +122,10 @@ Level.prototype.start = function () {
   }
 
   this.scene.setFunctionUpdate(teste.bind(null, this));
+  
+  printCommands(this.limitcommands)
+	
+	
 };
 
 Level.prototype.setLevel = function (arrmap, _this) {

@@ -157,6 +157,9 @@ Codebo.prototype.runCommands = function (exec) {
   this.actualaction++;
   var action = actions[this.actualaction];
   
+  printHightlight();
+  
+  
   if (action == 'forward') {
     
 	//

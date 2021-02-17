@@ -21,7 +21,7 @@ se.setResources = function () {
   this.loader.addResource('gui_block1',  'gui/gui_block_plan_1.png', 'image');
   this.loader.addResource('gui_block3a',  'gui/gui_block_plan_3_a.png', 'image');
   this.loader.addResource('gui_block3b',  'gui/gui_block_plan_3_b.png', 'image');
-    this.loader.addResource('gui_block4a',  'gui/gui_block_plan_4_a.png', 'image');
+   this.loader.addResource('gui_block4a',  'gui/gui_block_plan_4_a.png', 'image');
   this.loader.addResource('gui_block4b',  'gui/gui_block_plan_4_b.png', 'image');
   this.loader.addResource('gui_block5',  'gui/gui_block_plan_5.png', 'image');
   this.loader.addResource('gui_floor',  'gui/gui_floor.png', 'image');
@@ -442,6 +442,17 @@ se.setResources = function () {
     'image'
   );
   
+   this.loader.addResource(
+    'tutorial_criapilha01',
+    'gui/tutorial_criapilha01.png ',
+    'image'
+  );
+  
+  this.loader.addResource(
+    'tutorial_criapilha02',
+    'gui/tutorial_criapilha02.png ',
+    'image'
+  );
   
 
 };
@@ -499,7 +510,7 @@ se.gameReady = function () {
 	bt_prior_tutorial.setAnimation( [b_next_anim1, b_next_anim2] );
 	
 	
-	
+	//BT CLOSE
 	bt_close_tutorial =  new Button(
     null, 570,  180,
     function () { 
@@ -598,8 +609,9 @@ se.gameReady = function () {
   
 		new Rect(0,0, canvas.height, canvas.width, 'rgba(0, 0, 3, 0.5)'),
 		new Sprite("balon_msg", 200,200), 	bt_next_tutorial, bt_close_tutorial, 
-		new Text('Você tem um limite de 4 comandos.', 220, 260, '#000', 22),
-		new Text('Que tal cortar caminhos?', 260, 300, '#000', 25)
+		new Text('Você tem um limite de ', 260, 250, '#000', 25),
+		new Text(' 4 comandos!', 315, 290, '#000', 25),
+		new Text('Que tal cortar caminhos?', 260, 330, '#000', 25)
 	
 	]);
 	
@@ -628,6 +640,25 @@ se.gameReady = function () {
   
 		new Rect(0,0, canvas.height, canvas.width, 'rgba(0, 0, 3, 0.5)'),
 		new Sprite("balon_msg", 200,200), 	bt_next_tutorial, bt_close_tutorial, bt_prior_tutorial,	
+		new Text('Pilha são criadas sempre a frente,', 215, 260, '#000', 25),
+		new Text('na direção do Codebo...', 270, 300, '#000', 25)
+	
+	]);
+	
+	anim2 = new Animation(["tutorial_criapilha01", "tutorial_criapilha02"], 20);
+		
+	tutorial_3.push([
+       
+		new Rect(0,0, canvas.height, canvas.width, 'rgba(0, 0, 3, 0.5)'),
+		new Sprite("balon_msg", 200,200), 	bt_next_tutorial, bt_close_tutorial, bt_prior_tutorial,	new Text('... e no mesmo nivel!', 280 , 250, '#000', 25),
+		new Sprite( [anim2] , 380, 260, 60, 60)
+	
+	]);
+	
+	tutorial_3.push([
+  
+		new Rect(0,0, canvas.height, canvas.width, 'rgba(0, 0, 3, 0.5)'),
+		new Sprite("balon_msg", 200,200), 	bt_next_tutorial, bt_close_tutorial, bt_prior_tutorial,	
 		new Text('Para entrar na pilha, use', 280, 260, '#000', 25),
 		new Text('o comando empilhar robô.', 265, 300, '#000', 25),
 		new Sprite("button_stack_character_push", 440, 530, 60, 60)
@@ -642,7 +673,7 @@ se.gameReady = function () {
 		new Sprite("balon_msg", 200,200), 	bt_next_tutorial, bt_close_tutorial, bt_prior_tutorial,	
 		new Text('Para desempilhar o codebô', 260, 260, '#000', 25),
 		new Text('use o comando desempilhar.', 250, 300, '#000', 25),
-		new Sprite("button_stack_pop", 300, 530, 60, 60)
+		new Sprite("button_stack_pop", 370, 530, 60, 60)
 	
 	]);
 	
@@ -731,6 +762,7 @@ se.gameReady = function () {
   
 	//carrega menu
 	//se.mlevel.loadScene(2 + currentLevel);
+	//currentLevel = 2;
 	se.mlevel.loadScene(0);
   
 };
@@ -755,6 +787,7 @@ function createCommandsButton(item, limitcommands) {
     window.posx,
     canvas.height - 70,
     function () {
+		
       if (actions.length < limitcommands) {
 		 
 		  if(item == "stack_block_push"){
@@ -768,10 +801,7 @@ function createCommandsButton(item, limitcommands) {
 			  
 				var pop = 0;
 				var action_valid = false;
-				
-				
-				
-				
+
 				for(var j = actions.length-1; j >= 0; j--){
 					
 					if(actions[j] == "stack_pop"){
@@ -808,6 +838,8 @@ function createCommandsButton(item, limitcommands) {
 		  }
 		  
 	  }
+	  
+	  printCommands( levels[currentLevel].limitcommands );
     },
     window.size,
     window.size
@@ -884,6 +916,8 @@ new Rect(canvas.width - 300, 150, 580, 1180, 'rgba(255, 255, 255, 0.5)');
     function () {
       levels[currentLevel].getCodebo().pause();
 	  log.addAction("stop");
+	  printCommands(levels[currentLevel].limitcommands);
+	  celarHightlight();
     },
     60,
     60
@@ -900,7 +934,8 @@ new Rect(canvas.width - 300, 150, 580, 1180, 'rgba(255, 255, 255, 0.5)');
       levels[currentLevel].getMap().reset(levels[currentLevel].getCodebo());
 	  levels[currentLevel].blockused = 0;
       actions = [];
-	  
+	  printCommands(levels[currentLevel].limitcommands);
+	  clearHightlight();
 	  log.addAction("reload");
 	  
 	  
@@ -910,8 +945,10 @@ new Rect(canvas.width - 300, 150, 580, 1180, 'rgba(255, 255, 255, 0.5)');
   );
 
   new Button('button_help', 20, 20, function () {
+	  
 	   se.mlevel.getCurrentScene().resetCurrentTutorial();	
-	   se.mlevel.istutorial = true;
+	   se.mlevel.getCurrentScene().istutorial = true;
+  
   }, 70, 70);
   
   
@@ -921,13 +958,54 @@ new Rect(canvas.width - 300, 150, 580, 1180, 'rgba(255, 255, 255, 0.5)');
     20,
     function () {
       //menu
-      se.mlevel.loadScene(0);
+      se.mlevel.loadScene(2);
     },
     70,
     70
   );
 }
 
+function clearHightlight(){
+	
+	var objectstag = se.mlevel.getCurrentScene().getObjectsByTag('hightbt');
+	for (var i = 0; i < objectstag.length; i++) {
+		se.mlevel.removeObject(objectstag[i]);
+	}
+    
+	
+}
+
+function printHightlight(){
+	if( levels[currentLevel].codebo.getCurrentAction() > actions.length-1)
+		return;
+	
+	var posx = 0;
+	var posy = 0;
+	var marginx = canvas.width - 280;
+	var marginy = 180;
+	var size = 40;
+	var j = 0;
+  
+  
+	// removendo todos os comandos
+	clearHightlight();
+	
+	var index = levels[currentLevel].codebo.getCurrentAction();
+	j = index;
+
+	//grade de 4 comandos
+	if (index % 6 == 0) 
+		j = 0;//parseInt(index/6);
+	else
+		j = index % 6;
+	
+	posy = parseInt(index / 6) * (size + 5);
+	posx = j * (size + 5);	
+	var sp = new Sprite("mini_hightlight", marginx + posx, marginy + posy, size, size, 100);  
+	sp.setTag('hightbt');		
+	
+	 
+}
 /*Exibe os comandos abaixo do play*/
 function printCommands(limitcommand) {
 	
@@ -965,9 +1043,6 @@ function printCommands(limitcommand) {
 	 //if(actions[i] == "stack_block_push")
 		// qtd_block++;
 	 
-	 
-	 
-	 
     j++;
 
     //grade de 4 comandos
@@ -976,7 +1051,7 @@ function printCommands(limitcommand) {
     posx = j * (size + 5);
     
     bt = new MiniButton(
-      'mini_' + actions[i],
+      null,
       marginx + posx,
       marginy + posy,
       function () {
@@ -1032,22 +1107,34 @@ function printCommands(limitcommand) {
 		}
       
 	  
-	  
+		printCommands( levels[currentLevel].limitcommands );
 	  },
       size,
       size,
 	  0,
 	  100
     );
+	
+	namesp = 'mini_' + actions[i];
+	curposx = marginx + posx;
+	curposy = marginy + posy;
+	
+	if( i == actions.length-1){
+		bt.setAnimation(
+			[ new Animation([namesp,namesp,namesp,namesp], 2, [{h:size-6, w:size+6, x:curposx-3, y:curposy+3},{h:size-4, w:size+4, x:curposx-2,y:curposy+2},{h:size-2, w:size+2,y:curposx-1,y:curposy+1},{h:size, w:size, x:curposx, y:curposy}], false) ]
+		);
+	}else{
+		bt.setAnimation(namesp);
+	}
+	
     bt.setId(i);
     bt.setTag('btcommands');
 	
 	//HIGHLIGHT COMANDOS
-	//if((levels[currentLevel].codebo.getCurrentAction() == i) && (!levels[currentLevel].codebo.getPause() )){		 
-	if(levels[currentLevel].codebo.getCurrentAction() == i) {		 
+	/*if(levels[currentLevel].codebo.getCurrentAction() == i) {		 
 		var sp = new Sprite("mini_hightlight", marginx + posx, marginy + posy, size, size, 100);  
 		sp.setTag('btcommands');		
-	 }
+	 }*/
 	 
 	 
   }
@@ -1065,7 +1152,9 @@ function printCommands(limitcommand) {
       marginx + posx,
       marginy + posy,
       function () {
+		
         actions.splice(this.getId(), 1);
+
       },
       size,
       size
