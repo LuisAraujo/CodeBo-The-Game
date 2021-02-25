@@ -2694,6 +2694,34 @@ function ManagerMouse() {
  */
 ManagerMouse.prototype.start = function () {
     var _this = this;
+	
+		
+	canvas.addEventListener('touchstart', function(event) {
+		
+		 var x = event.targetTouches[0].pageX - canvas.offsetLeft,
+            y = event.targetTouches[0].pageY - canvas.offsetTop;
+
+        var objects = se.mlevel.getObjectsCurrentScene();
+		
+		for(var i = 0; i < objects.length; i++) {
+		element = objects[i];
+
+		if (element.classename == "mbutton") {
+			if (y > element.y && y < element.y + element.h && x > element.x && x < element.x + element.w) {
+				element.click();
+				break;
+			}
+
+		}
+
+		}
+
+
+		  
+	});
+
+
+
 
     canvas.addEventListener('click', function(event) {
 
@@ -3101,6 +3129,47 @@ Button.prototype.click = function(){
 Button.prototype.setClick = function(fn){
     this.clickFunction = fn;
 }
+
+
+
+/**
+ * @class
+ * @classdesc Representa um Butão Mobile.
+ * @extends GameObject
+ * @param {string} sprite - Nome do sprite do botão
+ * @param {int} x - Coordenada x do botão
+ * @param {int} y - Coordenada y do botão
+ * @param {funcition} Callback - função chamada no click
+ * @param {int} w - Largura do sprite
+ * @param {int} h - Altura do sprite
+ */
+function MButton(sprite, x, y, callback, w, h, r, z){
+	
+    this.classename = "mbutton";
+    GameObject.call(this, sprite, x, y, "mbutton", h,w, r, z);
+
+    if(callback!= undefined) {
+        this.clickFunction = callback;
+    }else{
+        this.clickFunction  = function () {console.warn("Esse objeto não possui uma clickFunction")}
+    }
+
+}
+
+MButton.prototype = Object.create(GameObject.prototype);
+
+
+/**
+ * Chama a função estipulado quando há o clique
+ * @method
+ * @name Button.click
+ */
+MButton.prototype.click = function(){
+    if(this.clickFunction != undefined)
+        this.clickFunction();
+}
+
+
 /**
  * Representa um elemento dragdrop
  * @param {string} sprite - Nome do sprite do botão
