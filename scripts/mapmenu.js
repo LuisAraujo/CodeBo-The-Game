@@ -11,14 +11,11 @@ MapMenu.prototype.start = function(){
 		createGUIMenuMap();
 
 		//MENU (LEVEL)
-		createGUILevels()
-		
+		createGUILevels();	
 	  
   });
   
-  
   this.scene.setFunctionUpdate(function () {});
-  
   
 }
 

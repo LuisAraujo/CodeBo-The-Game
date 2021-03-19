@@ -4,16 +4,16 @@
 }
 
 html, body{
-    background-color: #555;
+    background-color: #1b3352;
 	height: 100%;
 	width:100%;
-	overflow: hide;
+	overflow: hidden;
 }
 
 canvas{
     background-color: #fff;
-    /*margin-left: calc(50% - 600px);
-    margin-top: 20px;*/
+    margin-left: calc(50% - 600px);
+    margin-top: 20px;
 }
 
 .mobile-canvas{

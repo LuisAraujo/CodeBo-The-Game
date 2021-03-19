@@ -965,16 +965,18 @@ new Rect(canvas.width - 300, 150, 580, 1180, 'rgba(255, 255, 255, 0.5)');
   );
 }
 
+
+//todo: verificar se é possivel mover para level 
 function clearHightlight(){
 	
 	var objectstag = se.mlevel.getCurrentScene().getObjectsByTag('hightbt');
 	for (var i = 0; i < objectstag.length; i++) {
 		se.mlevel.removeObject(objectstag[i]);
 	}
-    
-	
+
 }
 
+//todo: verificar se é possivel mover para level 
 function printHightlight(){
 	if( levels[currentLevel].codebo.getCurrentAction() > actions.length-1)
 		return;
@@ -1006,165 +1008,154 @@ function printHightlight(){
 	
 	 
 }
+
+//todo: verificar se é possivel mover para level 
 /*Exibe os comandos abaixo do play*/
 function printCommands(limitcommand) {
-	
-  	if(levels[currentLevel].getEnd())
+		
+	if(levels[currentLevel].getEnd())
 		return;
-	
+
 	qtd_block = 0; 
-	
-  // removendo todos os comandos
-  var objectstag = se.mlevel.getCurrentScene().getObjectsByTag('btcommands');
-  for (var i = 0; i < objectstag.length; i++) {
-    se.mlevel.removeObject(objectstag[i]);
-  }
-  
-  var objectstag = se.mlevel.getCurrentScene().getObjectsByTag('guicommands');
-  for (var i = 0; i < objectstag.length; i++) {
-    se.mlevel.removeObject(objectstag[i]);
-  }
+		
+	// removendo todos os comandos
+	var objectstag = se.mlevel.getCurrentScene().getObjectsByTag('btcommands');
+	for (var i = 0; i < objectstag.length; i++) {
+	se.mlevel.removeObject(objectstag[i]);
+	}
+	  
+	var objectstag = se.mlevel.getCurrentScene().getObjectsByTag('guicommands');
+	for (var i = 0; i < objectstag.length; i++) {
+	se.mlevel.removeObject(objectstag[i]);
+	}
 
-  var posx = 0;
-  var posy = 0;
-  var marginx = canvas.width - 280;
-  var marginy = 180;
-  var j = 0;
-  var size = 40;
-
+	var posx = 0;
+	var posy = 0;
+	var marginx = canvas.width - 280;
+	var marginy = 180;
+	var j = 0;
+	var size = 40;
 
 	actualaction = 0;
-	
- 
-   
-   
-  //percorrendo os comandos
-  for (var i = 0; i < actions.length; i++) {
-	 //if(actions[i] == "stack_block_push")
-		// qtd_block++;
-	 
-    j++;
 
-    //grade de 4 comandos
-    if (i % 6 == 0) j = 0;
-    posy = parseInt(i / 6) * (size + 5);
-    posx = j * (size + 5);
-    
-    bt = new MiniButton(
-      null,
-      marginx + posx,
-      marginy + posy,
-      function () {
-		  log.addAction("remove > "+actions[this.getId()]);
-		  
-		  
-		  //removendo as modificações do blockused
-		if( actions[this.getId()] == "stack_block_push"){
-			levels[currentLevel].blockused--;
-			actions.splice(this.getId(), 1);
-		}else if( actions[this.getId()] == "stack_pop"){
-			//verifica se o pop remove um codebo ou um bloco
-			var pop = 0;
-			for(var j = actions.length-1; j >= 0; j--){
-				
-				if(actions[j] == "stack_pop")
-					pop++;
-				
-				if((actions[j] == "stack_character_push") && (pop == 1))
-					break;
-				
-				else if( (actions[j] == "stack_block_push") && (levels[currentLevel].blockused< levels[currentLevel].limitblock) ){
-					
-					levels[currentLevel].blockused++;	
-					
-					break;
-				}
+	//percorrendo os comandos
+	for (var i = 0; i < actions.length; i++) {
 
-				//fim do loop (exeções do uso do pop no level 5 e 7
-				if( (j == 0)  && (pop == 1) && ((currentLevel == 5) || (currentLevel == 7))){
-					
-					levels[currentLevel].limitblock--;
-					
-				}	
-			}
-			
-			var blockusedtotal = 0;
-			
-			for(var j = actions.length-1; j >= 0; j--){
-				if(actions[j] == "stack_block_push")
-					blockusedtotal++;
-			}
-			
-			if(blockusedtotal <= levels[currentLevel].limitblock)
+		j++;
+
+		//grade de 4 comandos
+		if (i % 6 == 0) j = 0;
+		posy = parseInt(i / 6) * (size + 5);
+		posx = j * (size + 5);
+
+		bt = new MiniButton(
+		  null,
+		  marginx + posx,
+		  marginy + posy,
+		  function () {
+			  log.addAction("remove > "+actions[this.getId()]);
+			  
+			  
+			  //removendo as modificações do blockused
+			if( actions[this.getId()] == "stack_block_push"){
+				levels[currentLevel].blockused--;
 				actions.splice(this.getId(), 1);
-			else{
-				 msgconsole = "Não é possivel remover esse bloco"
+			}else if( actions[this.getId()] == "stack_pop"){
+				//verifica se o pop remove um codebo ou um bloco
+				var pop = 0;
+				for(var j = actions.length-1; j >= 0; j--){
+					
+					if(actions[j] == "stack_pop")
+						pop++;
+					
+					if((actions[j] == "stack_character_push") && (pop == 1))
+						break;
+					
+					else if( (actions[j] == "stack_block_push") && (levels[currentLevel].blockused< levels[currentLevel].limitblock) ){
+						
+						levels[currentLevel].blockused++;	
+						
+						break;
+					}
+
+					//fim do loop (exeções do uso do pop no level 5 e 7
+					if( (j == 0)  && (pop == 1) && ((currentLevel == 5) || (currentLevel == 7))){
+						
+						levels[currentLevel].limitblock--;
+						
+					}	
+				}
+				
+				var blockusedtotal = 0;
+				
+				for(var j = actions.length-1; j >= 0; j--){
+					if(actions[j] == "stack_block_push")
+						blockusedtotal++;
+				}
+				
+				if(blockusedtotal <= levels[currentLevel].limitblock)
+					actions.splice(this.getId(), 1);
+				else{
+					 msgconsole = "Não é possivel remover esse bloco"
+				}
+				
+				//levels[currentLevel].blockused++;
+			}else{
+				actions.splice(this.getId(), 1);
 			}
-			
-			//levels[currentLevel].blockused++;
-		}else{
-			actions.splice(this.getId(), 1);
-		}
-      
-	  
-		printCommands( levels[currentLevel].limitcommands );
-	  },
-      size,
-      size,
-	  0,
-	  100
-    );
-	
-	namesp = 'mini_' + actions[i];
-	curposx = marginx + posx;
-	curposy = marginy + posy;
-	
-	if( i == actions.length-1){
-		bt.setAnimation(
-			[ new Animation([namesp,namesp,namesp,namesp], 2, [{h:size-6, w:size+6, x:curposx-3, y:curposy+3},{h:size-4, w:size+4, x:curposx-2,y:curposy+2},{h:size-2, w:size+2,y:curposx-1,y:curposy+1},{h:size, w:size, x:curposx, y:curposy}], false) ]
+		  
+		  
+			printCommands( levels[currentLevel].limitcommands );
+		  },
+		  size,
+		  size,
+		  0,
+		  100
 		);
-	}else{
-		bt.setAnimation(namesp);
+
+		namesp = 'mini_' + actions[i];
+		curposx = marginx + posx;
+		curposy = marginy + posy;
+
+		if( i == actions.length-1){
+			bt.setAnimation(
+				[ new Animation([namesp,namesp,namesp,namesp], 2, [{h:size-6, w:size+6, x:curposx-3, y:curposy+3},{h:size-4, w:size+4, x:curposx-2,y:curposy+2},{h:size-2, w:size+2,y:curposx-1,y:curposy+1},{h:size, w:size, x:curposx, y:curposy}], false) ]
+			);
+		}else{
+			bt.setAnimation(namesp);
+		}
+
+		bt.setId(i);
+		bt.setTag('btcommands');
+	 
 	}
-	
-    bt.setId(i);
-    bt.setTag('btcommands');
-	
-	//HIGHLIGHT COMANDOS
-	/*if(levels[currentLevel].codebo.getCurrentAction() == i) {		 
-		var sp = new Sprite("mini_hightlight", marginx + posx, marginy + posy, size, size, 100);  
-		sp.setTag('btcommands');		
-	 }*/
-	 
-	 
-  }
 
-  for (var i = actions.length; i < limitcommand; i++) {
-    j++;
+	for (var i = actions.length; i < limitcommand; i++) {
+		j++;
 
-    //grade de 4 comandos
-    if (i % 6 == 0) j = 0;
-    posy = parseInt(i / 6) * (size + 5);
-    posx = j * (size + 5);
+		//grade de 4 comandos
+		if (i % 6 == 0) j = 0;
+		posy = parseInt(i / 6) * (size + 5);
+		posx = j * (size + 5);
 
-    bt = new MiniButton(
-      'mini_blank',
-      marginx + posx,
-      marginy + posy,
-      function () {
-		
-        actions.splice(this.getId(), 1);
+		bt = new MiniButton(
+		  'mini_blank',
+		  marginx + posx,
+		  marginy + posy,
+		  function () {
+			
+			actions.splice(this.getId(), 1);
 
-      },
-      size,
-      size
-    );
-    bt.setId(i);
-    bt.setTag('btcommands');
-  }
-  
-  
-    gui_block = new Sprite("gui_block", canvas.width - 130, 125, 25,25);
+		  },
+		  size,
+		  size
+		);
+		bt.setId(i);
+		bt.setTag('btcommands');
+	}
+
+
+	gui_block = new Sprite("gui_block", canvas.width - 130, 125, 25,25);
 	gui_block.setTag("guicommands");
 	txt_qtd_block = new Text("", canvas.width - 100, 147, "white", 25);
 	txt_qtd_block.setTag("guicommands");
@@ -1174,10 +1165,12 @@ function printCommands(limitcommand) {
 		//this.setText("x" + ( levels[currentLevel].getLimitBlock() - qtd_block) );
 		this.setText("x" + ( levels[currentLevel].getLimitBlock() - levels[currentLevel].blockused) );
 	}
-	
 		
+			
 }
 
+
+//todo: verificar se é possivel mover para level
 function createArrayMap(map) {
   arrayMap = [];
 
@@ -1195,7 +1188,7 @@ function createArrayMap(map) {
   return arrayMap;
 }
 
-
+//todo: verificar se é possivel mover para level ou criar uma classe console.js
 function consoleError(msg, line){
 	msgconsole = msg + " c:"+(line+1);
 	txt_console.color = "#f33";
@@ -1203,7 +1196,7 @@ function consoleError(msg, line){
 	log.addAction("error>"+msgconsole);
 }
 
-
+//todo: verificar se é possivel mover para level ou criar uma classe console.js
 function consoleWarning(msg, line){
 	
 	

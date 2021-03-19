@@ -8,7 +8,6 @@ InitialScreen.prototype.start = function(){
 	
 	this.scene.setFunctionStart(function () {
 		
-	
 		new Rect(0,0, canvas.height, canvas.width, "#101118");
 		var tx = new Text("Apoio", 430, 250);
 		var anim =  new Animation();
