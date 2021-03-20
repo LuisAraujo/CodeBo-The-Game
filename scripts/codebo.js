@@ -464,7 +464,7 @@ Codebo.prototype.runCommands = function (exec) {
 	   this.map[this.actualy][this.actualx +1]%10  == this.getLevel()
     ){
      
-	 levels[currentLevel].getMap().setLevel(this.actualx + 1, this.actualy, 
+	 //levels[currentLevel].getMap().setLevel(this.actualx + 1, this.actualy, 
 	 levels[currentLevel].getMap().setLevel(this.actualx + 1, this.actualy, 
 		(this.map[this.actualy][this.actualx + 1]%10)*-1
 	  );
@@ -480,11 +480,13 @@ Codebo.prototype.runCommands = function (exec) {
  
  //INSERIR BLOCO NA PILHA
  } else if (action == 'stack_block_push') {
-    
+    //verifica direcao e se é um local que pode adicionar um bloco de pilha ( < 0) 
 	if (
       this.actualdirection == this.directions.FRONT &&
       levels[currentLevel].getMap().map[this.actualy + 1][this.actualx] < 0
     ) {
+		
+	  //coloca um bloco na pilha 	
       levels[currentLevel]
         .getMap()
         .setLevel(
@@ -493,10 +495,12 @@ Codebo.prototype.runCommands = function (exec) {
           parseInt(levels[currentLevel].getMap().map[this.actualy + 1][this.actualx]) - 1
         );
     
+	//verifica direcao e se é um local que pode adicionar um bloco de pilha ( < 0) 
 	} else if (
       this.actualdirection == this.directions.RIGHT &&
       this.map[this.actualy][this.actualx - 1] < 0
     ) {
+		
       levels[currentLevel]
         .getMap()
         .setLevel(
@@ -504,11 +508,13 @@ Codebo.prototype.runCommands = function (exec) {
           this.actualy,
           parseInt(levels[currentLevel].getMap().map[this.actualy][this.actualx - 1]) - 1
         );
+		
+	//verifica direcao e se é um local que pode adicionar um bloco de pilha ( < 0) 	
     } else if (
       this.actualdirection == this.directions.BACK &&
       this.map[this.actualy - 1][this.actualx] < 0
     ) {
-      console.log(this.actualy, this.actualx);
+
       levels[currentLevel]
         .getMap()
         .setLevel(
@@ -516,10 +522,13 @@ Codebo.prototype.runCommands = function (exec) {
           this.actualy - 1,
           parseInt(levels[currentLevel].getMap().map[this.actualy - 1][this.actualx]) - 1
         );
-    } else if (
+    
+	//verifica direcao e se é um local que pode adicionar um bloco de pilha ( < 0) 
+	} else if (
       this.actualdirection == this.directions.LEFT &&
       this.map[this.actualy][this.actualx + 1] < 0
     ) {
+		
       levels[currentLevel]
         .getMap()
         .setLevel(
@@ -527,26 +536,32 @@ Codebo.prototype.runCommands = function (exec) {
           this.actualy,
           parseInt(levels[currentLevel].getMap().map[this.actualy][this.actualx + 1]) - 1
         );
-    }else{
-		
+    
+	//não pode colocar uma bloco na pilha
+	}else{
 		consoleError("Impossível inserir em uma pilha!", this.actualaction);
+		//interrompe execução
 		this.pause();
 		
 	}
-
+	
+	//recria o mapa e ajusta o z index
     levels[currentLevel].getMap().create();
     levels[currentLevel].getMap().adjustmentLevels(this.getLevel(), this.actualx, this.actualy);
  
   //INSERIR CODEBO NA PILHA
  } else if (action == 'stack_character_push') {
     
+	//verifica direcao e se é um local que pode adicionar um bloco de pilha ( < 0) 
 	if (
       this.actualdirection == this.directions.FRONT &&
       levels[currentLevel].getMap().map[this.actualy + 1][this.actualx] < 0
     ) {
       
+	  //pega o nivel atual do codebo
 	  var oldlevel = this.actuallevel;
-
+	  
+      //muda o nivel do codebo para o nivel do bloco 	  
       this.actuallevel = Math.abs(
         levels[currentLevel].getMap().map[this.actualy + 1][this.actualx]
       );
@@ -557,95 +572,111 @@ Codebo.prototype.runCommands = function (exec) {
       //move to front
       this.x += 35;
       this.y += 17.5;
+	  
       //up
       this.y -= 35 * (this.actuallevel - oldlevel);
+	  
+	  //entrou na pilha
       this.is_stacked = true;
+	  
+	  //recria o level
       levels[currentLevel].getMap().create();
       
+	  //ajusta o z-index
 	  levels[currentLevel]
         .getMap()
         .adjustmentLevels(this.getLevel(), this.actualx, this.actualy);
 		
-		 this.is_stacked = true;
+		 //this.is_stacked = true;
     
+	
+	//verifica direcao e se é um local que pode adicionar um bloco de pilha ( < 0) 
 	} else if (
       this.actualdirection == this.directions.RIGHT &&
       this.map[this.actualy][this.actualx - 1] < 0
     ) {
-      var oldlevel = this.actuallevel;
-
-      this.actuallevel = Math.abs(
-        levels[currentLevel].getMap().map[this.actualy][this.actualx - 1]
-      );
-
-      //up level
-      this.actualx -= 1;
-
-      //move to right
-      this.x -= 36;
-      this.y += 18;
-
-      //up
-      this.y -= 35 * (this.actuallevel - oldlevel);
-      this.is_stacked = true;
-      levels[currentLevel].getMap().create();
-      levels[currentLevel]
-        .getMap()
-        .adjustmentLevels(this.getLevel(), this.actualx, this.actualy);
 		
-		 this.is_stacked = true;
+
+		var oldlevel = this.actuallevel;
+
+		this.actuallevel = Math.abs(
+		levels[currentLevel].getMap().map[this.actualy][this.actualx - 1]
+		);
+
+		//up level
+		this.actualx -= 1;
+	
+		
+		//move to right
+		this.x -= 36;
+		this.y += 18;
+
+		//up
+		this.y -= 35 * (this.actuallevel - oldlevel);
+		
+		this.is_stacked = true;
+		
+		levels[currentLevel].getMap().create();
+		levels[currentLevel]
+		.getMap()
+		.adjustmentLevels(this.getLevel(), this.actualx, this.actualy);
+
+	//verifica direcao e se é um local que pode adicionar um bloco de pilha ( < 0) 
     } else if (
       this.actualdirection == this.directions.BACK &&
       this.map[this.actualy - 1][this.actualx] < 0
     ) {
-      var oldlevel = this.actuallevel;
+		var oldlevel = this.actuallevel;
 
-      this.actuallevel = Math.abs(
-        levels[currentLevel].getMap().map[this.actualy - 1][this.actualx]
-      );
+		this.actuallevel = Math.abs(
+		levels[currentLevel].getMap().map[this.actualy - 1][this.actualx]
+		);
 
-      //up level
-      this.actualx -= 1;
+		//up level
+		this.actualx -= 1;
 
-      //move to back
-      this.x -= 35;
-      this.y -= 17.5;
+		//move to back
+		this.x -= 35;
+		this.y -= 17.5;
 
-      //up
-      this.y -= 35 * (this.actuallevel - oldlevel);
-      this.is_stacked = true;
-      levels[currentLevel].getMap().create();
-      levels[currentLevel]
-        .getMap()
-        .adjustmentLevels(this.getLevel(), this.actualx, this.actualy);
-	
+		//up
+		this.y -= 35 * (this.actuallevel - oldlevel);
+		
 		this.is_stacked = true;
-		 
+		
+		levels[currentLevel].getMap().create();
+		levels[currentLevel]
+		.getMap()
+		.adjustmentLevels(this.getLevel(), this.actualx, this.actualy);
+
+		this.is_stacked = true;
+		
+//verifica direcao e se é um local que pode adicionar um bloco de pilha ( < 0) 		
     } else if (
       this.actualdirection == this.directions.LEFT &&
       this.map[this.actualy][this.actualx + 1] < 0
     ) {
-      var oldlevel = this.actuallevel;
+		var oldlevel = this.actuallevel;
 
-      this.actuallevel = Math.abs(
-        levels[currentLevel].getMap().map[this.actualy][this.actualx + 1]
-      );
+		this.actuallevel = Math.abs(
+		levels[currentLevel].getMap().map[this.actualy][this.actualx + 1]
+		);
 
-      //up level
-      this.actualx += 1;
+		//up level
+		this.actualx += 1;
 
-      //move to back
-      this.x += 36;
-      this.y -= 18;
+		//move to back
+		this.x += 36;
+		this.y -= 18;
 
-      //up
-      this.y -= 35 * (this.actuallevel - oldlevel);
-      this.is_stacked = true;
-      levels[currentLevel].getMap().create();
-      levels[currentLevel]
-        .getMap()
-        .adjustmentLevels(this.getLevel(), this.actualx, this.actualy);
-     this.is_stacked = true;
+		//up
+		this.y -= 35 * (this.actuallevel - oldlevel);
+		this.is_stacked = true;
+		levels[currentLevel].getMap().create();
+		levels[currentLevel]
+		.getMap()
+		.adjustmentLevels(this.getLevel(), this.actualx, this.actualy);
+		
 	}else{
 		consoleError("Impossível inserir em uma pilha.", this.actualaction);
 		this.pause();
@@ -659,27 +690,26 @@ Codebo.prototype.runCommands = function (exec) {
   //REMOVER DA PILHA
   } else if (action == 'stack_pop') {
     
+	//O Codebô está empilhado (remove ele)
 	if (this.is_stacked) {
       
-	  console.log('POP is working!', this.actualdirection);
-      //O Codebô está empilhado
-     
-
+	  //está para frente?
       if (this.actualdirection == this.directions.FRONT) {
         
-		//is a bloco
+		//é um bloco
 		if(this.map[this.actualy + 1][this.actualx] > 10){
 			if (
 			  this.map[this.actualy] != undefined &&
 			  this.map[this.actualy + 1][this.actualx]%10 == this.getLevel()
 			) {
-			  console.log('POP front!');
-			   this.is_stacked = false;
-			  this.x += 35;
-			  this.y += 17.5;
+				//remove da pilha
+				this.is_stacked = false;
+				
+				this.x += 35;
+				this.y += 17.5;
 
-			  //this.actualx
-			  this.actualy += 1;
+				//this.actualx
+				this.actualy += 1;
 			}else{
 				
 				consoleError("Codebo não pode sair da pilha!", this.actualaction);
@@ -691,6 +721,7 @@ Codebo.prototype.runCommands = function (exec) {
 		    this.pause();
 		}
 			
+	  //está para o fundo		
       } else if (this.actualdirection == this.directions.BACK) {
         console.log('POP back!');
 		//is a block
@@ -716,7 +747,9 @@ Codebo.prototype.runCommands = function (exec) {
 			consoleError("Codebo não pode sair da pilha!", this.actualaction);
 		    this.pause();
 		}
-			
+	
+	
+	  //está para a direita
       } else if (this.actualdirection == this.directions.RIGHT) {
         console.log('POP right!');
        
@@ -743,6 +776,8 @@ Codebo.prototype.runCommands = function (exec) {
 		    this.pause();
 		}
 		
+		
+	  //esta para a esquerda?	
       } else if (this.actualdirection == this.directions.LEFT) {
         console.log('POP left!');
         if(this.map[this.actualy][this.actualx + 1] > 10){
@@ -775,13 +810,15 @@ Codebo.prototype.runCommands = function (exec) {
         .adjustmentLevels(this.getLevel(), this.actualx, this.actualy);
     
 	
+	//codebo n está na pilha (remove bloco)
 	} else {
       
-	  
+	  //está para frente e é um bloco de pilha?
 	  if (
         this.actualdirection == this.directions.FRONT &&
         levels[currentLevel].getMap().map[this.actualy + 1][this.actualx] < -1
       ) {
+		  
         levels[currentLevel]
           .getMap()
           .setLevel(
@@ -790,6 +827,8 @@ Codebo.prototype.runCommands = function (exec) {
             parseInt( levels[currentLevel].getMap().map[this.actualy + 1][this.actualx] ) + 1
           );
      
+	 
+	 //está para a direita?
 	 } else if (
         this.actualdirection == this.directions.RIGHT &&
         this.map[this.actualy][this.actualx - 1] < -1
@@ -801,7 +840,9 @@ Codebo.prototype.runCommands = function (exec) {
             this.actualy,
             parseInt(levels[currentLevel].getMap().map[this.actualy][this.actualx - 1]) + 1
           );
-      } else if (
+     
+	//está para o fundo?
+	 } else if (
         this.actualdirection == this.directions.BACK &&
         this.map[this.actualy - 1][this.actualx] < -1
       ) {
@@ -813,7 +854,9 @@ Codebo.prototype.runCommands = function (exec) {
             this.actualy - 1,
             parseInt(levels[currentLevel].getMap().map[this.actualy - 1][this.actualx]) + 1
           );
-      } else if (
+      
+	  //esta para a esquerda
+	  } else if (
         this.actualdirection == this.directions.LEFT &&
         this.map[this.actualy][this.actualx + 1] < -1
       ) {
@@ -839,16 +882,20 @@ Codebo.prototype.runCommands = function (exec) {
 
   //COLOCA ITEM NO MAP
   } else if (action == 'set_item') {
-	  console.log(this)
+	  
+	  //item não é nulo?
 	  if(this.actualitem != null){
-	
+		  
+	       //está para a frente e bloco é agua (10) 
 			if (
 			  this.actualdirection == this.directions.FRONT &&
 			  this.map[this.actualy + 1][this.actualx] == 10
 			){
 			  levels[currentLevel].getMap().setLevel(this.actualx, this.actualy + 1, 1);
 			  this.removeItem();
-			  
+			 
+
+			 //está para a direita e bloco é agua (10) 		
 			}else if (
 			  this.actualdirection == this.directions.RIGHT &&
 			  this.map[this.actualy][this.actualx - 1] == 10
@@ -856,6 +903,8 @@ Codebo.prototype.runCommands = function (exec) {
 				levels[currentLevel].getMap().setLevel(this.actualx - 1, this.actualy, 1);
 				this.removeItem();
 			
+			
+			 //está para a fundo e bloco é agua (10) 
 			}else if (
 			  this.actualdirection == this.directions.BACK &&
 			  this.map[this.actualy - 1][this.actualx] == 10
@@ -863,6 +912,7 @@ Codebo.prototype.runCommands = function (exec) {
 			  levels[currentLevel].getMap().setLevel(this.actualx, this.actualy - 1, 1);
 			  this.removeItem();
 			  
+			 //está para a esquerda e bloco é agua (10) 
 			}else if (
 			  this.actualdirection == this.directions.LEFT &&
 			  this.map[this.actualy][this.actualx + 1] == 10
@@ -877,44 +927,44 @@ Codebo.prototype.runCommands = function (exec) {
 	} 
  
  
-	//is in the end?
+	//codebo chegou a flag?
 	if((this.actualx == levels[currentLevel].posxend) && (this.actualy == levels[currentLevel].posyend)){
 		
 		if(!this.end){
-			console.log("ok");
 			this.end = true;
 			levels[currentLevel].setEnd();
-			
 		}
 	}
 		
-		
-
+	
   _this = this;
-
+  
+  //ainda possui mais ações?
   if (this.actualaction < actions.length) {
     setTimeout(function () {
       _this.runCommands(exec);
     }, TimeExecuteAction);
-  }else{
+	
+ //fim das ações 
+ }else{
 	  log.commandsPlay();
 	  this.pause();
   }
   
 };
 
+//para a execução dos comandos
 Codebo.prototype.stopCommands = function (actions) {
   this.actualaction = -1;
-
-  //colocar na posicao inicial (ver a relacao como o map)
 };
 
+//sobe de nivel no mapa
 Codebo.prototype.upLevel = function () {
   this.actuallevel++;
   this.updateZ();
 };
 
-//diminbui o level
+//diminui o nivel no mapa
 Codebo.prototype.downlevel = function () {
   this.actuallevel--;
   this.updateZ();
@@ -927,14 +977,17 @@ Codebo.prototype.updateZ = function () {
   else if (this.actuallevel == 3) this.z = 101;
 };
 
+//muda de nivel para um nivel especifico
 Codebo.prototype.changeLevel = function (level) {
   this.actuallevel = level;
 };
 
+//obtem o nivel
 Codebo.prototype.getLevel = function () {
   return this.actuallevel;
 };
 
+//reinicia as variaveis do codeno para a posicao inicial
 Codebo.prototype.startPosition = function () {
   this.actualx = this.startactualx;
   this.actualy = this.startactualy;
@@ -942,37 +995,38 @@ Codebo.prototype.startPosition = function () {
   this.y = this.starty;
 };
 
+//gira para esquerda
 Codebo.prototype.setLeftDirection = function () {
   this.actualdirection = this.directions.LEFT;
   this.setAnimationByIndex(2);
 };
 
+//gira para a direita
 Codebo.prototype.setRightDirection = function () {
   this.actualdirection = this.directions.RIGHT;
   this.setAnimationByIndex(3);
 };
 
+//gira para frente
 Codebo.prototype.setFrontDirection = function () {
   this.actualdirection = this.directions.FRONT;
   this.setAnimationByIndex(0);
 };
 
+//gira para fundo
 Codebo.prototype.setBackDirection = function () {
   this.actualdirection = this.directions.BACK;
   this.setAnimationByIndex(1);
 };
 
-
-
+//pega o item do mapa e exibe no menubar
 Codebo.prototype.getItem = function (item) {
-   console.log(this);
    levels[currentLevel].showItem(item);
    item.hide();
    this.actualitem = item;
-
 };
 
-
+//remove o item do mapa
 Codebo.prototype.removeItem = function (item) {
    
    levels[currentLevel].hideItem(item);

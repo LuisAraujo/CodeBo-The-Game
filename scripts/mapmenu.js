@@ -1,21 +1,20 @@
+/*
+Representa a tela de menu
+*/
 function MapMenu(isActive) {
 	this.scene =  new Scene(undefined, isActive);
 	this.start();
 }
 
-
+//configura a função inicial da cena vinculada
 MapMenu.prototype.start = function(){
 	
 	this.scene.setFunctionStart(function () {
-		
-		createGUIMenuMap();
-
-		//MENU (LEVEL)
-		createGUILevels();	
-	  
-  });
+	createGUIMenuMap();
+	createGUILevels();	
+	});
   
-  this.scene.setFunctionUpdate(function () {});
+	this.scene.setFunctionUpdate(function () {});
   
 }
 
@@ -23,7 +22,6 @@ MapMenu.prototype.start = function(){
 levelIsOpen = function(level){
 	
 	arr = [true, true, true, true, false, false, false, false, false, false];
-	
 	return arr[level];
 	
 }
@@ -72,9 +70,7 @@ createGUILevels = function(){
 		
 		//if this level is open
 		b = new Button( null , 200 + l * 200, 200+ 170*j , clickb, 60, 60);
-		
-		
-		
+	
 		
 		//ANIMACÕES
 		b_anim1 = new Animation(null, 10);
@@ -183,10 +179,6 @@ createGUIMenuMap = function(){
 		new Rect(canvas.width-40,0,canvas.height, 40, "#0d0e17");
 		  
 		new Sprite([ new Animation(["gui_logo"], 5)] , 20, 20);
-		
-		
-		
-		
-		
+			
 		
 }
