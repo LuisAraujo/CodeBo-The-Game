@@ -10,8 +10,8 @@ function MapMenu(isActive) {
 MapMenu.prototype.start = function(){
 	
 	this.scene.setFunctionStart(function () {
-	createGUIMenuMap();
-	createGUILevels();	
+		createGUIMenuMap();
+		createGUILevels(0);	
 	});
   
 	this.scene.setFunctionUpdate(function () {});
@@ -26,12 +26,22 @@ levelIsOpen = function(level){
 	
 }
 
+//todo: colocar conexão com bd
+levelStar = function(level){
+	
+	arr = [1, 2, 3, 2, 0, 0, 0, 0, 0, 0];
+	return arr[level];
+	
+}
 
-createGUILevels = function(){
+
+createGUILevels = function(world){
+	
 	arr_levels = ["A - 0001", "A - 0010", "A - 0011", "A - 0100", "A - 0101", "A - 0110", "A - 0111", "A - 1000", "A - 1001", "A - 1010"]
 	var j = l = 0;
+	length_world = 10;
 	
-	for( let i = 0 ; i < arr_levels.length; i ++){
+	for( let i = (length_world * world) ; i < length_world + (length_world * world) ; i ++){
 		
 		 if(i == arr_levels.length/2){
 			j++;
@@ -86,10 +96,18 @@ createGUILevels = function(){
 		b.setAnimation(  [b_anim1, b_anim2] );
 		
 		
-		if( levelIsOpen( i ) ){
-			new Sprite("mini_star",  190 + l * 200, 272+ 170*j , 20, 20);
-			new Sprite("mini_star",  220+ l * 200, 272+ 170*j , 20, 20);
-			new Sprite("mini_star",  250+ l * 200, 272+ 170*j , 20, 20);
+		if( levelIsOpen(i) ){
+			var stars =  levelStar(i);
+			
+			if(stars >= 1)
+				new Sprite("mini_star",  190 + l * 200, 272+ 170*j , 20, 20);
+			
+			if(stars >= 2)
+				new Sprite("mini_star",  220+ l * 200, 272+ 170*j , 20, 20);
+			
+			if(stars == 3)
+				new Sprite("mini_star",  250+ l * 200, 272+ 170*j , 20, 20);
+			
 		}
 		
 		l++;

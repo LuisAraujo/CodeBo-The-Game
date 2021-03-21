@@ -197,7 +197,7 @@ Codebo.prototype.runCommands = function (exec) {
   // var action = this.actions[this.actualaction];  não seria this?
   
   //chama o hightlight referente ao comando atual
-  printHightlight();
+  levels[currentLevel].printHightlight();
   
   //verifica caso para action
   if (action == 'forward') {
@@ -210,7 +210,7 @@ Codebo.prototype.runCommands = function (exec) {
         
 		//fora do mapa
 		if(this.map[this.actualy + 1] == undefined){
-			consoleWarning("Impossível seguir!", this.actualaction);
+			levels[currentLevel].consoleWarning("Impossível seguir!", this.actualaction);
 			return;
 		}
 		
@@ -231,7 +231,7 @@ Codebo.prototype.runCommands = function (exec) {
 			
 			//sobre o item
 			}else{
-				consoleWarning("Impossível seguir!", this.actualaction);
+				levels[currentLevel].consoleWarning("Impossível seguir!", this.actualaction);
 			}
 			
 		//é um elemento não-bloco (ex: ponte)
@@ -248,7 +248,7 @@ Codebo.prototype.runCommands = function (exec) {
 			  
 			  
 	    }else{
-			consoleWarning("Impossível seguir!", this.actualaction);
+			levels[currentLevel].consoleWarning("Impossível seguir!", this.actualaction);
 		}
 		
 		
@@ -256,7 +256,7 @@ Codebo.prototype.runCommands = function (exec) {
 	 } else if (this.actualdirection == this.directions.BACK) {
 		//fora do mapa
 		if( this.map[this.actualy - 1] == undefined ){
-			consoleWarning("Impossível seguir!", this.actualaction);
+			levels[currentLevel].consoleWarning("Impossível seguir!", this.actualaction);
 			return;
 		}
 			
@@ -272,7 +272,7 @@ Codebo.prototype.runCommands = function (exec) {
 
 			  this.actualy -= 1;
 			}else {
-				consoleWarning("Impossível seguir!", this.actualaction);
+				levels[currentLevel].consoleWarning("Impossível seguir!", this.actualaction);
 			}
 			
 		//é um não-bloco
@@ -287,14 +287,14 @@ Codebo.prototype.runCommands = function (exec) {
 			this.actualy -= 1;
 		
 		}else{
-				consoleWarning("Impossível seguir!", this.actualaction);
+				levels[currentLevel].consoleWarning("Impossível seguir!", this.actualaction);
 		}
 	 
 	//Direção para Direita? 	 
 	  } else if (this.actualdirection == this.directions.RIGHT) {
         //fora do mapa
 		if( this.map[this.actualy] == undefined ){
-				consoleWarning("Impossível seguir!", this.actualaction);
+				levels[currentLevel].consoleWarning("Impossível seguir!", this.actualaction);
 				return;
 			}
 			
@@ -311,7 +311,7 @@ Codebo.prototype.runCommands = function (exec) {
 			  this.actualx -= 1;
 			  //this.actualy
 			}else {
-				consoleWarning("Impossível seguir!", this.actualaction);
+				levels[currentLevel].consoleWarning("Impossível seguir!", this.actualaction);
 			}
 		
 		//é um não-bloco
@@ -326,14 +326,14 @@ Codebo.prototype.runCommands = function (exec) {
 			this.actualx -= 1;
 
 		}else{
-				consoleWarning("Impossível seguir!", this.actualaction);
+				levels[currentLevel].consoleWarning("Impossível seguir!", this.actualaction);
 		}
 
 	//Direção para Esquerda? 
 	 } else if (this.actualdirection == this.directions.LEFT) {
         //fora do mapa
 		if( this.map[this.actualy] == undefined ){
-			consoleWarning("Impossível seguir!", this.actualaction);
+			levels[currentLevel].consoleWarning("Impossível seguir!", this.actualaction);
 			return;
 		}
 		
@@ -349,7 +349,7 @@ Codebo.prototype.runCommands = function (exec) {
 			  this.actualx += 1;
 			 
 			}else {
-				consoleWarning("Impossível seguir!", this.actualaction);
+				levels[currentLevel].consoleWarning("Impossível seguir!", this.actualaction);
 			}
 			
 		//é um não-bloco
@@ -364,7 +364,7 @@ Codebo.prototype.runCommands = function (exec) {
 			this.actualx += 1;
 		
 		}else{
-			consoleWarning("Impossível seguir!", this.actualaction);
+			levels[currentLevel].consoleWarning("Impossível seguir!", this.actualaction);
 		}
       }
 
@@ -384,7 +384,7 @@ Codebo.prototype.runCommands = function (exec) {
 
 	//se estiver na pilha	
     }else{	
-		consoleWarning("Codebo está na pilha!", this.actualaction);
+		levels[currentLevel].consoleWarning("Codebo está na pilha!", this.actualaction);
 	}
   
   //LEFT  
@@ -470,7 +470,7 @@ Codebo.prototype.runCommands = function (exec) {
 	  );
     
 	}else{
-		consoleWarning("pilha não criada!", this.actualaction);
+		levels[currentLevel].consoleWarning("pilha não criada!", this.actualaction);
 	}
 	
 	//recria o mapa com o novo item
@@ -539,7 +539,7 @@ Codebo.prototype.runCommands = function (exec) {
     
 	//não pode colocar uma bloco na pilha
 	}else{
-		consoleError("Impossível inserir em uma pilha!", this.actualaction);
+		levels[currentLevel].consoleError("Impossível inserir em uma pilha!", this.actualaction);
 		//interrompe execução
 		this.pause();
 		
@@ -678,7 +678,7 @@ Codebo.prototype.runCommands = function (exec) {
 		.adjustmentLevels(this.getLevel(), this.actualx, this.actualy);
 		
 	}else{
-		consoleError("Impossível inserir em uma pilha.", this.actualaction);
+		levels[currentLevel].consoleError("Impossível inserir em uma pilha.", this.actualaction);
 		this.pause();
 	}
 	
@@ -712,12 +712,12 @@ Codebo.prototype.runCommands = function (exec) {
 				this.actualy += 1;
 			}else{
 				
-				consoleError("Codebo não pode sair da pilha!", this.actualaction);
+				levels[currentLevel].consoleError("Codebo não pode sair da pilha!", this.actualaction);
 				this.pause();
 			}
 			
 		}else{
-			consoleError("Codebo não pode sair da pilha!", this.actualaction);
+			levels[currentLevel].consoleError("Codebo não pode sair da pilha!", this.actualaction);
 		    this.pause();
 		}
 			
@@ -738,13 +738,13 @@ Codebo.prototype.runCommands = function (exec) {
 			  this.actualy -= 1;
 			}else{
 				
-				consoleError("Codebo não pode sair da pilha!", this.actualaction);
+				levels[currentLevel].consoleError("Codebo não pode sair da pilha!", this.actualaction);
 				this.pause();
 			}
 			
 			
 		}else{
-			consoleError("Codebo não pode sair da pilha!", this.actualaction);
+			levels[currentLevel].consoleError("Codebo não pode sair da pilha!", this.actualaction);
 		    this.pause();
 		}
 	
@@ -767,12 +767,12 @@ Codebo.prototype.runCommands = function (exec) {
 			  //this.actualy
 			}else{
 				
-				consoleError("Codebo não pode sair da pilha!", this.actualaction);
+				levels[currentLevel].consoleError("Codebo não pode sair da pilha!", this.actualaction);
 				this.pause();
 			}
 			
 		}else{
-			consoleError("Codebo não pode sair da pilha!", this.actualaction);
+			levels[currentLevel].consoleError("Codebo não pode sair da pilha!", this.actualaction);
 		    this.pause();
 		}
 		
@@ -794,12 +794,12 @@ Codebo.prototype.runCommands = function (exec) {
 			  //this.actualy+=1;
 			}else{
 				
-				consoleError("Codebo não pode sair da pilha!", this.actualaction);
+				levels[currentLevel].consoleError("Codebo não pode sair da pilha!", this.actualaction);
 				this.pause();
 			}
 			
 		}else{
-			consoleError("Codebo não pode sair da pilha!", this.actualaction);
+			levels[currentLevel].consoleError("Codebo não pode sair da pilha!", this.actualaction);
 		    this.pause();
 		}
 	  
@@ -869,7 +869,7 @@ Codebo.prototype.runCommands = function (exec) {
           );
       
 	  }else{
-		   consoleError("Erro ao desempilhar!!", this.actualaction);
+		   levels[currentLevel].consoleError("Erro ao desempilhar!!", this.actualaction);
 		   this.pause();
 	  }
 
