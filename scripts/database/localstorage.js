@@ -55,6 +55,13 @@ function getNameItem(id){
 	return getProject(id).split("_")[0]
 }
 
+function deleteAllItem(){
+
+	for( item in localStorage){
+		localStorage.removeItem(item);
+	}
+}
+
 function deleteItem(item){
 	console.log(item);
 	localStorage.removeItem(item);

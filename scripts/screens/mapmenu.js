@@ -21,7 +21,7 @@ MapMenu.prototype.start = function(){
 //todo: colocar conexão com bd
 levelIsOpen = function(level){
 	
-	arr = [true, true, true, true, false, false, false, false, false, false];
+	arr = [true, true, true, true, true, true, true, true, true, true];
 	return arr[level];
 	
 }
@@ -29,7 +29,7 @@ levelIsOpen = function(level){
 //todo: colocar conexão com bd
 levelStar = function(level){
 	
-	arr = [1, 2, 3, 2, 0, 0, 0, 0, 0, 0];
+	arr = [1, 2, 3, 2, 3, 3, 3, 3, 2, 1];
 	return arr[level];
 	
 }
