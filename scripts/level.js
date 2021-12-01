@@ -404,7 +404,8 @@ new Rect(canvas.width - 300, 150, 580, 1180, 'rgba(255, 255, 255, 0.5)');
       actions = [];
 	  levels[currentLevel].printCommands();
 	  clearHightlight();
-	  log.addAction("reload");
+	  log.reloadLevel();
+	  //log.addAction("reload");
 	  
 	  
     },
@@ -416,6 +417,7 @@ new Rect(canvas.width - 300, 150, 580, 1180, 'rgba(255, 255, 255, 0.5)');
 	  
 	   se.mlevel.getCurrentScene().resetCurrentTutorial();	
 	   se.mlevel.getCurrentScene().istutorial = true;
+	   log.addAction("help");
   
   }, 70, 70);
   
@@ -427,6 +429,7 @@ new Rect(canvas.width - 300, 150, 580, 1180, 'rgba(255, 255, 255, 0.5)');
     function () {
       //menu
       se.mlevel.loadScene(2);
+	  log.addAction("menu");
     },
     70,
     70
@@ -594,6 +597,7 @@ Level.prototype.setEnd = function () {
   }
 
   new Modal([sp_bg, bt_next, bt_menu, sp_txt, sp_star]);
+  log.finishLevel();
 };
 
 
@@ -658,8 +662,10 @@ Level.prototype.createContainerItem = function(item) {
 }
 
 Level.prototype.nextLevel = function(){
-	if(currentLevel < levels.length-1)
-	currentLevel++;
+	if(currentLevel < levels.length-1){
+		currentLevel++;
+		log.startLevel( currentLevel );
+	}
 }
 
 

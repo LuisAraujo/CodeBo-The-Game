@@ -40,6 +40,33 @@ Log.prototype.startLevel  = function(level){
 }
 
 
+Log.prototype.finishLevel  = function(level){
+	var d = new Date();
+	
+	register = "finish-level;" + level+";"+ d.getFullYear() +  "-" + d.getMonth()  + "-" + d.getDate() + ";"+
+	d.getHours() + ":" + d.getMinutes() +":" + d.getSeconds();
+	setNewItem(register);
+	console.log(register);
+}
+
+
+Log.prototype.reloadLevel  = function(level){
+	var d = new Date();
+	
+	register = "reload-level;" + level+";"+ d.getFullYear() +  "-" + d.getMonth()  + "-" + d.getDate() + ";"+
+	d.getHours() + ":" + d.getMinutes() +":" + d.getSeconds();
+	setNewItem(register);
+	console.log(register);
+}
+
+Log.prototype.setVersion  = function(version){
+	saveItem("logversion", version);
+}
+
+Log.prototype.getVersion  = function(version){
+	return  getItem("logversion");
+}
+
 Log.prototype.commandsPlay  = function(){
 	commands = "";
 	
@@ -48,7 +75,7 @@ Log.prototype.commandsPlay  = function(){
 	
 	var d = new Date();
 
-	register = "commands;"+ d.getFullYear() +  "-" + d.getMonth()  + "-" + d.getDate() + ";"+
+	register = "commands; ;"+ d.getFullYear() +  "-" + d.getMonth()  + "-" + d.getDate() + ";"+
 	d.getHours() + ":" + d.getMinutes() +":" + d.getSeconds()+"-"+ commands;
 	
 	this.actions = [];
