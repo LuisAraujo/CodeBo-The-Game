@@ -571,6 +571,7 @@ Level.prototype.setEnd = function () {
 
       _this.nextLevel();
       se.mlevel.loadScene(currentLevel + 3);
+	  
     },
     50,
     58
@@ -597,7 +598,8 @@ Level.prototype.setEnd = function () {
   }
 
   new Modal([sp_bg, bt_next, bt_menu, sp_txt, sp_star]);
-  log.finishLevel();
+  
+  log.finishLevel(currentLevel + 1);
 };
 
 
@@ -662,23 +664,25 @@ Level.prototype.createContainerItem = function(item) {
 }
 
 Level.prototype.nextLevel = function(){
+	console.log(currentLevel, levels.length-1 );
 	if(currentLevel < levels.length-1){
 		currentLevel++;
-		log.startLevel( currentLevel );
+		log.startLevel( currentLevel + 1 );
 	}
 }
 
 
 Level.prototype.createCommandsButton= function(item, limitcommands) {
  
- log.addAction(item);
+ //
  
  new Button(
     'button_' + item,
     window.posx,
     canvas.height - 70,
-    function () {
-		
+   
+   function () {
+	  log.addAction(item);
       if (actions.length < limitcommands) {
 		 
 		  if(item == "stack_block_push"){
