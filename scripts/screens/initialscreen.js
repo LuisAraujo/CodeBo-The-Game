@@ -14,7 +14,7 @@ InitialScreen.prototype.start = function(){
 		anim.insertRepeatAnimation( "logo_unifacs", 10  );
 		anim.insertAnimation( "fadein", null, 10 );
 		anim.setLoop(false);
-		console.log( anim.properties)
+		
 		var sp = new Sprite( [anim] , 380, 300, 150, 30);
 
 		var tx2 = new Text("Financiamento", 690, 250)

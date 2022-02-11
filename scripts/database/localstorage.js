@@ -1,13 +1,5 @@
 var meuStorage = localStorage;
 
-//clearAllProjects();
-//setNewProject("Teste_C#.2|10|100,D.2|100|200");
-//p = getListProject();
-
-
-console.log(meuStorage)
-
-
 function clearAllItems(){
 	localStorage.clear();	
 }

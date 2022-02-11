@@ -933,6 +933,7 @@ Codebo.prototype.runCommands = function (exec) {
 		if(!this.end){
 			this.end = true;
 			levels[currentLevel].setEnd();
+			log.setOpenLevel(currentLevel+1);
 		}
 	}
 		

@@ -4,6 +4,10 @@ Representa a tela de menu
 function MapMenu(isActive) {
 	this.scene =  new Scene(undefined, isActive);
 	this.start();
+	
+	if(getItem("world") == undefined) 
+		log.setOpenLevels();
+	
 }
 
 //configura a função inicial da cena vinculada
@@ -19,17 +23,16 @@ MapMenu.prototype.start = function(){
 }
 
 //todo: colocar conexão com bd
-levelIsOpen = function(level){
+levelIsOpen = function(level, world){
 	
-	arr = [true, true, true, true, true, true, true, true, true, true];
-	return arr[level];
+	return log.getStatusLevel(level);
 	
 }
 
 //todo: colocar conexão com bd
 levelStar = function(level){
 	
-	arr = [1, 2, 3, 2, 3, 3, 3, 3, 2, 1];
+	arr = [3, 3, 3, 3, 3, 3, 3, 3, 3, 3];
 	return arr[level];
 	
 }

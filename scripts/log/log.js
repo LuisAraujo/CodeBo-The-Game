@@ -59,6 +59,35 @@ Log.prototype.reloadLevel  = function(level){
 	console.log(register);
 }
 
+Log.prototype.setOpenLevels  = function(){
+	
+	var arrLevel = "true,false,false,false,false,false,false,false,false,false";
+	saveItem("world", arrLevel);
+	
+}
+
+
+Log.prototype.getOpenLevels  = function(level){
+
+	return getItem("world");	
+}
+
+
+Log.prototype.setOpenLevel  = function(level){
+	
+	var arrLevel =  getItem("world");
+	arrLevel = arrLevel.split(",");
+	arrLevel[level] = "true";
+	arrLevel = arrLevel.join(",");
+	saveItem("world", arrLevel);
+
+}
+
+Log.prototype.getStatusLevel  = function(level){
+	arrLevel = getItem("world").split(",");
+	return arrLevel[level]=="true"?true:false;	
+}
+
 Log.prototype.setVersion  = function(version){
 	saveItem("logversion", version);
 }
@@ -143,9 +172,8 @@ Log.prototype.getMetaDados = function(){
 	for(let i=0; i < allactions.length; i++)
 		text += "[" + allactions[i] + "]\n";
 
-	console.log(text);
 	var blob = new Blob([text], {type: "text/plain;charset=utf-8"});
-	//saveAs(blob, "metadados.txt");
+	saveAs(blob, "metadados.txt");
 
 }
 
