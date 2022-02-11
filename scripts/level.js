@@ -27,6 +27,8 @@ function Level({
   istutorial,
   isActive,
 } = {}) {
+	
+	
   this.xmlfile = map;
   this.scene = new Scene(undefined, isActive);
   this.itemname = item;
@@ -110,7 +112,6 @@ Level.prototype.updateLevel = function (limitcommands) {
 
 Level.prototype.start = function () {
 	
- 
   actions = [];
 
   xmlmap = new ReaderXMLFile(this.xmlfile);
@@ -125,7 +126,8 @@ Level.prototype.start = function () {
 
   this.scene.setFunctionUpdate(teste.bind(null, this));
   
-  this.printCommands()
+  this.printCommands();
+
 	
 	
 };
@@ -136,8 +138,11 @@ Level.prototype.printCommands = function () {
 	_this2 = this;
 
 	
-	if(levels[currentLevel].getEnd())
-		return;
+	console.log("print");
+	
+	
+	//if(levels[currentLevel].getEnd())
+	//	return;
 
 	qtd_block = 0; 
 		
@@ -166,7 +171,7 @@ Level.prototype.printCommands = function () {
 
 		j++;
 
-		//grade de 4 comandos
+		//grade de 6 comandos
 		if (i % 6 == 0) j = 0;
 		posy = parseInt(i / 6) * (size + 5);
 		posx = j * (size + 5);
@@ -252,9 +257,12 @@ Level.prototype.printCommands = function () {
 	 
 	}
 
+	
 	for (var i = actions.length; i < this.limitcommands; i++) {
 		j++;
-
+  
+		
+		
 		//grade de 4 comandos
 		if (i % 6 == 0) j = 0;
 		posy = parseInt(i / 6) * (size + 5);

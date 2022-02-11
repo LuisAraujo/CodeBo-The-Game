@@ -1,6 +1,14 @@
 function Log(){
 	this.actions = [];
 	this.allactions = [];
+	
+	var version = 2;
+	
+	if((this.getVersion() == null) || (this.getVersion() == undefined) || (this.getVersion() != version)){
+		clearAllItems();
+		this.setVersion(version);
+	}
+	
 }
 Log.prototype.addAction = function(action){
 	
@@ -147,7 +155,7 @@ Log.prototype.getMetaDados = function(){
 			
 			a__ = a_[3].split("-");
 			b__ = b_[3].split("-");
-			console.log(a__[0], b__[0], a__[0] > b__[0]);
+			
 			if(a__[0] > b__[0])
 				return 1;
 			else  if(a__[0] < b__[0])
