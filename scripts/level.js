@@ -26,6 +26,8 @@ function Level({
   tutorial,
   istutorial,
   isActive,
+  actions_count,
+  actions_id
 } = {}) {
 	
 	
@@ -113,7 +115,9 @@ Level.prototype.updateLevel = function (limitcommands) {
 Level.prototype.start = function () {
 	
   actions = [];
-
+  actions_count = 0;
+  actions_id = [];
+  
   xmlmap = new ReaderXMLFile(this.xmlfile);
   this.arrmap = this.createArrayMap(xmlmap);
 
@@ -181,12 +185,14 @@ Level.prototype.printCommands = function () {
 		  marginx + posx,
 		  marginy + posy,
 		  function () {
-			  log.addAction("remove > "+actions[this.getId()]);
+			  
+			  log.addAction("remove > "+actions[this.getId()] + "(" + actions_id[this.getId()]  +")");
 			  
 			  //removendo as modificações do blockused
 			if( actions[this.getId()] == "stack_block_push"){
 				levels[currentLevel].blockused--;
 				actions.splice(this.getId(), 1);
+				actions_id.splice(this.getId(), 1);
 			}else if( actions[this.getId()] == "stack_pop"){
 				//verifica se o pop remove um codebo ou um bloco
 				var pop = 0;
@@ -219,15 +225,17 @@ Level.prototype.printCommands = function () {
 						blockusedtotal++;
 				}
 				
-				if(blockusedtotal <= levels[currentLevel].limitblock)
+				if(blockusedtotal <= levels[currentLevel].limitblock){
 					actions.splice(this.getId(), 1);
-				else{
+					actions_id.splice(this.getId(), 1);
+				}else{
 					 msgconsole = "Não é possivel remover esse bloco"
 				}
 				
 				//levels[currentLevel].blockused++;
 			}else{
 				actions.splice(this.getId(), 1);
+				actions_id.splice(this.getId(), 1);
 			}
 		  
 			
@@ -690,7 +698,10 @@ Level.prototype.createCommandsButton= function(item, limitcommands) {
     canvas.height - 70,
    
    function () {
-	  log.addAction(item);
+	  
+	  log.addAction(item + "("+actions_count+")");
+	  actions_id.push(actions_count++);
+	  
       if (actions.length < limitcommands) {
 		 
 		  if(item == "stack_block_push"){
