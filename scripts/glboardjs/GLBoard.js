@@ -5,7 +5,7 @@ import CommonCode from "./utils/CommonCode.js";
 import Phase from "./models/Phase.js";
 //import InternetConnection from "./utils/internetConnection.js";
 import { GENDER, STATUS_PHASE, STATUS_SECTION } from "./utils/StructsCommon.js";
-import Section from "./models/section.js";
+import Section from "./models/Section.js";
 import DateHelper from "./utils/DateHelper.js";
 
 // export { CommonCode } from "./utils/CommonCode.js";
