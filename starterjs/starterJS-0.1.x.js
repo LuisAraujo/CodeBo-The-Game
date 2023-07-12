@@ -2324,7 +2324,7 @@ ManagerLoader.prototype.loading = function( ){
         
         //se for do tipo imagem
 		if(this.assetsList[i][2] == "image"){
-
+            console.log(this.assetsList[i])
             this.assetsListLoaded.push(new Image());
             var img = this.assetsListLoaded[this.assetsListLoaded.length-1];
 
