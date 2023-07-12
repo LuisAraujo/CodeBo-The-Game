@@ -2318,13 +2318,11 @@ ManagerLoader.prototype.loading = function( ){
         setTimeout(this.callback, 2000);
         return;
     }
-    console.log(this.assetsList.length);
+   
     //console.log(this.assetsList);
     for(var i = 0; i < this.assetsList.length; i++){
-        console.log(this.assetsList[i])
         //se for do tipo imagem
 		if(this.assetsList[i][2] == "image"){
-            console.log(this.assetsList[i])
             this.assetsListLoaded.push(new Image());
             var img = this.assetsListLoaded[this.assetsListLoaded.length-1];
 
