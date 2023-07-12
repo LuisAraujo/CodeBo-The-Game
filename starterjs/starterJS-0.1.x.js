@@ -4805,7 +4805,8 @@ StarterEngine.prototype.setResources = function () {
                     //break by ;
                     var elem = line.split(";");
                     if(elem.length>1)
-                    _this.loader.addResource(elem[0], elem[1], elem[2].slice(0,-1) );
+                    //_this.loader.addResource(elem[0], elem[1], elem[2].slice(0,-1) );
+                    _this.loader.addResource(elem[0], elem[1], elem[2] );
                     
                 });
 
