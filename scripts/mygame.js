@@ -9,6 +9,23 @@ se.gameReady = function () {
   //TESTE USANDO A API
   console.log("Dados do Player:", gl.getPlayerData());
 
+	gl.setLastLogin(new Date());
+
+	if (gl.data.game_data.phases == 0) {	
+		gl.data.game_data.phases_unlocked = 1;	
+		gl.setQuantPhasesGame(10);
+		gl.addPhaseGame('1');
+		gl.addPhaseGame('2');
+		gl.addPhaseGame('3');
+		gl.addPhaseGame('4');
+		gl.addPhaseGame('5');
+		gl.addPhaseGame('6');
+		gl.addPhaseGame('7');
+		gl.addPhaseGame('8');
+		gl.addPhaseGame('9');
+		gl.addPhaseGame('10');
+	}
+
 
   //@todo colocar isso em configurações
   TimeExecuteAction  = 200;
