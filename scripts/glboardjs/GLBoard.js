@@ -34,11 +34,11 @@ export default class GLBoard {
     //callback();
 
    // const connection = await InternetConnection.checkConnection();
-    // if (!connection) {
-    //   throw new Error(
-    //     "Não foi possível carregar os dados do usuário pois não há conexão com a internet!"
-    //   );
-    // }
+    if (!navigator.onLine) {
+      throw new Error(
+        "Não foi possível carregar os dados do usuário pois não há conexão com a internet!"
+      );
+    }
 
     try {
       const url =
@@ -52,13 +52,10 @@ export default class GLBoard {
           "Esse usuário ainda não possui registros! Adicione informações."
         );
       } else {
-        callback();
-        //console.log(result);
         this.data.game_data = result.game_data;
         this.data.player_data = result.player_data;
-      
-        // console.log(JSON.parse(result));
       }
+      callback();
     } catch (error) {
       console.log(error);
     }
@@ -70,11 +67,11 @@ export default class GLBoard {
   async SEND_USER_DATA() {
     //const connection = await InternetConnection.checkConnection();
     // const url = "http://localhost:3000/glboard";
-    // if (!connection) {
-    //   throw new Error(
-    //     "Não foi possível carregar os dados do usuário pois não há conexão com a internet!"
-    //   );
-    // }
+    if (!navigator.onLine) {
+      throw new Error(
+        "Não foi possível carregar os dados do usuário pois não há conexão com a internet!"
+      );
+    }
 
     try {
       const url =
