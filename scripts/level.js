@@ -401,7 +401,7 @@ new Rect(canvas.width - 300, 150, 580, 1180, 'rgba(255, 255, 255, 0.5)');
       levels[currentLevel].getCodebo().pause();
 	  log.addAction("stop");
 	  levels[currentLevel].printCommands();
-	  celarHightlight();
+	  levels[currentLevel].clearHightlight();
     },
     60,
     60
@@ -413,14 +413,15 @@ new Rect(canvas.width - 300, 150, 580, 1180, 'rgba(255, 255, 255, 0.5)');
     20,
     function () {
 	  msgconsole = "";
+    const levelActions =  actions.slice();
 	  levels[currentLevel].reset(true);
       levels[currentLevel].getCodebo().reset();
       levels[currentLevel].getMap().reset(levels[currentLevel].getCodebo());
 	  levels[currentLevel].blockused = 0;
       actions = [];
 	  levels[currentLevel].printCommands();
-	  clearHightlight();
-	  log.reloadLevel();
+	  levels[currentLevel].clearHightlight();
+	  log.reloadLevel(levels[currentLevel].getCodebo().actuallevel, levelActions);
 	  //log.addAction("reload");
 	  
 	  
