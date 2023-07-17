@@ -2,7 +2,10 @@ import GLBoard from "./GLBoard.js";
 import DateHelper from "./utils/DateHelper.js";
 import { GENDER } from "./utils/StructsCommon.js";
 
-window.gl = new GLBoard("_25QFu6_u34tDLpx2Sv-JA", "Hiago");
+const urlParams = new URLSearchParams(window.location.search);
+const playerName = urlParams.get("nome");
+
+window.gl = new GLBoard("38-g3GfglwUPqMzh3PQLbA", playerName ?? "guest" + Math.random().toString().split(".")[1]);
 await gl.LOAD_USER_DATA( function(){
    
     var src = "scripts/mygame.js";
@@ -12,6 +15,14 @@ await gl.LOAD_USER_DATA( function(){
     document.body.appendChild( s );
 
 });
+
+if (gl.data.player_data.id === undefined) {
+    gl.setPlayerData(
+        playerName,
+        urlParams.get("birthday"),
+        urlParams.get("gender")
+    );
+}
 
 // setTimeout(() => {
 // console.log(gl.getPhasesUnlockedPlayer());
