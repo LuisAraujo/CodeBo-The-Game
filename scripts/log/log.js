@@ -1,6 +1,7 @@
 function Log(){
 	this.actions = [];
 	this.allactions = [];
+	this.phaseGameStart;
 	
 	var version = 2;
 	
@@ -39,6 +40,8 @@ Log.prototype.outGame = function(){
 
 Log.prototype.startLevel  = function(level){
 	var d = new Date();
+
+	this.phaseGameStart = d;
 	console.log(level);
 	register = "start-level;" + level+";"+ d.getFullYear() +  "-" + d.getMonth()  + "-" + d.getDate() + ";"+
 	this.getFullHour();
@@ -51,6 +54,7 @@ Log.prototype.startLevel  = function(level){
 Log.prototype.finishLevel  = function(level){
 	var d = new Date();
 	
+	gl.addSectionInPhase(level.toString(), 'VITORIA', 10, this.phaseGameStart, d, null, this.actions);
 	register = "finish-level;" + level+";"+ d.getFullYear() +  "-" + d.getMonth()  + "-" + d.getDate() + ";"+
 	this.getFullHour();
 	setNewItem(register);
@@ -58,9 +62,10 @@ Log.prototype.finishLevel  = function(level){
 }
 
 
-Log.prototype.reloadLevel  = function(level){
+Log.prototype.reloadLevel  = function(level, levelActions){
 	var d = new Date();
 	
+	gl.addSectionInPhase(level.toString(), 'DESISTENCIA', 0, this.phaseGameStart, d, null, levelActions);
 	register = "reload-level;" + level+";"+ d.getFullYear() +  "-" + d.getMonth()  + "-" + d.getDate() + ";"+
 	this.getFullHour();
 	setNewItem(register);
