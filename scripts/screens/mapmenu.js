@@ -68,7 +68,7 @@ createGUILevels = function(world){
 				
 				this.setAnimationByIndex(1);
 				currentLevel = i;
-				setTimeout( function(){se.mlevel.loadScene(3 + i)}, 200);
+				setTimeout( function(){se.mlevel.loadScene(5 + i)}, 200);
 				log.startLevel( i +1 );
 				
 			}

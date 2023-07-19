@@ -31,11 +31,14 @@ se.gameReady = function () {
   TimeExecuteAction  = 200;
   msgconsole = "";
   
-  /** MENU */
+  /** TELAS */
   initialscreen = new InitialScreen(true);
   mainmenu = new MainMenu(true);
   mainmap = new MapMenu(true);
+  helpscreen = new HelpScreen(true);
+  settingscreen = new SettingScreen(true);
  
+  /* TUTORIAIS */
   //BT NEXT
   bt_next_tutorial = new Button(
     null, 520,  180,
@@ -278,7 +281,7 @@ se.gameReady = function () {
 	
 	levels[8].setTutorial( tutorial_9 );
 	
-	//LEVEL 9
+	//LEVEL 10
     levels.push( new Level({namelevel:"1010", map:"map_level_10",item:"item_bridge", item_posx: 400, item_posy: 230, itemx: 1, itemy :4, commands:['stack_new','stack_block_push', 'stack_character_push', 'stack_pop','set_item'],codebox:0,codeboy:2, codebo_posx:280, codebo_posy:300, codebo_dir: 0, map_margintop:50, map_marginleft:70, limitcommands:36,limitblock:5, posxend:3, posyend:4, flag_posx:475, flag_posy:260, commandsneedly:10, istutorial: false, isActive:true}) );
 
 	se.mlevel.loadScene(0);

@@ -9,24 +9,29 @@ InitialScreen.prototype.start = function(){
 	this.scene.setFunctionStart(function () {
 		
 		new Rect(0,0, canvas.height, canvas.width, "#101118");
-		var tx = new Text("Apoio", 430, 250);
+		var tx = new Text("Apoio", 330, 250);
+		var anim =  new Animation();
+		anim.insertRepeatAnimation( "logo_ifba", 10  );
+		anim.insertAnimation( "fadein", null, 10 );
+		anim.setLoop(false);
+		
+		var sp = new Sprite( [anim] , 200, 270, 110, 100);
+
 		var anim =  new Animation();
 		anim.insertRepeatAnimation( "logo_unifacs", 10  );
 		anim.insertAnimation( "fadein", null, 10 );
 		anim.setLoop(false);
 		
-		var sp = new Sprite( [anim] , 380, 300, 150, 30);
+		var sp2 = new Sprite( [anim] , 380, 300, 150, 30);
 
-		var tx2 = new Text("Financiamento", 690, 250)
+		var tx2 = new Text("Financiamento", 800, 250)
 		
 		var anim =  new Animation();
 		anim.insertRepeatAnimation( "logo_fapesb", 10  );
 		anim.insertAnimation( "fadein", null, 10 );
 		anim.setLoop(false);
 		
-		var sp2 = new Sprite( [anim], 700, 275, 120, 65);
-		
-		
+		var sp3 = new Sprite( [anim], 810, 275, 120, 65);
 		
 					
 		setTimeout( 
@@ -36,12 +41,13 @@ InitialScreen.prototype.start = function(){
 			tx2.hide(); 
 			sp.hide(); 
 			sp2.hide();
+			sp3.hide();
 
 			anim = new Animation(["logo_anim1", "logo_anim2", "logo_anim3", "logo_anim4", 
 			"logo_anim5", "logo_anim6", "logo_anim7"], 10, false);
 			anim.setLoop(false);
 			
-			var sp3 = new Sprite( [anim] , 270, 250, 640, 88);
+			var sp4 = new Sprite( [anim] , 270, 250, 640, 88);
 			
 		}, 3000);
 		

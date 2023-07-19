@@ -72,19 +72,41 @@ MainMenu.prototype.start = function(){
 		new Sprite("gui_panel_menu", canvas.width - 350, canvas.height - 310, 280,250);
 
 		new Button("button_config_menu", canvas.width - 350 ,  canvas.height - 170, 
-		function(){}, 
+		function(){
+			se.mlevel.loadScene(4);  
+		}, 
 		70 , 200);
 
-		new Button("button_help_menu", canvas.width - 340 ,  canvas.height - 230, 
-		function(){},
+		var bthelp = new Button("button_help_menu", canvas.width - 340 ,  canvas.height - 235, 
+		function(){
+			se.mlevel.loadScene(3);  
+		},
 		70 , 200);
+		
 
-		var btplay = new Button("button_play_menu", canvas.width - 315 ,  canvas.height - 300, 
+		anim = new Animation(["logo_anim1", "logo_anim2", "logo_anim3", "logo_anim4", 
+			"logo_anim5", "logo_anim6", "logo_anim7"], 10, false);
+
+		var btplay = new Button([ new Animation("button_play_menu"), new Animation("button_play_menu2")], 
+		canvas.width - 325 ,  canvas.height - 300, 
 			function(){
 			se.mlevel.loadScene(2);   
 			}, 
 		70 , 200);
-
+		
+		btplay.moveMouse = function(x,y){
+			   
+			if((x > this.x) && (x < this.x + this.w)
+			   && (y < this.y) && (y > this.y + this.h)){
+				this.setAnimationByIndex(0);
+			   
+			}else{
+				this.setAnimationByIndex(1);
+				console.log("no eixo");
+			   }
+		};
+		
+		se.mlevel.addObjetcsMovimentMouse(btplay);
 
 		new Rect(0,0, 40, canvas.width, "#0d0e17");
 		new Rect(0, canvas.height-40, 40, canvas.width, "#0d0e17");
