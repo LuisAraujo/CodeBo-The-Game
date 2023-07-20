@@ -200,6 +200,13 @@ createGUIMenuMap = function(){
 		new Rect(canvas.width-40,0,canvas.height, 40, "#0d0e17");
 		  
 		new Sprite([ new Animation(["gui_logo"], 5)] , 20, 20);
+
+		new Button("button_back",  50, (canvas.height/2)-10, 
+		function(){
+			se.mlevel.loadScene(1);  
+		},40, 40);
+
+		
 			
 		
 }

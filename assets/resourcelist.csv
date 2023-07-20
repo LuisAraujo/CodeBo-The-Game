@@ -1,10 +1,14 @@
 button_play_menu;buttons/gui_bt_play_menu.png;image
 button_play_menu2;buttons/gui_bt_play_menu_select.png;image
 button_help_menu;buttons/gui_bt_ajuda.png;image
+button_help_menu2;buttons/gui_bt_ajuda_select.png;image
 button_config_menu;buttons/gui_bt_config.png;image
+button_config_menu2;buttons/gui_bt_config_select.png;image
+button_back;buttons/bt_back.png;image
 gui_logo;gui/logo.png;image
 gui_logo_bg;gui/logo_bg.png;image
 gui_codebo;gui/gui_codebo_menu.png;image
+gui_codebo2;gui/codebo_menu_2.png;image
 gui_bg_menu;gui/gui_bg_menu.png;image
 gui_block1;gui/gui_block_plan_1.png;image
 gui_block3a;gui/gui_block_plan_3_a.png;image
