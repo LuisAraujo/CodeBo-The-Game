@@ -587,7 +587,7 @@ Level.prototype.setEnd = function () {
       //se.mlevel.loadScene(0);
 
       _this.nextLevel();
-      se.mlevel.loadScene(currentLevel + 3);
+      se.mlevel.loadScene(currentLevel + 5);
 	  
     },
     50,
