@@ -24,6 +24,9 @@ se.gameReady = function () {
 		gl.addPhaseGame('8');
 		gl.addPhaseGame('9');
 		gl.addPhaseGame('10');
+	} else {
+		const phasesUnlocked = log.buildLevelsUnlockedString(gl.getPhasesUnlockedPlayer());
+		log.unlockLevels(phasesUnlocked);
 	}
 
 
