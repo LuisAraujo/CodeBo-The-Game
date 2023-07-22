@@ -328,6 +328,10 @@ export default class GLBoard {
 
     const phaseIndex = this.#findPhaseIndex(phase_id);
 
+    if (this.data.game_data.phases[phaseIndex].sections == undefined) {
+      this.data.game_data.phases[phaseIndex].sections = [];
+    }
+
     if (section.conclusion == STATUS_SECTION.VITORIA) {
       this.data.game_data.phases[phaseIndex].status = STATUS_PHASE.FINALIZADA;
       this.data.game_data.phases_unlocked++;
