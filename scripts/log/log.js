@@ -53,10 +53,13 @@ Log.prototype.startLevel  = function(level){
 
 Log.prototype.finishLevel  = function(level){
 	var d = new Date();
-	
-	gl.addSectionInPhase(level.toString(), 'VITORIA', 10, this.phaseGameStart, d, null, this.actions);
+
+	const minutesInGame = gl.getPlayerMinutesGame() + this.getMinutesDifference(d, this.phaseGameStart);
+	gl.setPlayerMinutesGame(minutesInGame);
+	gl.addSectionInPhase(level.toString(), 'VITORIA', 3, this.phaseGameStart, d, null, this.actions);
 	register = "finish-level;" + level+";"+ d.getFullYear() +  "-" + d.getMonth()  + "-" + d.getDate() + ";"+
 	this.getFullHour();
+	gl.SEND_USER_DATA();
 	setNewItem(register);
 	console.log(register);
 }
@@ -65,9 +68,12 @@ Log.prototype.finishLevel  = function(level){
 Log.prototype.reloadLevel  = function(level, levelActions){
 	var d = new Date();
 	
+	const minutesInGame = gl.getPlayerMinutesGame() + this.getMinutesDifference(d, this.phaseGameStart);
+	gl.setPlayerMinutesGame(minutesInGame);
 	gl.addSectionInPhase(level.toString(), 'DESISTENCIA', 0, this.phaseGameStart, d, null, levelActions);
 	register = "reload-level;" + level+";"+ d.getFullYear() +  "-" + d.getMonth()  + "-" + d.getDate() + ";"+
 	this.getFullHour();
+	gl.SEND_USER_DATA();
 	setNewItem(register);
 	console.log(register);
 }
@@ -146,6 +152,28 @@ Log.prototype.getFullHour = function(){
 		 seconds = "0" + seconds;
 	 
 	return hours + ":" + minutes +":" + seconds;
+}
+
+Log.prototype.getMinutesDifference = function(newDate, oldDate){
+  const miliseconds = newDate.getTime() - oldDate.getTime();
+  const seconds = miliseconds / 1000;
+  const minutes = seconds / 60;
+
+  return Math.abs(Math.round(minutes));
+}
+
+Log.prototype.buildLevelsUnlockedString = function(qntPhasesUnlocked){
+	const phasesUnlocked = [];
+	qntPhasesUnlocked--; 
+  for (let index = 0; index <= 9; index++) {
+		phasesUnlocked[index] = index <= qntPhasesUnlocked ? "true" : "false";
+	}
+
+	return phasesUnlocked.toString();
+}
+
+Log.prototype.unlockLevels = function(levels){
+	saveItem("world", levels);
 }
 
 Log.prototype.getMetaDados = function(){
