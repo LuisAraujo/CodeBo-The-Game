@@ -5,7 +5,7 @@ export default class GameData {
     date_last_login,
     phases = [],
     phases_unlocked,
-    player_minutes_in_game
+    player_minutes_in_game = 0
   ) {
     this.custom_report = custom_report;
     this.number_phases = number_phases;
