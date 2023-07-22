@@ -3,7 +3,7 @@ import DateHelper from "./utils/DateHelper.js";
 import { GENDER } from "./utils/StructsCommon.js";
 
 const urlParams = new URLSearchParams(window.location.search);
-const playerName = urlParams.get("nome");
+const playerName = urlParams.get("name");
 
 // Credenciais do GLBoard - Temporariamente comentado para teste
 // window.gl = new GLBoard("38-g3GfglwUPqMzh3PQLbA", playerName ?? "guest" + Math.random().toString().split(".")[1]);
