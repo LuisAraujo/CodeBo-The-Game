@@ -78,6 +78,20 @@ Log.prototype.reloadLevel  = function(level, levelActions){
 	console.log(register);
 }
 
+Log.prototype.setError = function(msgconsole){
+	var d = new Date();
+	const minutesInGame = gl.getPlayerMinutesGame() + this.getMinutesDifference(d, this.phaseGameStart);
+	gl.setPlayerMinutesGame(minutesInGame);
+	gl.addSectionInPhase(level.toString(), 'DERROTA', 0, this.phaseGameStart, d, null, levelActions);
+	register = "error-message;"+msgconsole+";" + level+";"+ d.getFullYear() +  "-" + d.getMonth()  + "-" + d.getDate() + ";"+
+	this.getFullHour();
+	gl.SEND_USER_DATA();
+	setNewItem(register);
+	console.log(register);
+
+	this.addAction("error>"+msgconsole);
+}
+
 Log.prototype.setOpenLevels  = function(){
 	
 	var arrLevel = "true,false,false,false,false,false,false,false,false,false";

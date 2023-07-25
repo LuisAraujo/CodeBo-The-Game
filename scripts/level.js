@@ -625,7 +625,9 @@ Level.prototype.consoleError = function (msg, line) {
 	msgconsole = msg + " c:"+(line+1);
 	txt_console.color = "#f33";
 	
-	log.addAction("error>"+msgconsole);
+  log.setError(msgconsole);
+  
+	//log.addAction("error>"+msgconsole);
 	
 }
 Level.prototype.consoleWarning = function (msg, line) {
