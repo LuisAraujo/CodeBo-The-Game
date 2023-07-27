@@ -6,8 +6,8 @@ const urlParams = new URLSearchParams(window.location.search);
 const playerName = urlParams.get("name");
 
 // Credenciais do GLBoard - Temporariamente comentado para teste
-// window.gl = new GLBoard("38-g3GfglwUPqMzh3PQLbA", playerName ?? "guest" + Math.random().toString().split(".")[1]);
-window.gl = new GLBoard("_25QFu6_u34tDLpx2Sv-JA", playerName);
+// window.gl = new GLBoard("_25QFu6_u34tDLpx2Sv-JA", playerName);
+window.gl = new GLBoard("38-g3GfglwUPqMzh3PQLbA", playerName ?? "guest" + Math.random().toString().split(".")[1]);
 await gl.LOAD_USER_DATA( function(){
    
     var src = "scripts/mygame.js";
