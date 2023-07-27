@@ -21,7 +21,7 @@ await gl.LOAD_USER_DATA( function(){
 if (gl.data.player_data.id === undefined) {
     gl.setPlayerData(
         playerName,
-        urlParams.get("birthday"),
+        urlParams.get("birthday") + " 00:00:00",
         urlParams.get("gender")
     );
 }
