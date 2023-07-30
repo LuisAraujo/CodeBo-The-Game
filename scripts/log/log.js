@@ -74,6 +74,7 @@ Log.prototype.reloadLevel  = function(level, levelActions){
 	register = "reload-level;" + level+";"+ d.getFullYear() +  "-" + d.getMonth()  + "-" + d.getDate() + ";"+
 	this.getFullHour();
 	gl.SEND_USER_DATA();
+	this.phaseGameStart = new Date();
 	setNewItem(register);
 	console.log(register);
 }
