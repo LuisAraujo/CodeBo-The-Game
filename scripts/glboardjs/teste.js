@@ -19,10 +19,14 @@ await gl.LOAD_USER_DATA( function(){
 });
 
 if (gl.data.player_data.id === undefined) {
+    const birthday = urlParams.get("birthday");
+    const gender = urlParams.get("gender");
+    const dateBirthday = birthday ?? "01/01/2023";
+    
     gl.setPlayerData(
         playerName,
-        urlParams.get("birthday") + " 00:00:00",
-        urlParams.get("gender")
+        dateBirthday + " 00:00:00",
+        gender ?? "OUTROS"
     );
 }
 
