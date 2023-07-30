@@ -87,6 +87,7 @@ Log.prototype.setError = function(msgconsole){
 	register = "error-message;"+msgconsole+";" + level+";"+ d.getFullYear() +  "-" + d.getMonth()  + "-" + d.getDate() + ";"+
 	this.getFullHour();
 	gl.SEND_USER_DATA();
+	this.phaseGameStart = new Date();
 	setNewItem(register);
 	console.log(register);
 
