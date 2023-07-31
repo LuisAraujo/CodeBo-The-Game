@@ -421,7 +421,7 @@ new Rect(canvas.width - 300, 150, 580, 1180, 'rgba(255, 255, 255, 0.5)');
       actions = [];
 	  levels[currentLevel].printCommands();
 	  levels[currentLevel].clearHightlight();
-	  log.reloadLevel(levels[currentLevel].getCodebo().actuallevel, levelActions);
+	  log.reloadLevel(currentLevel + 1, levelActions);
 	  //log.addAction("reload");
 	  
 	  
@@ -625,7 +625,7 @@ Level.prototype.consoleError = function (msg, line) {
 	msgconsole = msg + " c:"+(line+1);
 	txt_console.color = "#f33";
 	
-  log.setError(msgconsole);
+  log.setError(currentLevel + 1,msgconsole);
   
 	//log.addAction("error>"+msgconsole);
 	

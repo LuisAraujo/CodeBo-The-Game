@@ -79,7 +79,7 @@ Log.prototype.reloadLevel  = function(level, levelActions){
 	console.log(register);
 }
 
-Log.prototype.setError = function(msgconsole){
+Log.prototype.setError = function(level, msgconsole){
 	var d = new Date();
 	const minutesInGame = gl.getPlayerMinutesGame() + this.getMinutesDifference(d, this.phaseGameStart);
 	gl.setPlayerMinutesGame(minutesInGame);
