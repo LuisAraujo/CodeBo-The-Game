@@ -83,7 +83,7 @@ Log.prototype.setError = function(level, msgconsole){
 	var d = new Date();
 	const minutesInGame = gl.getPlayerMinutesGame() + this.getMinutesDifference(d, this.phaseGameStart);
 	gl.setPlayerMinutesGame(minutesInGame);
-	gl.addSectionInPhase(level.toString(), 'DERROTA', 0, this.phaseGameStart, d, null, levelActions);
+	gl.addSectionInPhase(level.toString(), 'DERROTA', 0, this.phaseGameStart, d, null, this.actions);
 	register = "error-message;"+msgconsole+";" + level+";"+ d.getFullYear() +  "-" + d.getMonth()  + "-" + d.getDate() + ";"+
 	this.getFullHour();
 	gl.SEND_USER_DATA();
